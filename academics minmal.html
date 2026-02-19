@@ -1,0 +1,1466 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Academics | CS CONNECT - AISAT</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      /* --- CORE VARIABLES & RESET (Same as Home) --- */
+      :root {
+        --primary-red: #a41f13;
+        --bg-off-white: #faf5f1;
+        --neutral-gray: #e0dbd8;
+        --dark-charcoal: #292f36;
+        --taupe-brown: #8f7a6e;
+        --glass: rgba(255, 255, 255, 0.85);
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+
+      body {
+        background-color: var(--bg-off-white);
+        color: var(--dark-charcoal);
+        overflow-x: hidden;
+      }
+
+      /* --- ANIMATIONS --- */
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      @keyframes bg-glow {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      @keyframes scroll-left {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-100%);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .reveal {
+        opacity: 0;
+        transition: all 1s ease-out;
+        transform: translateY(30px);
+      }
+
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* --- NEWS TICKER --- */
+      .news-ticker {
+        background: var(--dark-charcoal);
+        color: #fff;
+        padding: 8px 0;
+        font-size: 0.9rem;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      .ticker-content {
+        display: inline-block;
+        animation: scroll-left 20s linear infinite;
+        padding-left: 100%;
+      }
+
+      /* --- NAVIGATION --- */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: var(--glass);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 5%;
+        transition: 0.3s;
+      }
+
+      .logo {
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: var(--primary-red);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--dark-charcoal);
+        font-weight: 600;
+        position: relative;
+        transition: 0.3s;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 0;
+        background-color: var(--primary-red);
+        transition: 0.3s;
+      }
+
+      .nav-links a:hover::after,
+      .nav-links a.active::after {
+        width: 100%;
+      }
+
+      .nav-links a.active {
+        color: var(--primary-red);
+      }
+
+      .btn-login {
+        padding: 0.5rem 1.5rem;
+        background: var(--dark-charcoal);
+        color: white;
+        border-radius: 50px;
+        text-decoration: none;
+        transition: 0.3s;
+      }
+
+      .btn-login:hover {
+        background: var(--primary-red);
+      }
+
+      /* --- PAGE HEADER (Similar to Hero but smaller) --- */
+      .page-header {
+        height: 50vh;
+        background: linear-gradient(
+          -45deg,
+          var(--primary-red),
+          #5e110a,
+          var(--dark-charcoal),
+          #1a1e22
+        );
+        background-size: 400% 400%;
+        animation: bg-glow 15s ease infinite;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .page-header::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle at 50% 50%,
+          rgba(255, 255, 255, 0.1) 0%,
+          transparent 60%
+        );
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .breadcrumb {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        opacity: 0.9;
+        z-index: 2;
+      }
+
+      .breadcrumb a {
+        color: var(--neutral-gray);
+        text-decoration: none;
+      }
+
+      .page-header h1 {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        z-index: 2;
+        text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .page-header p {
+        font-size: 1.2rem;
+        color: var(--neutral-gray);
+        z-index: 2;
+        max-width: 600px;
+      }
+
+      /* --- SECTION STYLING --- */
+      .section-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 5rem 5%;
+      }
+
+      .section-title {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .section-title h2 {
+        font-size: 2.5rem;
+        color: var(--dark-charcoal);
+        margin-bottom: 1rem;
+      }
+
+      .section-title p {
+        color: var(--taupe-brown);
+        font-size: 1.1rem;
+      }
+
+      /* --- PROGRAMS SECTION --- */
+      .programs-section {
+        background: white;
+      }
+
+      .programs-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+        gap: 3rem;
+      }
+
+      .program-card {
+        background: var(--bg-off-white);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        border: 2px solid var(--neutral-gray);
+        transition: 0.4s;
+      }
+
+      .program-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 60px rgba(164, 31, 19, 0.2);
+        border-color: var(--primary-red);
+      }
+
+      .program-header {
+        background: linear-gradient(135deg, var(--primary-red), #c92a1e);
+        color: white;
+        padding: 2.5rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .program-header::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.1) 0%,
+          transparent 70%
+        );
+      }
+
+      .program-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .program-header h3 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .program-subtitle {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        position: relative;
+        z-index: 1;
+      }
+
+      .program-body {
+        padding: 2.5rem;
+        background: white;
+      }
+
+      .program-detail {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--neutral-gray);
+      }
+
+      .program-detail:last-child {
+        border-bottom: none;
+      }
+
+      .detail-icon {
+        width: 50px;
+        height: 50px;
+        background: var(--bg-off-white);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-red);
+        font-size: 1.5rem;
+        flex-shrink: 0;
+      }
+
+      .detail-content {
+        flex: 1;
+      }
+
+      .detail-label {
+        font-weight: 700;
+        color: var(--dark-charcoal);
+        margin-bottom: 0.3rem;
+      }
+
+      .detail-value {
+        color: var(--taupe-brown);
+        line-height: 1.6;
+      }
+
+      .program-features {
+        background: var(--bg-off-white);
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin-top: 2rem;
+      }
+
+      .program-features h4 {
+        color: var(--primary-red);
+        margin-bottom: 1rem;
+      }
+
+      .program-features ul {
+        list-style: none;
+      }
+
+      .program-features li {
+        padding: 0.5rem 0;
+        padding-left: 2rem;
+        position: relative;
+      }
+
+      .program-features li::before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: var(--primary-red);
+        font-weight: bold;
+      }
+
+      /* --- CURRICULUM SECTION (Accordion) --- */
+      .curriculum-section {
+        background: var(--bg-off-white);
+      }
+
+      .curriculum-tabs {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .tab-btn {
+        padding: 1rem 2rem;
+        background: white;
+        border: 2px solid var(--neutral-gray);
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+        color: var(--dark-charcoal);
+      }
+
+      .tab-btn:hover {
+        border-color: var(--primary-red);
+        color: var(--primary-red);
+      }
+
+      .tab-btn.active {
+        background: var(--primary-red);
+        color: white;
+        border-color: var(--primary-red);
+      }
+
+      .semester-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+        gap: 2rem;
+      }
+
+      .semester-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        border: 2px solid var(--neutral-gray);
+        transition: 0.3s;
+      }
+
+      .semester-card:hover {
+        border-color: var(--primary-red);
+        box-shadow: 0 10px 30px rgba(164, 31, 19, 0.15);
+      }
+
+      .semester-header {
+        background: var(--dark-charcoal);
+        color: white;
+        padding: 1.5rem 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .semester-badge {
+        background: var(--primary-red);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: bold;
+      }
+
+      .semester-body {
+        padding: 2rem;
+      }
+
+      .subject-item {
+        display: grid;
+        grid-template-columns: 80px 1fr 60px;
+        gap: 1rem;
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--bg-off-white);
+        align-items: center;
+      }
+
+      .subject-item:last-child {
+        border-bottom: none;
+      }
+
+      .subject-code {
+        font-weight: 700;
+        color: var(--primary-red);
+        font-size: 0.9rem;
+      }
+
+      .subject-name {
+        color: var(--dark-charcoal);
+        font-weight: 500;
+      }
+
+      .subject-credits {
+        text-align: right;
+        color: var(--taupe-brown);
+        font-weight: 600;
+      }
+
+      .download-pdf-btn {
+        width: 100%;
+        padding: 1rem;
+        background: var(--bg-off-white);
+        border: none;
+        border-top: 2px solid var(--neutral-gray);
+        font-weight: 600;
+        color: var(--dark-charcoal);
+        cursor: pointer;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .download-pdf-btn:hover {
+        background: var(--primary-red);
+        color: white;
+      }
+
+      /* --- RESOURCES GRID --- */
+      .resources-section {
+        background: white;
+      }
+
+      .resources-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .resource-card {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 15px;
+        border: 2px solid var(--neutral-gray);
+        text-align: center;
+        transition: 0.4s;
+        cursor: pointer;
+      }
+
+      .resource-card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--shadow);
+        border-color: var(--primary-red);
+      }
+
+      .resource-icon {
+        width: 80px;
+        height: 80px;
+        background: var(--bg-off-white);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        font-size: 2.5rem;
+        color: var(--primary-red);
+        transition: 0.3s;
+      }
+
+      .resource-card:hover .resource-icon {
+        background: var(--primary-red);
+        color: white;
+        transform: rotateY(360deg);
+      }
+
+      .resource-card h3 {
+        color: var(--dark-charcoal);
+        margin-bottom: 1rem;
+      }
+
+      .resource-card p {
+        color: var(--taupe-brown);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+      }
+
+      .resource-btn {
+        padding: 0.8rem 2rem;
+        background: var(--dark-charcoal);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .resource-btn:hover {
+        background: var(--primary-red);
+      }
+
+      /* --- QUESTION BANK SECTION --- */
+      .qbank-section {
+        background: var(--bg-off-white);
+      }
+
+      .search-filter-bar {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+      }
+
+      .search-box {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .search-box input {
+        flex: 1;
+        padding: 1rem 1.5rem;
+        border: 2px solid var(--neutral-gray);
+        border-radius: 50px;
+        font-size: 1rem;
+        outline: none;
+        transition: 0.3s;
+      }
+
+      .search-box input:focus {
+        border-color: var(--primary-red);
+      }
+
+      .search-box button {
+        padding: 1rem 2.5rem;
+        background: var(--primary-red);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .search-box button:hover {
+        background: var(--dark-charcoal);
+      }
+
+      .filter-chips {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .filter-chip {
+        padding: 0.5rem 1.5rem;
+        background: var(--bg-off-white);
+        border: 2px solid var(--neutral-gray);
+        border-radius: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+        font-weight: 600;
+      }
+
+      .filter-chip:hover,
+      .filter-chip.active {
+        background: var(--primary-red);
+        color: white;
+        border-color: var(--primary-red);
+      }
+
+      .qbank-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .qbank-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        border: 2px solid var(--neutral-gray);
+        transition: 0.3s;
+      }
+
+      .qbank-card:hover {
+        border-color: var(--primary-red);
+        box-shadow: 0 5px 15px rgba(164, 31, 19, 0.1);
+      }
+
+      .qbank-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .qbank-badge {
+        background: var(--bg-off-white);
+        padding: 0.3rem 0.8rem;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--primary-red);
+      }
+
+      .qbank-card h4 {
+        color: var(--dark-charcoal);
+        margin-bottom: 0.5rem;
+      }
+
+      .qbank-meta {
+        color: var(--taupe-brown);
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+
+      .qbank-download {
+        width: 100%;
+        padding: 0.8rem;
+        background: var(--dark-charcoal);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .qbank-download:hover {
+        background: var(--primary-red);
+      }
+
+      /* --- FOOTER --- */
+      footer {
+        background: var(--dark-charcoal);
+        color: var(--bg-off-white);
+        padding: 4rem 10%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+      }
+
+      footer h4 {
+        color: var(--primary-red);
+        margin-bottom: 1.5rem;
+      }
+
+      footer ul {
+        list-style: none;
+      }
+
+      footer ul li {
+        margin-bottom: 0.8rem;
+      }
+
+      footer ul li a {
+        color: var(--neutral-gray);
+        text-decoration: none;
+        transition: 0.3s;
+      }
+
+      footer ul li a:hover {
+        color: white;
+      }
+
+      /* --- CHATBOT --- */
+      .chatbot-float {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background: var(--primary-red);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        box-shadow: 0 10px 20px rgba(164, 31, 19, 0.4);
+        cursor: pointer;
+        z-index: 2000;
+        transition: 0.3s;
+        animation: float 3s ease-in-out infinite;
+      }
+
+      .chatbot-float:hover {
+        transform: scale(1.1);
+      }
+
+      /* --- RESPONSIVE --- */
+      @media (max-width: 768px) {
+        .page-header h1 {
+          font-size: 2.5rem;
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .programs-grid,
+        .semester-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .section-title h2 {
+          font-size: 2rem;
+        }
+
+        .qbank-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Tab Content */
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+        animation: fadeIn 0.5s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- News Ticker -->
+    <div class="news-ticker">
+      <div class="ticker-content">
+        📢 Admissions Open for 2026 Batch | 🎉 CSE Student Wins National
+        Hackathon | 📅 Next Workshop: AI in Healthcare - Feb 20th | 🏆 AISAT
+        Ranked Top 10 in Innovation
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+      <div class="logo">
+        <div
+          style="
+            width: 40px;
+            height: 40px;
+            background: var(--primary-red);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            font-size: 10px;
+          "
+        >
+          AISAT
+        </div>
+        AISAT CSE
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="academics.html" class="active">Academics</a></li>
+        <li><a href="faculty.html">Faculty</a></li>
+        <li><a href="placements.html">Placements</a></li>
+        <li><a href="library.html">Library</a></li>
+      </ul>
+      <a href="login.html" class="btn-login">Login</a>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+      <div class="breadcrumb">
+        <a href="index.html">Home</a> / <span>Academics</span>
+      </div>
+      <h1>Academics</h1>
+      <p>Comprehensive curriculum designed to shape future tech leaders</p>
+    </section>
+
+    <!-- Programs Offered Section -->
+    <section class="programs-section">
+      <div class="section-container">
+        <div class="section-title reveal">
+          <h2>Programs Offered</h2>
+          <p>Industry-aligned courses for aspiring engineers</p>
+        </div>
+
+        <div class="programs-grid">
+          <!-- B.Tech Card -->
+          <div class="program-card reveal">
+            <div class="program-header">
+              <div class="program-icon">🎓</div>
+              <h3>B.Tech</h3>
+              <p class="program-subtitle">Computer Science & Engineering</p>
+            </div>
+            <div class="program-body">
+              <div class="program-detail">
+                <div class="detail-icon"><i class="fas fa-clock"></i></div>
+                <div class="detail-content">
+                  <div class="detail-label">Duration</div>
+                  <div class="detail-value">4 Years (8 Semesters)</div>
+                </div>
+              </div>
+
+              <div class="program-detail">
+                <div class="detail-icon"><i class="fas fa-users"></i></div>
+                <div class="detail-content">
+                  <div class="detail-label">Intake</div>
+                  <div class="detail-value">120 Students per year</div>
+                </div>
+              </div>
+
+              <div class="program-detail">
+                <div class="detail-icon">
+                  <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="detail-content">
+                  <div class="detail-label">Eligibility</div>
+                  <div class="detail-value">
+                    10+2 with Physics, Mathematics & Chemistry/Computer Science
+                  </div>
+                </div>
+              </div>
+
+              <div class="program-detail">
+                <div class="detail-icon"><i class="fas fa-university"></i></div>
+                <div class="detail-content">
+                  <div class="detail-label">Affiliation</div>
+                  <div class="detail-value">
+                    APJ Abdul Kalam Technological University (KTU)
+                  </div>
+                </div>
+              </div>
+
+              <div class="program-features">
+                <h4>Program Highlights</h4>
+                <ul>
+                  <li>Industry-aligned curriculum with latest technologies</li>
+                  <li>
+                    Hands-on training in AI, ML, Data Science, Cloud Computing
+                  </li>
+                  <li>State-of-the-art labs and research facilities</li>
+                  <li>
+                    Strong industry partnerships and internship opportunities
+                  </li>
+                  <li>Focus on innovation and entrepreneurship</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- M.Tech Card -->
+          <div class="program-card reveal">
+            <div class="program-header">
+              <div class="program-icon">🔬</div>
+              <h3>M.Tech</h3>
+              <p class="program-subtitle">Computer Science & Engineering</p>
+            </div>
+            <div class="program-body">
+              <div class="program-detail">
+                <div class="detail-icon"><i class="fas fa-clock"></i></div>
+                <div class="detail-content">
+                  <div class="detail-label">Duration</div>
+                  <div class="detail-value">2 Years (4 Semesters)</div>
+                </div>
+              </div>
+
+              <div class="program-detail">
+                <div class="detail-icon"><i class="fas fa-users"></i></div>
+                <div class="detail-content">
+                  <div class="detail-label">Intake</div>
+                  <div class="detail-value">18 Students per year</div>
+                </div>
+              </div>
+
+              <div class="program-detail">
+                <div class="detail-icon">
+                  <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="detail-content">
+                  <div class="detail-label">Eligibility</div>
+                  <div class="detail-value">
+                    B.Tech/B.E in CSE or related disciplines with valid GATE
+                    score
+                  </div>
+                </div>
+              </div>
+
+              <div class="program-detail">
+                <div class="detail-icon"><i class="fas fa-microscope"></i></div>
+                <div class="detail-content">
+                  <div class="detail-label">Specialization</div>
+                  <div class="detail-value">Advanced Computing & Research</div>
+                </div>
+              </div>
+
+              <div class="program-features">
+                <h4>Program Highlights</h4>
+                <ul>
+                  <li>Research-oriented curriculum with thesis component</li>
+                  <li>Advanced courses in ML, Big Data, Cybersecurity</li>
+                  <li>Opportunities to publish in international journals</li>
+                  <li>Industry collaboration for live projects</li>
+                  <li>Excellent placement support in R&D roles</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Semester-wise Curriculum Section -->
+    <section class="curriculum-section">
+      <div class="section-container">
+        <div class="section-title reveal">
+          <h2>Semester-wise Curriculum</h2>
+          <p>B.Tech CSE - KTU 2019 Scheme</p>
+        </div>
+
+        <!-- Year Tabs -->
+        <div class="curriculum-tabs reveal">
+          <button class="tab-btn active" onclick="switchYear(1)">Year 1</button>
+          <button class="tab-btn" onclick="switchYear(2)">Year 2</button>
+          <button class="tab-btn" onclick="switchYear(3)">Year 3</button>
+          <button class="tab-btn" onclick="switchYear(4)">Year 4</button>
+        </div>
+
+        <!-- Year 1 Content -->
+        <div class="tab-content active" id="year1">
+          <div class="semester-grid">
+            <!-- Semester 1 -->
+            <div class="semester-card reveal">
+              <div class="semester-header">
+                <span class="semester-badge">S1</span>
+                <h3>Foundation Semester</h3>
+              </div>
+              <div class="semester-body">
+                <div class="subject-item">
+                  <span class="subject-code">MAT101</span>
+                  <span class="subject-name">Calculus</span>
+                  <span class="subject-credits">4 Credits</span>
+                </div>
+                <div class="subject-item">
+                  <span class="subject-code">PHY110</span>
+                  <span class="subject-name">Engineering Physics</span>
+                  <span class="subject-credits">3 Credits</span>
+                </div>
+                <div class="subject-item">
+                  <span class="subject-code">CYT100</span>
+                  <span class="subject-name">Engineering Chemistry</span>
+                  <span class="subject-credits">3 Credits</span>
+                </div>
+                <div class="subject-item">
+                  <span class="subject-code">EST100</span>
+                  <span class="subject-name">Engineering Graphics</span>
+                  <span class="subject-credits">4 Credits</span>
+                </div>
+                <div class="subject-item">
+                  <span class="subject-code">BEC101</span>
+                  <span class="subject-name">Basic Engineering</span>
+                  <span class="subject-credits">2 Credits</span>
+                </div>
+              </div>
+              <button class="download-pdf-btn">
+                <i class="fas fa-download"></i> Download Semester 1 Syllabus
+              </button>
+            </div>
+
+            <!-- Semester 2 -->
+            <div class="semester-card reveal">
+              <div class="semester-header">
+                <span class="semester-badge">S2</span>
+                <h3>Core Fundamentals</h3>
+              </div>
+              <div class="semester-body">
+                <div class="subject-item">
+                  <span class="subject-code">MAT102</span>
+                  <span class="subject-name">Linear Algebra</span>
+                  <span class="subject-credits">4 Credits</span>
+                </div>
+                <div class="subject-item">
+                  <span class="subject-code">PHY120</span>
+                  <span class="subject-name">Physics Lab</span>
+                  <span class="subject-credits">1 Credit</span>
+                </div>
+                <div class="subject-item">
+                  <span class="subject-code">BEE101</span>
+                  <span class="subject-name">Electrical Engineering</span>
+                  <span class="subject-credits">3 Credits</span>
+                </div>
+                <div class="subject-item">
+                  <span class="subject-code">CST101</span>
+                  <span class="subject-name">Introduction to Computing</span>
+                  <span class="subject-credits">3 Credits</span>
+                </div>
+                <div class="subject-item">
+                  <span class="subject-code">EST110</span>
+                  <span class="subject-name">Engineering Mechanics</span>
+                  <span class="subject-credits">4 Credits</span>
+                </div>
+              </div>
+              <button class="download-pdf-btn">
+                <i class="fas fa-download"></i> Download Semester 2 Syllabus
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Year 2 Content -->
+        <div class="tab-content" id="year2">
+          <div class="semester-grid">
+            <!-- Semester 3 -->
+            <div class="semester-card reveal">
+              <div class="semester-header">
+                <span class="semester-badge">S3</span>
+                <h3>Programming & Logic</h3>
+              </div>
+              <div class="semester-body">
+                <div class="subject-item">
+                  <span class="subject-code">MAT201</span>
+                  <span class="subject-name">Discrete Mathematics</span>
+                  <span class="subject-credits">4 Credits</span>
+                </div>
+                <div class="subject-item">
+                  <span class="subject-code">CST201</span>
+                  <span class="subject-name">Data Structures</span>
+                  <span class="subject-credits">4 Credits</span>
+                </div>
+                <div class="subject-item">
+                  <span class="subject-code">CST203</span>
+                  <span class="subject-name">Logic System Design</span>
+                  <span class="subject-credits">3 Credits</span>
+                </div>
+                <div class="subject-item">
+                  <span class="subject-code">CST205</span>
+                  <span class="subject-name">Computer Architecture</span>
+                  <span class="subject-credits">4 Credits</span>
+                </div>
+                <div class="subject-item">
+                  <span class="subject-code">CST207</span>
+                  <span class="subject-name">OOP using Java</span>
+                  <span class="subject-credits">3 Credits</span>
+                </div>
+              </div>
+              <button class="download-pdf-btn">
+                <i class="fas fa-download"></i> Download Semester 3 Syllabus
+              </button>
+            </div>
+
+            <!-- Semester 4 -->
+            <div class="semester-card reveal">
+              <div class="semester-header">
+                <span class="semester-badge">S4</span>
+                <h3>Advanced Concepts</h3>
+              </div>
+              <div class="semester-body">
+                <div class="subject-item">
+                  <span class="subject-code">CST202</span>
+                  <span class="subject-name">Database Management</span>
+                  <span class="subject-credits">4 Credits</span>
+                </div>
+                <div class="subject-item">
+                  <span class="subject-code">CST204</span>
+                  <span class="subject-name">Operating Systems</span>
+                  <span class="subject-credits">4 Credits</span>
+                </div>
+                <div class="subject-item">
+                  <span class="subject-code">CST206</span>
+                  <span class="subject-name">Computer Networks</span>
+                  <span class="subject-credits">3 Credits</span>
+                </div>
+                <div class="subject-item">
+                  <span class="subject-code">CST208</span>
+                  <span class="subject-name">Microprocessor</span>
+                  <span class="subject-credits">4 Credits</span>
+                </div>
+              </div>
+              <button class="download-pdf-btn">
+                <i class="fas fa-download"></i> Download Semester 4 Syllabus
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Year 3 Placeholder -->
+        <div class="tab-content" id="year3">
+          <div style="text-align: center; padding: 4rem 2rem">
+            <i
+              class="fas fa-rocket"
+              style="
+                font-size: 4rem;
+                color: var(--neutral-gray);
+                margin-bottom: 2rem;
+              "
+            ></i>
+            <h3 style="font-size: 2rem; margin-bottom: 1rem">
+              Year 3 Curriculum
+            </h3>
+            <p style="color: var(--taupe-brown); font-size: 1.1rem">
+              Specialization tracks and advanced topics (Semesters 5 & 6)
+            </p>
+          </div>
+        </div>
+
+        <!-- Year 4 Placeholder -->
+        <div class="tab-content" id="year4">
+          <div style="text-align: center; padding: 4rem 2rem">
+            <i
+              class="fas fa-project-diagram"
+              style="
+                font-size: 4rem;
+                color: var(--neutral-gray);
+                margin-bottom: 2rem;
+              "
+            ></i>
+            <h3 style="font-size: 2rem; margin-bottom: 1rem">
+              Year 4 Curriculum
+            </h3>
+            <p style="color: var(--taupe-brown); font-size: 1.1rem">
+              Electives, Capstone Projects & Internship (Semesters 7 & 8)
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Academic Resources Section -->
+    <section class="resources-section">
+      <div class="section-container">
+        <div class="section-title reveal">
+          <h2>Academic Resources</h2>
+          <p>Essential documents and study materials</p>
+        </div>
+
+        <div class="resources-grid">
+          <div class="resource-card reveal">
+            <div class="resource-icon">
+              <i class="fas fa-calendar-alt"></i>
+            </div>
+            <h3>Academic Calendar</h3>
+            <p>Current academic year schedule with exam dates and holidays</p>
+            <a href="#" class="resource-btn"
+              ><i class="fas fa-download"></i> Download</a
+            >
+          </div>
+
+          <div class="resource-card reveal">
+            <div class="resource-icon">
+              <i class="fas fa-book"></i>
+            </div>
+            <h3>KTU Regulations</h3>
+            <p>University regulations and academic guidelines</p>
+            <a href="#" class="resource-btn"
+              ><i class="fas fa-download"></i> Download</a
+            >
+          </div>
+
+          <div class="resource-card reveal">
+            <div class="resource-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <h3>Timetable</h3>
+            <p>Class schedules and lab timings for all semesters</p>
+            <a href="#" class="resource-btn"
+              ><i class="fas fa-download"></i> Download</a
+            >
+          </div>
+
+          <div class="resource-card reveal">
+            <div class="resource-icon">
+              <i class="fas fa-sticky-note"></i>
+            </div>
+            <h3>Faculty Notes</h3>
+            <p>Lecture notes and study materials uploaded by faculty</p>
+            <a href="#" class="resource-btn"
+              ><i class="fas fa-external-link-alt"></i> View</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Question Bank Section -->
+    <section class="qbank-section">
+      <div class="section-container">
+        <div class="section-title reveal">
+          <h2>Question Bank Repository</h2>
+          <p>Previous year question papers and practice materials</p>
+        </div>
+
+        <!-- Search & Filter -->
+        <div class="search-filter-bar reveal">
+          <div class="search-box">
+            <input
+              type="text"
+              placeholder="Search by subject name or code..."
+            />
+            <button><i class="fas fa-search"></i> Search</button>
+          </div>
+          <div class="filter-chips">
+            <div class="filter-chip active">All Semesters</div>
+            <div class="filter-chip">S1-S2</div>
+            <div class="filter-chip">S3-S4</div>
+            <div class="filter-chip">S5-S6</div>
+            <div class="filter-chip">S7-S8</div>
+          </div>
+        </div>
+
+        <!-- Question Bank Grid -->
+        <div class="qbank-grid">
+          <div class="qbank-card reveal">
+            <div class="qbank-header">
+              <span class="qbank-badge">S1</span>
+            </div>
+            <h4>Calculus</h4>
+            <p class="qbank-meta">MAT101 | 2020-2024</p>
+            <button class="qbank-download">
+              <i class="fas fa-download"></i> Download Papers
+            </button>
+          </div>
+
+          <div class="qbank-card reveal">
+            <div class="qbank-header">
+              <span class="qbank-badge">S3</span>
+            </div>
+            <h4>Data Structures</h4>
+            <p class="qbank-meta">CST201 | 2020-2024</p>
+            <button class="qbank-download">
+              <i class="fas fa-download"></i> Download Papers
+            </button>
+          </div>
+
+          <div class="qbank-card reveal">
+            <div class="qbank-header">
+              <span class="qbank-badge">S4</span>
+            </div>
+            <h4>Database Management</h4>
+            <p class="qbank-meta">CST202 | 2020-2024</p>
+            <button class="qbank-download">
+              <i class="fas fa-download"></i> Download Papers
+            </button>
+          </div>
+
+          <div class="qbank-card reveal">
+            <div class="qbank-header">
+              <span class="qbank-badge">S4</span>
+            </div>
+            <h4>Operating Systems</h4>
+            <p class="qbank-meta">CST204 | 2020-2024</p>
+            <button class="qbank-download">
+              <i class="fas fa-download"></i> Download Papers
+            </button>
+          </div>
+
+          <div class="qbank-card reveal">
+            <div class="qbank-header">
+              <span class="qbank-badge">S5</span>
+            </div>
+            <h4>Computer Networks</h4>
+            <p class="qbank-meta">CST302 | 2020-2024</p>
+            <button class="qbank-download">
+              <i class="fas fa-download"></i> Download Papers
+            </button>
+          </div>
+
+          <div class="qbank-card reveal">
+            <div class="qbank-header">
+              <span class="qbank-badge">S6</span>
+            </div>
+            <h4>Machine Learning</h4>
+            <p class="qbank-meta">CST304 | 2020-2024</p>
+            <button class="qbank-download">
+              <i class="fas fa-download"></i> Download Papers
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div>
+        <h4>AISAT CSE</h4>
+        <p style="font-size: 0.9rem; color: var(--neutral-gray)">
+          Albertian Institute of Science and Technology,<br />
+          Kalamassery, Kochi.<br />
+          Kerala, India.
+        </p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#">Admissions</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">Student Portal</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Twitter</a></li>
+        </ul>
+      </div>
+    </footer>
+
+    <!-- Floating Chatbot -->
+    <div class="chatbot-float" onclick="alert('Chatbot feature coming soon!')">
+      💬
+    </div>
+
+    <script>
+      // Scroll Reveal Animation
+      window.addEventListener("scroll", reveal);
+
+      function reveal() {
+        var reveals = document.querySelectorAll(".reveal");
+        for (var i = 0; i < reveals.length; i++) {
+          var windowheight = window.innerHeight;
+          var revealtop = reveals[i].getBoundingClientRect().top;
+          var revealpoint = 150;
+
+          if (revealtop < windowheight - revealpoint) {
+            reveals[i].classList.add("active");
+          }
+        }
+      }
+
+      // Trigger on load
+      reveal();
+
+      // Year Tab Switching
+      function switchYear(year) {
+        // Hide all tab contents
+        document.querySelectorAll(".tab-content").forEach((content) => {
+          content.classList.remove("active");
+        });
+
+        // Remove active class from all buttons
+        document.querySelectorAll(".tab-btn").forEach((btn) => {
+          btn.classList.remove("active");
+        });
+
+        // Show selected year
+        document.getElementById("year" + year).classList.add("active");
+
+        // Add active class to clicked button
+        event.target.classList.add("active");
+      }
+
+      // Filter Chips Toggle
+      document.querySelectorAll(".filter-chip").forEach((chip) => {
+        chip.addEventListener("click", function () {
+          document
+            .querySelectorAll(".filter-chip")
+            .forEach((c) => c.classList.remove("active"));
+          this.classList.add("active");
+        });
+      });
+    </script>
+  </body>
+</html>

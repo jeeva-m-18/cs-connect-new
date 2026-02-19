@@ -1,0 +1,2038 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Scanner | Library - CS CONNECT</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- QR Code Scanner Library -->
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <style>
+      /* --- CORE VARIABLES --- */
+      :root {
+        --primary-red: #a41f13;
+        --bg-off-white: #faf5f1;
+        --neutral-gray: #e0dbd8;
+        --dark-charcoal: #292f36;
+        --taupe-brown: #8f7a6e;
+        --glass: rgba(255, 255, 255, 0.85);
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+
+      body {
+        background-color: var(--bg-off-white);
+        color: var(--dark-charcoal);
+        overflow-x: hidden;
+      }
+
+      /* --- ANIMATIONS --- */
+      @keyframes scroll-left {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-100%);
+        }
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1.05);
+          opacity: 0.8;
+        }
+      }
+
+      @keyframes scan-line {
+        0% {
+          top: 0;
+        }
+        100% {
+          top: 100%;
+        }
+      }
+
+      .reveal {
+        opacity: 0;
+        transition: all 1s ease-out;
+        transform: translateY(30px);
+      }
+
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* --- NEWS TICKER --- */
+      .news-ticker {
+        background: var(--dark-charcoal);
+        color: #fff;
+        padding: 8px 0;
+        font-size: 0.9rem;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      .ticker-content {
+        display: inline-block;
+        animation: scroll-left 20s linear infinite;
+        padding-left: 100%;
+      }
+
+      /* --- NAVIGATION --- */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: var(--glass);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 5%;
+        transition: 0.3s;
+      }
+
+      .logo {
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: var(--primary-red);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--dark-charcoal);
+        font-weight: 600;
+        position: relative;
+        transition: 0.3s;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 0;
+        background-color: var(--primary-red);
+        transition: 0.3s;
+      }
+
+      .nav-links a:hover::after,
+      .nav-links a.active::after {
+        width: 100%;
+      }
+
+      .nav-links a.active {
+        color: var(--primary-red);
+      }
+
+      .btn-login {
+        padding: 0.5rem 1.5rem;
+        background: var(--dark-charcoal);
+        color: white;
+        border-radius: 50px;
+        text-decoration: none;
+        transition: 0.3s;
+      }
+
+      .btn-login:hover {
+        background: var(--primary-red);
+      }
+
+      /* --- SCANNER CONTAINER --- */
+      .scanner-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem 5%;
+      }
+
+      .page-title {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .page-title h1 {
+        font-size: 3rem;
+        color: var(--dark-charcoal);
+        margin-bottom: 1rem;
+      }
+
+      .page-title p {
+        color: var(--taupe-brown);
+        font-size: 1.1rem;
+      }
+
+      /* --- SCANNER SECTION --- */
+      .scanner-section {
+        background: white;
+        border-radius: 20px;
+        padding: 3rem;
+        box-shadow: var(--shadow);
+        margin-bottom: 2rem;
+      }
+
+      /* --- CAMERA PREVIEW --- */
+      .camera-preview {
+        position: relative;
+        max-width: 600px;
+        margin: 0 auto 2rem;
+        border-radius: 15px;
+        overflow: hidden;
+        background: var(--dark-charcoal);
+      }
+
+      #qr-reader {
+        width: 100%;
+        border: none;
+      }
+
+      #qr-reader__dashboard_section_csr {
+        display: none !important;
+      }
+
+      .scan-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 250px;
+        height: 250px;
+        border: 3px solid var(--primary-red);
+        border-radius: 15px;
+        pointer-events: none;
+      }
+
+      .scan-overlay::before,
+      .scan-overlay::after {
+        content: "";
+        position: absolute;
+        background: var(--primary-red);
+      }
+
+      /* Corner indicators */
+      .scan-overlay::before {
+        top: -3px;
+        left: -3px;
+        width: 30px;
+        height: 30px;
+        border-top: 3px solid var(--primary-red);
+        border-left: 3px solid var(--primary-red);
+      }
+
+      .scan-line {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--primary-red);
+        animation: scan-line 2s linear infinite;
+        box-shadow: 0 0 10px var(--primary-red);
+      }
+
+      /* --- SCANNER CONTROLS --- */
+      .scanner-controls {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+
+      .control-btn {
+        padding: 1rem 2.5rem;
+        border: none;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .btn-start {
+        background: var(--primary-red);
+        color: white;
+      }
+
+      .btn-start:hover {
+        background: var(--dark-charcoal);
+        transform: translateY(-2px);
+      }
+
+      .btn-stop {
+        background: var(--dark-charcoal);
+        color: white;
+      }
+
+      .btn-stop:hover {
+        background: var(--primary-red);
+        transform: translateY(-2px);
+      }
+
+      .btn-switch {
+        background: var(--bg-off-white);
+        color: var(--dark-charcoal);
+        border: 2px solid var(--neutral-gray);
+      }
+
+      .btn-switch:hover {
+        border-color: var(--primary-red);
+        color: var(--primary-red);
+      }
+
+      /* --- MANUAL ENTRY --- */
+      .manual-entry {
+        background: var(--bg-off-white);
+        padding: 2rem;
+        border-radius: 15px;
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .manual-entry h3 {
+        color: var(--dark-charcoal);
+        margin-bottom: 1rem;
+      }
+
+      .manual-input-group {
+        display: flex;
+        gap: 1rem;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      .manual-input-group input {
+        flex: 1;
+        padding: 1rem 1.5rem;
+        border: 2px solid var(--neutral-gray);
+        border-radius: 50px;
+        font-size: 1rem;
+        outline: none;
+        transition: 0.3s;
+      }
+
+      .manual-input-group input:focus {
+        border-color: var(--primary-red);
+      }
+
+      .manual-input-group button {
+        padding: 1rem 2rem;
+        background: var(--dark-charcoal);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .manual-input-group button:hover {
+        background: var(--primary-red);
+      }
+
+      /* --- BOOK DETAILS SECTION --- */
+      .book-details-section {
+        background: white;
+        border-radius: 20px;
+        padding: 3rem;
+        box-shadow: var(--shadow);
+        display: none;
+      }
+
+      .book-details-section.active {
+        display: block;
+        animation: fadeIn 0.5s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .book-result {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        gap: 3rem;
+        align-items: start;
+      }
+
+      .book-cover-large {
+        width: 100%;
+        height: 350px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .book-info-detailed {
+        padding: 1rem 0;
+      }
+
+      .book-info-detailed h2 {
+        font-size: 2.5rem;
+        color: var(--dark-charcoal);
+        margin-bottom: 0.5rem;
+      }
+
+      .book-author-large {
+        font-size: 1.3rem;
+        color: var(--taupe-brown);
+        margin-bottom: 2rem;
+      }
+
+      .availability-badge {
+        display: inline-block;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+      }
+
+      .badge-available {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      .badge-issued {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      .book-meta-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .meta-item {
+        background: var(--bg-off-white);
+        padding: 1.5rem;
+        border-radius: 12px;
+        border-left: 4px solid var(--primary-red);
+      }
+
+      .meta-label {
+        font-size: 0.9rem;
+        color: var(--taupe-brown);
+        margin-bottom: 0.5rem;
+      }
+
+      .meta-value {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--dark-charcoal);
+      }
+
+      .book-actions-large {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+
+      .btn-action-large {
+        padding: 1.2rem 3rem;
+        border: none;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .btn-request-large {
+        background: var(--primary-red);
+        color: white;
+      }
+
+      .btn-request-large:hover {
+        background: var(--dark-charcoal);
+        transform: translateY(-2px);
+      }
+
+      .btn-scan-another {
+        background: var(--dark-charcoal);
+        color: white;
+      }
+
+      .btn-scan-another:hover {
+        background: var(--primary-red);
+        transform: translateY(-2px);
+      }
+
+      /* --- INSTRUCTIONS --- */
+      .instructions {
+        background: var(--bg-off-white);
+        padding: 2rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+      }
+
+      .instructions h3 {
+        color: var(--dark-charcoal);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .instructions ol {
+        padding-left: 2rem;
+        line-height: 2;
+        color: var(--taupe-brown);
+      }
+
+      .instructions li {
+        margin-bottom: 0.5rem;
+      }
+
+      /* --- ERROR MESSAGES --- */
+      .error-message {
+        background: #f8d7da;
+        color: #721c24;
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin-bottom: 2rem;
+        display: none;
+        text-align: center;
+        border-left: 4px solid #721c24;
+      }
+
+      .error-message.active {
+        display: block;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .error-message i {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .success-message {
+        background: #d4edda;
+        color: #155724;
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin-bottom: 2rem;
+        display: none;
+        text-align: center;
+        border-left: 4px solid #155724;
+      }
+
+      .success-message.active {
+        display: block;
+        animation: fadeIn 0.3s ease;
+      }
+
+      /* --- FOOTER --- */
+      footer {
+        background: var(--dark-charcoal);
+        color: var(--bg-off-white);
+        padding: 4rem 10%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+      }
+
+      footer h4 {
+        color: var(--primary-red);
+        margin-bottom: 1.5rem;
+      }
+
+      footer ul {
+        list-style: none;
+      }
+
+      footer ul li {
+        margin-bottom: 0.8rem;
+      }
+
+      footer ul li a {
+        color: var(--neutral-gray);
+        text-decoration: none;
+        transition: 0.3s;
+      }
+
+      footer ul li a:hover {
+        color: white;
+      }
+
+      /* --- CHATBOT --- */
+      .chatbot-float {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background: var(--primary-red);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        box-shadow: 0 10px 20px rgba(164, 31, 19, 0.4);
+        cursor: pointer;
+        z-index: 2000;
+        transition: 0.3s;
+        animation: float 3s ease-in-out infinite;
+      }
+
+      .chatbot-float:hover {
+        transform: scale(1.1);
+      }
+
+      /* --- RESPONSIVE --- */
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+        }
+
+        .scanner-section {
+          padding: 2rem 1.5rem;
+        }
+
+        .book-result {
+          grid-template-columns: 1fr;
+        }
+
+        .book-cover-large {
+          height: 300px;
+        }
+
+        .book-info-detailed h2 {
+          font-size: 2rem;
+        }
+
+        .scanner-controls {
+          flex-direction: column;
+        }
+
+        .control-btn {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .manual-input-group {
+          flex-direction: column;
+        }
+
+        .book-actions-large {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- News Ticker -->
+    <div class="news-ticker">
+      <div class="ticker-content">
+        📢 Admissions Open for 2026 Batch | 🎉 CSE Student Wins National
+        Hackathon | 📅 Next Workshop: AI in Healthcare - Feb 20th | 🏆 AISAT
+        Ranked Top 10 in Innovation
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+      <div class="logo">
+        <div
+          style="
+            width: 40px;
+            height: 40px;
+            background: var(--primary-red);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            font-size: 10px;
+          "
+        >
+          AISAT
+        </div>
+        AISAT CSE
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="academics.html">Academics</a></li>
+        <li><a href="faculty.html">Faculty</a></li>
+        <li><a href="placements.html">Placements</a></li>
+        <li><a href="library.html" class="active">Library</a></li>
+      </ul>
+      <a href="login.html" class="btn-login">Login</a>
+    </nav>
+    <!-- Navigation -->
+    <nav>
+      <!-- ... existing nav code ... -->
+    </nav>
+
+    <!-- ✅ ADD THIS BREADCRUMB -->
+    <div
+      style="
+        background: var(--bg-off-white);
+        padding: 1rem 5%;
+        border-bottom: 1px solid var(--neutral-gray);
+      "
+    >
+      <div
+        style="
+          max-width: 1400px;
+          margin: 0 auto;
+          font-size: 0.9rem;
+          color: var(--taupe-brown);
+        "
+      >
+        <a
+          href="index.html"
+          style="color: var(--taupe-brown); text-decoration: none"
+          >Home</a
+        >
+        /
+        <a
+          href="library.html"
+          style="color: var(--taupe-brown); text-decoration: none"
+          >Library</a
+        >
+        /
+        <span style="color: var(--dark-charcoal); font-weight: 600"
+          >QR Scanner</span
+        >
+      </div>
+    </div>
+
+    <!-- Scanner Container -->
+     <!-- Scanner Container -->
+<div class="scanner-container">
+    
+    <!-- ✅ ADD THIS INFO BANNER -->
+    <div style="background: linear-gradient(135deg, var(--primary-red), #c92a1e); padding: 1.5rem; border-radius: 15px; margin-bottom: 2rem; color: white; text-align: center;">
+        <i class="fas fa-info-circle" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+        <h3 style="margin-bottom: 0.5rem;">Scan Book QR Code</h3>
+        <p style="opacity: 0.95;">Scan any book QR code from the library to check availability and request issue</p>
+        <a href="library.html" style="color: white; text-decoration: underline; font-weight: 600; display: inline-block; margin-top: 0.5rem;">
+            ← Browse Library Catalog
+        </a>
+    </div>
+    
+    <!-- Page Title -->
+    <div class="page-title reveal">
+        <h1><i class="fas fa-qrcode"></i> QR Code Scanner</h1>
+        <p>Scan book QR codes to view details and availability</p>
+    </div>
+    <div class="scanner-container">
+      <!-- Page Title -->
+      <div class="page-title reveal">
+        <h1><i class="fas fa-qrcode"></i> QR Code Scanner</h1>
+        <p>Scan book QR codes to view details and availability</p>
+      </div>
+
+      <!-- Error Message -->
+      <div class="error-message" id="errorMessage">
+        <i class="fas fa-exclamation-triangle"></i>
+        <h3>Error</h3>
+        <p id="errorText"></p>
+      </div>
+
+      <!-- Success Message -->
+      <div class="success-message" id="successMessage">
+        <i class="fas fa-check-circle"></i>
+        <h3>QR Code Scanned Successfully!</h3>
+      </div>
+
+      <!-- Instructions -->
+      <div class="instructions reveal">
+        <h3><i class="fas fa-info-circle"></i> How to Scan</h3>
+        <ol>
+          <li>Click "Start Scanner" to activate your camera</li>
+          <li>Allow camera permissions when prompted</li>
+          <li>Hold the QR code within the scanning area</li>
+          <li>The system will automatically detect and display book details</li>
+          <li>Alternatively, enter the Book ID manually below</li>
+        </ol>
+      </div>
+
+      <!-- Scanner Section -->
+      <div class="scanner-section reveal">
+        <!-- Camera Preview -->
+        <div class="camera-preview">
+          <div id="qr-reader"></div>
+          <div class="scan-overlay">
+            <div class="scan-line"></div>
+          </div>
+        </div>
+
+        <!-- Scanner Controls -->
+        <div class="scanner-controls">
+          <button
+            class="control-btn btn-start"
+            id="startBtn"
+            onclick="startScanner()"
+          >
+            <i class="fas fa-play"></i> Start Scanner
+          </button>
+          <button
+            class="control-btn btn-stop"
+            id="stopBtn"
+            onclick="stopScanner()"
+            style="display: none"
+          >
+            <i class="fas fa-stop"></i> Stop Scanner
+          </button>
+          <button class="control-btn btn-switch" onclick="switchCamera()">
+            <i class="fas fa-sync-alt"></i> Switch Camera
+          </button>
+        </div>
+      </div>
+
+      <!-- Manual Entry -->
+      <div class="manual-entry reveal">
+        <h3>Or Enter Book ID Manually</h3>
+        <div class="manual-input-group">
+          <input
+            type="text"
+            id="manualInput"
+            placeholder="Enter Book ID (e.g., CSE001)"
+          />
+          <button onclick="searchBookManually()">
+            <i class="fas fa-search"></i> Search
+          </button>
+        </div>
+      </div>
+
+      <!-- Book Details Section (Hidden Initially) -->
+      <div class="book-details-section" id="bookDetails">
+        <div class="book-result">
+          <div class="book-cover-large" id="bookCover">
+            <i class="fas fa-book"></i>
+          </div>
+          <div class="book-info-detailed">
+            <h2 id="bookTitle">Data Structures and Algorithms</h2>
+            <p class="book-author-large" id="bookAuthor">by Thomas H. Cormen</p>
+
+            <span
+              class="availability-badge badge-available"
+              id="availabilityBadge"
+            >
+              <i class="fas fa-check-circle"></i> Available
+            </span>
+
+            <div class="book-meta-grid">
+              <div class="meta-item">
+                <div class="meta-label">Book ID</div>
+                <div class="meta-value" id="bookId">CSE001</div>
+              </div>
+              <div class="meta-item">
+                <div class="meta-label">Category</div>
+                <div class="meta-value" id="bookCategory">Textbook</div>
+              </div>
+              <div class="meta-item">
+                <div class="meta-label">Shelf Location</div>
+                <div class="meta-value" id="bookShelf">A-42</div>
+              </div>
+              <div class="meta-item">
+                <div class="meta-label">ISBN</div>
+                <div class="meta-value" id="bookIsbn">978-0262033848</div>
+              </div>
+            </div>
+
+            <div class="book-actions-large">
+              <button
+                class="btn-action-large btn-request-large"
+                id="requestBtn"
+              >
+                <i class="fas fa-hand-paper"></i> Request Issue
+              </button>
+              <button
+                class="btn-action-large btn-scan-another"
+                onclick="scanAnother()"
+              >
+                <i class="fas fa-qrcode"></i> Scan Another
+              </button>
+              <button
+                class="btn-action-large"
+                style="background: var(--taupe-brown)"
+                onclick="backToLibrary()"
+              >
+                <i class="fas fa-arrow-left"></i> Back to Library
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div>
+        <h4>AISAT CSE</h4>
+        <p style="font-size: 0.9rem; color: var(--neutral-gray)">
+          Albertian Institute of Science and Technology,<br />
+          Kalamassery, Kochi.<br />
+          Kerala, India.
+        </p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="library.html">Back to Library</a></li>
+          <li><a href="#">Library Rules</a></li>
+          <li><a href="#">Contact Librarian</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Twitter</a></li>
+        </ul>
+      </div>
+    </footer>
+
+    <!-- Floating Chatbot -->
+    <div class="chatbot-float" onclick="window.location.href = 'chatbot.html'">
+      💬
+    </div>
+
+    <script>
+      // Mock book database
+      const bookDatabase = {
+        CSE001: {
+          title: "Data Structures and Algorithms",
+          author: "Thomas H. Cormen",
+          category: "Textbook",
+          shelf: "A-42",
+          isbn: "978-0262033848",
+          available: true,
+          icon: "fa-book-open",
+          gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+        },
+        CSE002: {
+          title: "Operating System Concepts",
+          author: "Abraham Silberschatz",
+          category: "Textbook",
+          shelf: "A-38",
+          isbn: "978-1118063330",
+          available: false,
+          icon: "fa-laptop",
+          gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+        },
+        CSE003: {
+          title: "Machine Learning",
+          author: "Tom M. Mitchell",
+          category: "Reference",
+          shelf: "B-15",
+          isbn: "978-0070428072",
+          available: true,
+          icon: "fa-brain",
+          gradient: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+        },
+        CSE004: {
+          title: "Computer Networks",
+          author: "Andrew S. Tanenbaum",
+          category: "Textbook",
+          shelf: "A-29",
+          isbn: "978-0132126953",
+          available: true,
+          icon: "fa-network-wired",
+          gradient: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+        },
+      };
+
+      let html5QrCode;
+      let currentCamera = 0;
+      let cameras = [];
+
+      // Scroll reveal
+      window.addEventListener("scroll", reveal);
+      function reveal() {
+        var reveals = document.querySelectorAll(".reveal");
+        for (var i = 0; i < reveals.length; i++) {
+          var windowheight = window.innerHeight;
+          var revealtop = reveals[i].getBoundingClientRect().top;
+          var revealpoint = 150;
+          if (revealtop < windowheight - revealpoint) {
+            reveals[i].classList.add("active");
+          }
+        }
+      }
+      reveal();
+
+      // Start Scanner
+      async function startScanner() {
+        try {
+          // Get available cameras
+          cameras = await Html5Qrcode.getCameras();
+
+          if (cameras && cameras.length > 0) {
+            html5QrCode = new Html5Qrcode("qr-reader");
+
+            const config = {
+              fps: 10,
+              qrbox: { width: 250, height: 250 },
+            };
+
+            await html5QrCode.start(
+              cameras[currentCamera].id,
+              config,
+              onScanSuccess,
+              onScanFailure,
+            );
+
+            document.getElementById("startBtn").style.display = "none";
+            document.getElementById("stopBtn").style.display = "flex";
+            hideError();
+          } else {
+            showError("No cameras found. Please check camera permissions.");
+          }
+        } catch (err) {
+          showError(
+            "Unable to access camera. Please allow camera permissions.",
+          );
+          console.error(err);
+        }
+      }
+
+      // Stop Scanner
+      async function stopScanner() {
+        if (html5QrCode) {
+          try {
+            await html5QrCode.stop();
+            document.getElementById("startBtn").style.display = "flex";
+            document.getElementById("stopBtn").style.display = "none";
+          } catch (err) {
+            console.error(err);
+          }
+        }
+      }
+
+      // Switch Camera
+      async function switchCamera() {
+        if (cameras.length > 1) {
+          await stopScanner();
+          currentCamera = (currentCamera + 1) % cameras.length;
+          await startScanner();
+        } else {
+          showError("Only one camera available");
+        }
+      }
+
+      // On Scan Success
+      function onScanSuccess(decodedText, decodedResult) {
+        console.log(`QR Code detected: ${decodedText}`);
+        stopScanner();
+        showBookDetails(decodedText);
+      }
+
+      // On Scan Failure
+      function onScanFailure(error) {
+        // Silent - scanning continuously
+      }
+
+      // Show Book Details
+      function showBookDetails(bookId) {
+        const book = bookDatabase[bookId];
+
+        if (book) {
+          // Update UI with book details
+          document.getElementById("bookTitle").textContent = book.title;
+          document.getElementById("bookAuthor").textContent =
+            `by ${book.author}`;
+          document.getElementById("bookId").textContent = bookId;
+          document.getElementById("bookCategory").textContent = book.category;
+          document.getElementById("bookShelf").textContent = book.shelf;
+          document.getElementById("bookIsbn").textContent = book.isbn;
+
+          // Update cover
+          const cover = document.getElementById("bookCover");
+          cover.style.background = book.gradient;
+          cover.innerHTML = `<i class="fas ${book.icon}"></i>`;
+
+          // Update availability
+          const badge = document.getElementById("availabilityBadge");
+          const requestBtn = document.getElementById("requestBtn");
+
+          if (book.available) {
+            badge.className = "availability-badge badge-available";
+            badge.innerHTML = '<i class="fas fa-check-circle"></i> Available';
+            requestBtn.disabled = false;
+            requestBtn.innerHTML =
+              '<i class="fas fa-hand-paper"></i> Request Issue';
+          } else {
+            badge.className = "availability-badge badge-issued";
+            badge.innerHTML =
+              '<i class="fas fa-times-circle"></i> Currently Issued';
+            requestBtn.disabled = true;
+            requestBtn.innerHTML = '<i class="fas fa-ban"></i> Not Available';
+          }
+
+          // Show book details section
+          document.getElementById("bookDetails").classList.add("active");
+
+          // Show success message
+          showSuccess();
+
+          // Scroll to details
+          document
+            .getElementById("bookDetails")
+            .scrollIntoView({ behavior: "smooth", block: "center" });
+        } else {
+          showError("Book not found in database. Please contact librarian.");
+        }
+      }
+
+      // Manual Search
+      function searchBookManually() {
+        const bookId = document
+          .getElementById("manualInput")
+          .value.trim()
+          .toUpperCase();
+
+        if (bookId) {
+          showBookDetails(bookId);
+        } else {
+          showError("Please enter a valid Book ID");
+        }
+      }
+
+      // Scan Another
+      function scanAnother() {
+        document.getElementById("bookDetails").classList.remove("active");
+        document.getElementById("manualInput").value = "";
+        hideError();
+        hideSuccess();
+
+        // Optionally restart scanner automatically
+        startScanner();
+      }
+
+      // ✅ ADD NEW FUNCTION: Go back to library catalog
+      function backToLibrary() {
+        window.location.href = "library.html";
+      }
+
+      // Show Error
+      function showError(message) {
+        const errorDiv = document.getElementById("errorMessage");
+        document.getElementById("errorText").textContent = message;
+        errorDiv.classList.add("active");
+
+        setTimeout(() => {
+          hideError();
+        }, 5000);
+      }
+
+      // Hide Error
+      function hideError() {
+        document.getElementById("errorMessage").classList.remove("active");
+      }
+
+      // Show Success
+      function showSuccess() {
+        const successDiv = document.getElementById("successMessage");
+        successDiv.classList.add("active");
+
+        setTimeout(() => {
+          hideSuccess();
+        }, 3000);
+      }
+
+      // Hide Success
+      function hideSuccess() {
+        document.getElementById("successMessage").classList.remove("active");
+      }
+
+      // Request Issue Button
+      document
+        .getElementById("requestBtn")
+        .addEventListener("click", function () {
+          if (!this.disabled) {
+            alert(
+              "Issue request submitted! The librarian will approve your request shortly.",
+            );
+            // In production, this would send a request to the backend
+          }
+        });
+
+      // Enter key for manual search
+      document
+        .getElementById("manualInput")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            searchBookManually();
+          }
+        });
+    </script>
+    <!-- ========================================
+     FLOATING CHATBOT WIDGET
+     Add this before </body> on every page
+========================================= -->
+
+    <style>
+      /* --- FLOATING CHATBOT BUTTON --- */
+      .chatbot-float {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background: var(--primary-red, #a41f13);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        box-shadow: 0 10px 25px rgba(164, 31, 19, 0.4);
+        cursor: pointer;
+        z-index: 9998;
+        transition: all 0.3s ease;
+        animation: float-bounce 3s ease-in-out infinite;
+      }
+
+      @keyframes float-bounce {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .chatbot-float:hover {
+        transform: scale(1.1) translateY(-5px);
+        box-shadow: 0 15px 35px rgba(164, 31, 19, 0.6);
+      }
+
+      .chatbot-float.chat-open {
+        background: var(--dark-charcoal, #292f36);
+      }
+
+      /* Notification Badge */
+      .chat-notification {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        width: 20px;
+        height: 20px;
+        background: #ff4444;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: bold;
+        animation: pulse-badge 2s infinite;
+      }
+
+      @keyframes pulse-badge {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+      }
+
+      /* --- FLOATING CHAT WINDOW --- */
+      .floating-chat-window {
+        position: fixed;
+        bottom: 110px;
+        right: 30px;
+        width: 400px;
+        height: 600px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+        display: none;
+        flex-direction: column;
+        overflow: hidden;
+        z-index: 9999;
+        animation: slideInUp 0.3s ease;
+      }
+
+      @keyframes slideInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .floating-chat-window.active {
+        display: flex;
+      }
+
+      /* Chat Window Header */
+      .floating-chat-header {
+        background: linear-gradient(
+          135deg,
+          var(--primary-red, #a41f13),
+          #c92a1e
+        );
+        color: white;
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 3px solid var(--dark-charcoal, #292f36);
+      }
+
+      .floating-chat-header-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .floating-bot-avatar {
+        width: 45px;
+        height: 45px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+      }
+
+      .floating-header-text h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.2rem;
+      }
+
+      .floating-header-text p {
+        font-size: 0.8rem;
+        opacity: 0.9;
+      }
+
+      .floating-chat-controls {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .floating-control-btn {
+        width: 30px;
+        height: 30px;
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 50%;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+      }
+
+      .floating-control-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.1);
+      }
+
+      /* Chat Messages Area */
+      .floating-chat-messages {
+        flex: 1;
+        padding: 1.5rem;
+        overflow-y: auto;
+        background: var(--bg-off-white, #faf5f1);
+      }
+
+      .floating-chat-messages::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .floating-chat-messages::-webkit-scrollbar-track {
+        background: var(--neutral-gray, #e0dbd8);
+      }
+
+      .floating-chat-messages::-webkit-scrollbar-thumb {
+        background: var(--primary-red, #a41f13);
+        border-radius: 10px;
+      }
+
+      /* Message Styles */
+      .floating-message {
+        display: flex;
+        margin-bottom: 1rem;
+        animation: fadeInMessage 0.3s ease;
+      }
+
+      @keyframes fadeInMessage {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .floating-message.bot {
+        justify-content: flex-start;
+      }
+
+      .floating-message.user {
+        justify-content: flex-end;
+      }
+
+      .floating-message-avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        flex-shrink: 0;
+      }
+
+      .floating-message.bot .floating-message-avatar {
+        background: var(--primary-red, #a41f13);
+        color: white;
+        margin-right: 0.8rem;
+      }
+
+      .floating-message.user .floating-message-avatar {
+        background: var(--dark-charcoal, #292f36);
+        color: white;
+        margin-left: 0.8rem;
+        order: 2;
+      }
+
+      .floating-message-bubble {
+        max-width: 75%;
+        padding: 0.8rem 1.2rem;
+        border-radius: 15px;
+        line-height: 1.4;
+        font-size: 0.9rem;
+      }
+
+      .floating-message.bot .floating-message-bubble {
+        background: white;
+        color: var(--dark-charcoal, #292f36);
+        border-bottom-left-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      }
+
+      .floating-message.user .floating-message-bubble {
+        background: var(--primary-red, #a41f13);
+        color: white;
+        border-bottom-right-radius: 4px;
+        box-shadow: 0 2px 8px rgba(164, 31, 19, 0.3);
+      }
+
+      .floating-message-time {
+        font-size: 0.7rem;
+        opacity: 0.6;
+        margin-top: 0.3rem;
+      }
+
+      /* Typing Indicator */
+      .floating-typing {
+        display: none;
+        align-items: center;
+        gap: 0.8rem;
+        margin-bottom: 1rem;
+      }
+
+      .floating-typing.active {
+        display: flex;
+      }
+
+      .floating-typing-dots {
+        display: flex;
+        gap: 4px;
+        padding: 0.8rem 1.2rem;
+        background: white;
+        border-radius: 15px;
+        border-bottom-left-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      }
+
+      .floating-typing-dot {
+        width: 6px;
+        height: 6px;
+        background: var(--taupe-brown, #8f7a6e);
+        border-radius: 50%;
+        animation: typingDot 1.4s infinite;
+      }
+
+      .floating-typing-dot:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+
+      .floating-typing-dot:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+
+      @keyframes typingDot {
+        0%,
+        100% {
+          opacity: 0.4;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.2);
+        }
+      }
+
+      /* Quick Replies */
+      .floating-quick-replies {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.8rem;
+      }
+
+      .floating-quick-reply {
+        padding: 0.5rem 1rem;
+        background: white;
+        border: 2px solid var(--primary-red, #a41f13);
+        color: var(--primary-red, #a41f13);
+        border-radius: 15px;
+        cursor: pointer;
+        transition: 0.3s;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      .floating-quick-reply:hover {
+        background: var(--primary-red, #a41f13);
+        color: white;
+      }
+
+      /* Chat Input */
+      .floating-chat-input {
+        padding: 1rem;
+        background: white;
+        border-top: 2px solid var(--neutral-gray, #e0dbd8);
+      }
+
+      .floating-input-wrapper {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+
+      .floating-input-wrapper input {
+        flex: 1;
+        padding: 0.8rem 1rem;
+        border: 2px solid var(--neutral-gray, #e0dbd8);
+        border-radius: 20px;
+        font-size: 0.9rem;
+        outline: none;
+        transition: 0.3s;
+        font-family: inherit;
+      }
+
+      .floating-input-wrapper input:focus {
+        border-color: var(--primary-red, #a41f13);
+      }
+
+      .floating-send-btn {
+        width: 40px;
+        height: 40px;
+        background: var(--primary-red, #a41f13);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .floating-send-btn:hover {
+        background: var(--dark-charcoal, #292f36);
+        transform: scale(1.1);
+      }
+
+      /* Welcome Message */
+      .floating-welcome {
+        text-align: center;
+        padding: 2rem 1rem;
+      }
+
+      .floating-welcome-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .floating-welcome h4 {
+        color: var(--dark-charcoal, #292f36);
+        margin-bottom: 0.5rem;
+      }
+
+      .floating-welcome p {
+        color: var(--taupe-brown, #8f7a6e);
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+
+      .floating-welcome-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+        margin-top: 1rem;
+      }
+
+      .floating-welcome-option {
+        padding: 1rem;
+        background: white;
+        border: 2px solid var(--neutral-gray, #e0dbd8);
+        border-radius: 12px;
+        cursor: pointer;
+        transition: 0.3s;
+        text-align: center;
+      }
+
+      .floating-welcome-option:hover {
+        border-color: var(--primary-red, #a41f13);
+        transform: translateY(-3px);
+      }
+
+      .floating-welcome-option i {
+        font-size: 1.5rem;
+        color: var(--primary-red, #a41f13);
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+
+      .floating-welcome-option span {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--dark-charcoal, #292f36);
+      }
+
+      /* Mobile Responsive */
+      @media (max-width: 768px) {
+        .floating-chat-window {
+          width: calc(100vw - 20px);
+          height: calc(100vh - 120px);
+          right: 10px;
+          bottom: 80px;
+        }
+
+        .chatbot-float {
+          bottom: 20px;
+          right: 20px;
+        }
+      }
+    </style>
+
+    <!-- Floating Chatbot Button -->
+    <div class="chatbot-float" id="chatbotFloat" onclick="toggleFloatingChat()">
+      💬
+      <span
+        class="chat-notification"
+        id="chatNotification"
+        style="display: none"
+        >1</span
+      >
+    </div>
+
+    <!-- Floating Chat Window -->
+    <div class="floating-chat-window" id="floatingChatWindow">
+      <!-- Header -->
+      <div class="floating-chat-header">
+        <div class="floating-chat-header-info">
+          <div class="floating-bot-avatar">🤖</div>
+          <div class="floating-header-text">
+            <h3>CS CONNECT</h3>
+            <p>Online now</p>
+          </div>
+        </div>
+        <div class="floating-chat-controls">
+          <button
+            class="floating-control-btn"
+            onclick="clearFloatingChat()"
+            title="Clear"
+          >
+            <i class="fas fa-trash"></i>
+          </button>
+          <button
+            class="floating-control-btn"
+            onclick="openFullChatbot()"
+            title="Expand"
+          >
+            <i class="fas fa-expand"></i>
+          </button>
+          <button
+            class="floating-control-btn"
+            onclick="toggleFloatingChat()"
+            title="Close"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Messages Area -->
+      <div class="floating-chat-messages" id="floatingChatMessages">
+        <!-- Welcome Message -->
+        <div class="floating-welcome" id="floatingWelcome">
+          <div class="floating-welcome-icon">👋</div>
+          <h4>Hi! I'm your CS CONNECT Assistant</h4>
+          <p>How can I help you today?</p>
+
+          <div class="floating-welcome-options">
+            <div
+              class="floating-welcome-option"
+              onclick="sendFloatingQuick('Admissions')"
+            >
+              <i class="fas fa-graduation-cap"></i>
+              <span>Admissions</span>
+            </div>
+            <div
+              class="floating-welcome-option"
+              onclick="sendFloatingQuick('Syllabus')"
+            >
+              <i class="fas fa-book"></i>
+              <span>Syllabus</span>
+            </div>
+            <div
+              class="floating-welcome-option"
+              onclick="sendFloatingQuick('Faculty')"
+            >
+              <i class="fas fa-chalkboard-teacher"></i>
+              <span>Faculty</span>
+            </div>
+            <div
+              class="floating-welcome-option"
+              onclick="sendFloatingQuick('Library')"
+            >
+              <i class="fas fa-book-reader"></i>
+              <span>Library</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Typing Indicator -->
+        <div class="floating-typing" id="floatingTyping">
+          <div
+            class="floating-message-avatar"
+            style="background: var(--primary-red, #a41f13); color: white"
+          >
+            🤖
+          </div>
+          <div class="floating-typing-dots">
+            <div class="floating-typing-dot"></div>
+            <div class="floating-typing-dot"></div>
+            <div class="floating-typing-dot"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input Area -->
+      <div class="floating-chat-input">
+        <div class="floating-input-wrapper">
+          <input
+            type="text"
+            id="floatingInput"
+            placeholder="Type your message..."
+            onkeypress="handleFloatingEnter(event)"
+          />
+          <button class="floating-send-btn" onclick="sendFloatingMessage()">
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Floating Chat State
+      let floatingChatOpen = false;
+      let floatingMessageCount = 0;
+
+      // Knowledge Base (same as full chatbot)
+      const floatingKB = {
+        admissions: {
+          keywords: ["admission", "admissions", "join", "enroll", "apply"],
+          response:
+            "📚 Admissions are open for 2026!\n\nB.Tech: 120 seats\nM.Tech: 18 seats\n\nVisit our Admissions page for details!",
+          quickReplies: ["Eligibility", "Fee Structure", "Apply Now"],
+        },
+        syllabus: {
+          keywords: ["syllabus", "curriculum", "course", "subjects"],
+          response:
+            "📖 Our curriculum follows KTU 2019 scheme with industry-aligned courses.\n\nView semester-wise syllabus on our Academics page!",
+          quickReplies: ["View Syllabus", "Download Notes"],
+        },
+        faculty: {
+          keywords: ["faculty", "teachers", "professors", "hod"],
+          response:
+            "👨‍🏫 32+ experienced faculty members led by Dr. Jeswin Roy Decouth (HOD).\n\nVisit Faculty page to know more!",
+          quickReplies: ["View Faculty", "Contact Faculty"],
+        },
+        library: {
+          keywords: ["library", "books", "borrow", "qr"],
+          response:
+            "📚 1000+ books with QR code-based system!\n\nFeatures:\n• Online book issue\n• Digital resources\n• Study materials",
+          quickReplies: ["Browse Library", "QR Scanner"],
+        },
+        placement: {
+          keywords: ["placement", "job", "career", "package"],
+          response:
+            "💼 98% Placement Rate!\n\nHighest: ₹45 LPA\nAverage: ₹6.5 LPA\n\nTop companies: TCS, Infosys, Wipro",
+          quickReplies: ["View Companies", "Statistics"],
+        },
+        contact: {
+          keywords: ["contact", "phone", "email", "address"],
+          response:
+            "📞 Contact Us:\n\n📧 cse@aisat.ac.in\n📱 +91 98765 43210\n\n📍 Kalamassery, Kochi, Kerala",
+          quickReplies: ["Get Directions", "Email Us"],
+        },
+      };
+
+      // Toggle Chat Window
+      function toggleFloatingChat() {
+        const chatWindow = document.getElementById("floatingChatWindow");
+        const chatFloat = document.getElementById("chatbotFloat");
+
+        floatingChatOpen = !floatingChatOpen;
+
+        if (floatingChatOpen) {
+          chatWindow.classList.add("active");
+          chatFloat.classList.add("chat-open");
+          chatFloat.innerHTML = "✕";
+          hideNotification();
+          scrollFloatingToBottom();
+        } else {
+          chatWindow.classList.remove("active");
+          chatFloat.classList.remove("chat-open");
+          chatFloat.innerHTML = "💬";
+        }
+      }
+
+      // Send Message
+      function sendFloatingMessage() {
+        const input = document.getElementById("floatingInput");
+        const message = input.value.trim();
+
+        if (message) {
+          // Hide welcome
+          document.getElementById("floatingWelcome").style.display = "none";
+
+          // Add user message
+          addFloatingMessage(message, "user");
+
+          // Clear input
+          input.value = "";
+
+          // Show typing
+          showFloatingTyping();
+
+          // Get response
+          setTimeout(() => {
+            const response = getFloatingResponse(message);
+            hideFloatingTyping();
+            addFloatingMessage(response.text, "bot", response.quickReplies);
+          }, 1000);
+        }
+      }
+
+      // Add Message
+      function addFloatingMessage(text, type, quickReplies = null) {
+        const messagesDiv = document.getElementById("floatingChatMessages");
+        const messageDiv = document.createElement("div");
+        messageDiv.className = `floating-message ${type}`;
+
+        const time = new Date().toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+
+        let quickRepliesHTML = "";
+        if (quickReplies) {
+          quickRepliesHTML = `
+            <div class="floating-quick-replies">
+                ${quickReplies
+                  .map(
+                    (reply) =>
+                      `<button class="floating-quick-reply" onclick="sendFloatingQuick('${reply}')">${reply}</button>`,
+                  )
+                  .join("")}
+            </div>
+        `;
+        }
+
+        messageDiv.innerHTML = `
+        <div class="floating-message-avatar">${type === "bot" ? "🤖" : "👤"}</div>
+        <div>
+            <div class="floating-message-bubble">${text.replace(/\n/g, "<br>")}</div>
+            <div class="floating-message-time">${time}</div>
+            ${quickRepliesHTML}
+        </div>
+    `;
+
+        messagesDiv.appendChild(messageDiv);
+        scrollFloatingToBottom();
+        floatingMessageCount++;
+      }
+
+      // Get Response
+      function getFloatingResponse(message) {
+        const messageLower = message.toLowerCase();
+
+        for (const [key, data] of Object.entries(floatingKB)) {
+          if (
+            data.keywords &&
+            data.keywords.some((keyword) => messageLower.includes(keyword))
+          ) {
+            return {
+              text: data.response,
+              quickReplies: data.quickReplies,
+            };
+          }
+        }
+
+        return {
+          text: "I can help with:\n• Admissions\n• Syllabus\n• Faculty\n• Library\n• Placements\n\nWhat would you like to know?",
+          quickReplies: ["Admissions", "Faculty", "Library"],
+        };
+      }
+
+      // Send Quick Reply
+      function sendFloatingQuick(message) {
+        document.getElementById("floatingInput").value = message;
+        sendFloatingMessage();
+      }
+
+      // Show Typing
+      function showFloatingTyping() {
+        document.getElementById("floatingTyping").classList.add("active");
+        scrollFloatingToBottom();
+      }
+
+      // Hide Typing
+      function hideFloatingTyping() {
+        document.getElementById("floatingTyping").classList.remove("active");
+      }
+
+      // Scroll to Bottom
+      function scrollFloatingToBottom() {
+        const messagesDiv = document.getElementById("floatingChatMessages");
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+      }
+
+      // Handle Enter Key
+      function handleFloatingEnter(event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          sendFloatingMessage();
+        }
+      }
+
+      // Clear Chat
+      function clearFloatingChat() {
+        if (confirm("Clear chat history?")) {
+          const messagesDiv = document.getElementById("floatingChatMessages");
+          messagesDiv.innerHTML = `
+            <div class="floating-welcome" id="floatingWelcome">
+                <div class="floating-welcome-icon">👋</div>
+                <h4>Chat Cleared!</h4>
+                <p>How can I help you?</p>
+            </div>
+            <div class="floating-typing" id="floatingTyping">
+                <div class="floating-message-avatar" style="background: var(--primary-red, #a41f13); color: white;">🤖</div>
+                <div class="floating-typing-dots">
+                    <div class="floating-typing-dot"></div>
+                    <div class="floating-typing-dot"></div>
+                    <div class="floating-typing-dot"></div>
+                </div>
+            </div>
+        `;
+          floatingMessageCount = 0;
+        }
+      }
+
+      // Open Full Chatbot
+      function openFullChatbot() {
+        window.location.href = "chatbot.html";
+      }
+
+      // Show Notification
+      function showNotification() {
+        document.getElementById("chatNotification").style.display = "flex";
+      }
+
+      // Hide Notification
+      function hideNotification() {
+        document.getElementById("chatNotification").style.display = "none";
+      }
+
+      // Auto-show notification after 5 seconds (optional)
+      setTimeout(() => {
+        if (!floatingChatOpen && floatingMessageCount === 0) {
+          showNotification();
+        }
+      }, 5000);
+    </script>
+  </body>
+</html>

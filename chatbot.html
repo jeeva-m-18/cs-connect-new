@@ -1,0 +1,929 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CS CONNECT Assistant | Chatbot</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      /* --- CORE VARIABLES --- */
+      :root {
+        --primary-red: #a41f13;
+        --bg-off-white: #faf5f1;
+        --neutral-gray: #e0dbd8;
+        --dark-charcoal: #292f36;
+        --taupe-brown: #8f7a6e;
+        --glass: rgba(255, 255, 255, 0.85);
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+
+      body {
+        background-color: var(--bg-off-white);
+        color: var(--dark-charcoal);
+        overflow: hidden;
+        height: 100vh;
+      }
+
+      /* --- ANIMATIONS --- */
+      @keyframes scroll-left {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-100%);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes typing {
+        0%,
+        100% {
+          opacity: 0.4;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideUp {
+        from {
+          transform: translateY(20px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      /* --- NEWS TICKER --- */
+      .news-ticker {
+        background: var(--dark-charcoal);
+        color: #fff;
+        padding: 8px 0;
+        font-size: 0.9rem;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      .ticker-content {
+        display: inline-block;
+        animation: scroll-left 20s linear infinite;
+        padding-left: 100%;
+      }
+
+      /* --- NAVIGATION --- */
+      nav {
+        background: var(--glass);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 5%;
+      }
+
+      .logo {
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: var(--primary-red);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--dark-charcoal);
+        font-weight: 600;
+        transition: 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: var(--primary-red);
+      }
+
+      /* --- CHAT CONTAINER --- */
+      .chat-container {
+        display: flex;
+        flex-direction: column;
+        height: calc(100vh - 120px);
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        box-shadow: var(--shadow);
+      }
+
+      /* --- CHAT HEADER --- */
+      .chat-header {
+        background: linear-gradient(135deg, var(--primary-red), #c92a1e);
+        color: white;
+        padding: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        border-bottom: 3px solid var(--dark-charcoal);
+      }
+
+      .bot-avatar {
+        width: 70px;
+        height: 70px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .header-info h1 {
+        font-size: 2rem;
+        margin-bottom: 0.3rem;
+      }
+
+      .header-info p {
+        opacity: 0.9;
+        font-size: 1rem;
+      }
+
+      .header-actions {
+        margin-left: auto;
+        display: flex;
+        gap: 1rem;
+      }
+
+      .header-btn {
+        width: 45px;
+        height: 45px;
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 50%;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .header-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.1);
+      }
+
+      /* --- CHAT MESSAGES AREA --- */
+      .chat-messages {
+        flex: 1;
+        padding: 2rem;
+        overflow-y: auto;
+        background: var(--bg-off-white);
+        scroll-behavior: smooth;
+      }
+
+      .chat-messages::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      .chat-messages::-webkit-scrollbar-track {
+        background: var(--neutral-gray);
+      }
+
+      .chat-messages::-webkit-scrollbar-thumb {
+        background: var(--primary-red);
+        border-radius: 10px;
+      }
+
+      /* --- MESSAGE BUBBLES --- */
+      .message {
+        display: flex;
+        margin-bottom: 1.5rem;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .message.bot {
+        justify-content: flex-start;
+      }
+
+      .message.user {
+        justify-content: flex-end;
+      }
+
+      .message-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+      }
+
+      .message.bot .message-avatar {
+        background: var(--primary-red);
+        color: white;
+        margin-right: 1rem;
+      }
+
+      .message.user .message-avatar {
+        background: var(--dark-charcoal);
+        color: white;
+        margin-left: 1rem;
+        order: 2;
+      }
+
+      .message-content {
+        max-width: 60%;
+        position: relative;
+      }
+
+      .message-bubble {
+        padding: 1rem 1.5rem;
+        border-radius: 18px;
+        line-height: 1.5;
+        position: relative;
+      }
+
+      .message.bot .message-bubble {
+        background: white;
+        color: var(--dark-charcoal);
+        border-bottom-left-radius: 4px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      }
+
+      .message.user .message-bubble {
+        background: var(--primary-red);
+        color: white;
+        border-bottom-right-radius: 4px;
+        box-shadow: 0 2px 10px rgba(164, 31, 19, 0.3);
+      }
+
+      .message-time {
+        font-size: 0.75rem;
+        opacity: 0.6;
+        margin-top: 0.3rem;
+        padding: 0 0.5rem;
+      }
+
+      .message.bot .message-time {
+        text-align: left;
+      }
+
+      .message.user .message-time {
+        text-align: right;
+      }
+
+      /* --- TYPING INDICATOR --- */
+      .typing-indicator {
+        display: none;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .typing-indicator.active {
+        display: flex;
+      }
+
+      .typing-dots {
+        display: flex;
+        gap: 5px;
+        padding: 1rem 1.5rem;
+        background: white;
+        border-radius: 18px;
+        border-bottom-left-radius: 4px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      }
+
+      .typing-dot {
+        width: 8px;
+        height: 8px;
+        background: var(--taupe-brown);
+        border-radius: 50%;
+        animation: typing 1.4s infinite;
+      }
+
+      .typing-dot:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+
+      .typing-dot:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+
+      /* --- QUICK REPLIES --- */
+      .quick-replies {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        margin-top: 1rem;
+        animation: slideUp 0.4s ease;
+      }
+
+      .quick-reply-btn {
+        padding: 0.6rem 1.2rem;
+        background: white;
+        border: 2px solid var(--primary-red);
+        color: var(--primary-red);
+        border-radius: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      .quick-reply-btn:hover {
+        background: var(--primary-red);
+        color: white;
+        transform: translateY(-2px);
+      }
+
+      /* --- CHAT INPUT --- */
+      .chat-input-container {
+        padding: 1.5rem 2rem;
+        background: white;
+        border-top: 2px solid var(--neutral-gray);
+      }
+
+      .chat-input-wrapper {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        max-width: 100%;
+      }
+
+      .chat-input {
+        flex: 1;
+        padding: 1rem 1.5rem;
+        border: 2px solid var(--neutral-gray);
+        border-radius: 25px;
+        font-size: 1rem;
+        outline: none;
+        transition: 0.3s;
+        resize: none;
+        font-family: inherit;
+        max-height: 120px;
+      }
+
+      .chat-input:focus {
+        border-color: var(--primary-red);
+        box-shadow: 0 0 0 3px rgba(164, 31, 19, 0.1);
+      }
+
+      .input-actions {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .input-btn {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+      }
+
+      .send-btn {
+        background: var(--primary-red);
+        color: white;
+      }
+
+      .send-btn:hover {
+        background: var(--dark-charcoal);
+        transform: scale(1.1);
+      }
+
+      .send-btn:disabled {
+        background: var(--neutral-gray);
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      /* --- WELCOME SCREEN --- */
+      .welcome-screen {
+        text-align: center;
+        padding: 3rem 2rem;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .welcome-icon {
+        font-size: 5rem;
+        margin-bottom: 1.5rem;
+        color: var(--primary-red);
+      }
+
+      .welcome-screen h2 {
+        font-size: 2rem;
+        color: var(--dark-charcoal);
+        margin-bottom: 1rem;
+      }
+
+      .welcome-screen p {
+        color: var(--taupe-brown);
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+      }
+
+      .welcome-options {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+
+      .welcome-option {
+        padding: 1.5rem;
+        background: white;
+        border: 2px solid var(--neutral-gray);
+        border-radius: 15px;
+        cursor: pointer;
+        transition: 0.3s;
+        text-align: center;
+      }
+
+      .welcome-option:hover {
+        border-color: var(--primary-red);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(164, 31, 19, 0.1);
+      }
+
+      .welcome-option i {
+        font-size: 2rem;
+        color: var(--primary-red);
+        margin-bottom: 0.5rem;
+      }
+
+      .welcome-option span {
+        display: block;
+        font-weight: 600;
+        color: var(--dark-charcoal);
+      }
+
+      /* --- RESPONSIVE --- */
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+        }
+
+        .chat-header {
+          padding: 1.5rem;
+        }
+
+        .bot-avatar {
+          width: 50px;
+          height: 50px;
+          font-size: 1.8rem;
+        }
+
+        .header-info h1 {
+          font-size: 1.5rem;
+        }
+
+        .message-content {
+          max-width: 80%;
+        }
+
+        .chat-messages {
+          padding: 1rem;
+        }
+
+        .welcome-options {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- News Ticker -->
+    <div class="news-ticker">
+      <div class="ticker-content">
+        📢 Admissions Open for 2026 Batch | 🎉 CSE Student Wins National
+        Hackathon | 📅 Next Workshop: AI in Healthcare - Feb 20th | 🏆 AISAT
+        Ranked Top 10 in Innovation
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+      <div class="logo">
+        <div
+          style="
+            width: 40px;
+            height: 40px;
+            background: var(--primary-red);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            font-size: 10px;
+          "
+        >
+          AISAT
+        </div>
+        AISAT CSE
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="academics.html">Academics</a></li>
+        <li><a href="faculty.html">Faculty</a></li>
+        <li><a href="placements.html">Placements</a></li>
+        <li><a href="library.html">Library</a></li>
+      </ul>
+    </nav>
+
+    <!-- Chat Container -->
+    <div class="chat-container">
+      <!-- Chat Header -->
+      <div class="chat-header">
+        <div class="bot-avatar">🤖</div>
+        <div class="header-info">
+          <h1>CS CONNECT Assistant</h1>
+          <p>Your AI-powered guide to AISAT CSE Department</p>
+        </div>
+        <div class="header-actions">
+          <button class="header-btn" onclick="clearChat()" title="Clear Chat">
+            <i class="fas fa-trash"></i>
+          </button>
+          <button
+            class="header-btn"
+            onclick="window.location.href = 'index.html'"
+            title="Close"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Chat Messages -->
+      <div class="chat-messages" id="chatMessages">
+        <!-- Welcome Screen -->
+        <div class="welcome-screen" id="welcomeScreen">
+          <div class="welcome-icon">💬</div>
+          <h2>Hello! Welcome to CS CONNECT</h2>
+          <p>
+            I'm your virtual assistant. I can help you with admissions, courses,
+            faculty information, library services, and much more!
+          </p>
+
+          <div class="welcome-options">
+            <div
+              class="welcome-option"
+              onclick="sendQuickMessage('Tell me about admissions')"
+            >
+              <i class="fas fa-graduation-cap"></i>
+              <span>Admissions</span>
+            </div>
+            <div
+              class="welcome-option"
+              onclick="sendQuickMessage('Show me the syllabus')"
+            >
+              <i class="fas fa-book"></i>
+              <span>Syllabus</span>
+            </div>
+            <div
+              class="welcome-option"
+              onclick="sendQuickMessage('Faculty information')"
+            >
+              <i class="fas fa-chalkboard-teacher"></i>
+              <span>Faculty</span>
+            </div>
+            <div
+              class="welcome-option"
+              onclick="sendQuickMessage('Library services')"
+            >
+              <i class="fas fa-book-reader"></i>
+              <span>Library</span>
+            </div>
+            <div
+              class="welcome-option"
+              onclick="sendQuickMessage('Placement statistics')"
+            >
+              <i class="fas fa-briefcase"></i>
+              <span>Placements</span>
+            </div>
+            <div
+              class="welcome-option"
+              onclick="sendQuickMessage('Contact information')"
+            >
+              <i class="fas fa-phone"></i>
+              <span>Contact</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Typing Indicator -->
+        <div class="typing-indicator" id="typingIndicator">
+          <div
+            class="message-avatar"
+            style="background: var(--primary-red); color: white"
+          >
+            🤖
+          </div>
+          <div class="typing-dots">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat Input -->
+      <div class="chat-input-container">
+        <div class="chat-input-wrapper">
+          <textarea
+            class="chat-input"
+            id="messageInput"
+            placeholder="Type your message here..."
+            rows="1"
+            onkeypress="handleKeyPress(event)"
+          ></textarea>
+          <div class="input-actions">
+            <button
+              class="input-btn send-btn"
+              id="sendBtn"
+              onclick="sendMessage()"
+            >
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Chatbot Knowledge Base
+      const knowledgeBase = {
+        admissions: {
+          keywords: [
+            "admission",
+            "admissions",
+            "join",
+            "enroll",
+            "apply",
+            "application",
+          ],
+          response:
+            "📚 **Admissions Information:**\n\nAdmissions are currently open for the 2026 batch!\n\n**B.Tech CSE:**\n• Duration: 4 Years\n• Intake: 120 Students\n• Eligibility: 10+2 with PCM/PCS\n\n**M.Tech CSE:**\n• Duration: 2 Years\n• Intake: 18 Students\n• Eligibility: B.Tech/B.E with valid GATE score\n\nVisit our admissions page for more details!",
+          quickReplies: [
+            "Admission Process",
+            "Fee Structure",
+            "Eligibility Criteria",
+          ],
+        },
+        syllabus: {
+          keywords: [
+            "syllabus",
+            "curriculum",
+            "course",
+            "subjects",
+            "semester",
+          ],
+          response:
+            "📖 **Curriculum Information:**\n\nOur curriculum is designed according to KTU 2019 scheme.\n\n**Key Features:**\n• Industry-aligned courses\n• Hands-on labs\n• Latest technologies (AI, ML, Cloud)\n• Project-based learning\n\nYou can view semester-wise syllabus on our Academics page!",
+          quickReplies: ["View Syllabus", "Download Notes", "Question Banks"],
+        },
+        faculty: {
+          keywords: ["faculty", "teachers", "professors", "hod", "staff"],
+          response:
+            "👨‍🏫 **Faculty Information:**\n\nOur department has 32+ experienced faculty members led by **Dr. Jeswin Roy Decouth** (HOD).\n\n**Faculty Expertise:**\n• PhD holders and industry experts\n• Research in AI, ML, Cybersecurity\n• 150+ publications\n• Strong industry connections\n\nVisit the Faculty page to know more!",
+          quickReplies: ["View Faculty", "HOD Details", "Contact Faculty"],
+        },
+        library: {
+          keywords: ["library", "books", "borrow", "issue", "qr code"],
+          response:
+            "📚 **Library Services:**\n\nOur department library offers:\n• 1000+ books and journals\n• QR code-based book scanning\n• Online book issue system\n• Digital resources\n• Study materials\n\nYou can scan book QR codes to check availability!",
+          quickReplies: ["Browse Library", "QR Scanner", "Issue Book"],
+        },
+        placement: {
+          keywords: [
+            "placement",
+            "placements",
+            "job",
+            "career",
+            "companies",
+            "package",
+          ],
+          response:
+            "💼 **Placement Statistics:**\n\n**Highlights:**\n• 98% Placement Rate\n• Top Companies: TCS, Infosys, Wipro, Cognizant\n• Highest Package: ₹45 LPA\n• Average Package: ₹6.5 LPA\n\nWe have strong industry partnerships and excellent placement support!",
+          quickReplies: [
+            "View Companies",
+            "Placement Process",
+            "Alumni Success",
+          ],
+        },
+        contact: {
+          keywords: ["contact", "phone", "email", "address", "location"],
+          response:
+            "📞 **Contact Information:**\n\n**Department Office:**\n📧 cse@aisat.ac.in\n📱 +91 98765 43210\n\n**Address:**\nAlbertian Institute of Science & Technology\nKalamassery, Kochi\nKerala - 682022\n\n**Office Hours:**\nMon-Fri: 9:00 AM - 5:00 PM",
+          quickReplies: ["Get Directions", "Email Us", "Visit Website"],
+        },
+        default: {
+          response:
+            "I'm here to help! I can assist you with:\n\n• Admissions & Eligibility\n• Course Syllabus\n• Faculty Information\n• Library Services\n• Placement Statistics\n• Contact Details\n\nWhat would you like to know?",
+          quickReplies: [
+            "Admissions",
+            "Syllabus",
+            "Faculty",
+            "Library",
+            "Placements",
+          ],
+        },
+      };
+
+      // Initialize
+      let messageCount = 0;
+
+      // Send Message
+      function sendMessage() {
+        const input = document.getElementById("messageInput");
+        const message = input.value.trim();
+
+        if (message) {
+          // Hide welcome screen
+          document.getElementById("welcomeScreen").style.display = "none";
+
+          // Add user message
+          addMessage(message, "user");
+
+          // Clear input
+          input.value = "";
+
+          // Show typing indicator
+          showTyping();
+
+          // Get bot response after delay
+          setTimeout(() => {
+            const response = getBotResponse(message);
+            hideTyping();
+            addMessage(response.text, "bot", response.quickReplies);
+          }, 1500);
+        }
+      }
+
+      // Add Message
+      function addMessage(text, type, quickReplies = null) {
+        const messagesDiv = document.getElementById("chatMessages");
+        const messageDiv = document.createElement("div");
+        messageDiv.className = `message ${type}`;
+
+        const time = new Date().toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+
+        messageDiv.innerHTML = `
+                <div class="message-avatar">${type === "bot" ? "🤖" : "👤"}</div>
+                <div class="message-content">
+                    <div class="message-bubble">${formatMessage(text)}</div>
+                    <div class="message-time">${time}</div>
+                    ${quickReplies ? createQuickReplies(quickReplies) : ""}
+                </div>
+            `;
+
+        messagesDiv.appendChild(messageDiv);
+        scrollToBottom();
+        messageCount++;
+      }
+
+      // Format Message (support for line breaks and bold)
+      function formatMessage(text) {
+        return text
+          .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+          .replace(/\n/g, "<br>");
+      }
+
+      // Create Quick Replies
+      function createQuickReplies(replies) {
+        const repliesHTML = replies
+          .map(
+            (reply) =>
+              `<button class="quick-reply-btn" onclick="sendQuickMessage('${reply}')">${reply}</button>`,
+          )
+          .join("");
+
+        return `<div class="quick-replies">${repliesHTML}</div>`;
+      }
+
+      // Send Quick Message
+      function sendQuickMessage(message) {
+        document.getElementById("messageInput").value = message;
+        sendMessage();
+      }
+
+      // Get Bot Response
+      function getBotResponse(message) {
+        const messageLower = message.toLowerCase();
+
+        // Check each category
+        for (const [key, data] of Object.entries(knowledgeBase)) {
+          if (
+            key !== "default" &&
+            data.keywords.some((keyword) => messageLower.includes(keyword))
+          ) {
+            return {
+              text: data.response,
+              quickReplies: data.quickReplies,
+            };
+          }
+        }
+
+        // Default response
+        return {
+          text: knowledgeBase.default.response,
+          quickReplies: knowledgeBase.default.quickReplies,
+        };
+      }
+
+      // Show Typing Indicator
+      function showTyping() {
+        document.getElementById("typingIndicator").classList.add("active");
+        scrollToBottom();
+      }
+
+      // Hide Typing Indicator
+      function hideTyping() {
+        document.getElementById("typingIndicator").classList.remove("active");
+      }
+
+      // Scroll to Bottom
+      function scrollToBottom() {
+        const messagesDiv = document.getElementById("chatMessages");
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+      }
+
+      // Handle Enter Key
+      function handleKeyPress(event) {
+        if (event.key === "Enter" && !event.shiftKey) {
+          event.preventDefault();
+          sendMessage();
+        }
+      }
+
+      // Clear Chat
+      function clearChat() {
+        if (confirm("Are you sure you want to clear the chat history?")) {
+          const messagesDiv = document.getElementById("chatMessages");
+          messagesDiv.innerHTML = `
+                    <div class="welcome-screen" id="welcomeScreen">
+                        <div class="welcome-icon">💬</div>
+                        <h2>Chat Cleared!</h2>
+                        <p>How can I assist you today?</p>
+                    </div>
+                    <div class="typing-indicator" id="typingIndicator">
+                        <div class="message-avatar" style="background: var(--primary-red); color: white;">🤖</div>
+                        <div class="typing-dots">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                    </div>
+                `;
+          messageCount = 0;
+        }
+      }
+
+      // Auto-resize textarea
+      const textarea = document.getElementById("messageInput");
+      textarea.addEventListener("input", function () {
+        this.style.height = "auto";
+        this.style.height = this.scrollHeight + "px";
+      });
+    </script>
+  </body>
+</html>

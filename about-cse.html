@@ -1,0 +1,2140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About CSE Department | CS CONNECT</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      /* --- CORE VARIABLES --- */
+      :root {
+        --primary-red: #a41f13;
+        --bg-off-white: #faf5f1;
+        --neutral-gray: #e0dbd8;
+        --dark-charcoal: #292f36;
+        --taupe-brown: #8f7a6e;
+        --glass: rgba(255, 255, 255, 0.85);
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+
+      body {
+        background-color: var(--bg-off-white);
+        color: var(--dark-charcoal);
+        overflow-x: hidden;
+      }
+
+      /* --- ANIMATIONS --- */
+      @keyframes scroll-left {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-100%);
+        }
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+
+      .reveal {
+        opacity: 0;
+        transition: all 1s ease-out;
+        transform: translateY(30px);
+      }
+
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* --- NEWS TICKER --- */
+      .news-ticker {
+        background: var(--dark-charcoal);
+        color: #fff;
+        padding: 8px 0;
+        font-size: 0.9rem;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      .ticker-content {
+        display: inline-block;
+        animation: scroll-left 20s linear infinite;
+        padding-left: 100%;
+      }
+
+      /* --- NAVIGATION --- */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: var(--glass);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 5%;
+        transition: 0.3s;
+      }
+
+      .logo {
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: var(--primary-red);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--dark-charcoal);
+        font-weight: 600;
+        position: relative;
+        transition: 0.3s;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 0;
+        background-color: var(--primary-red);
+        transition: 0.3s;
+      }
+
+      .nav-links a:hover::after,
+      .nav-links a.active::after {
+        width: 100%;
+      }
+
+      .nav-links a.active {
+        color: var(--primary-red);
+      }
+
+      .btn-login {
+        padding: 0.5rem 1.5rem;
+        background: var(--dark-charcoal);
+        color: white;
+        border-radius: 50px;
+        text-decoration: none;
+        transition: 0.3s;
+      }
+
+      .btn-login:hover {
+        background: var(--primary-red);
+      }
+
+      /* --- DEPARTMENT BANNER --- */
+      .dept-banner {
+        height: 60vh;
+        background: linear-gradient(
+          135deg,
+          var(--primary-red) 0%,
+          var(--dark-charcoal) 100%
+        );
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .dept-banner::before {
+        content: "";
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.1) 0%,
+          transparent 70%
+        );
+        border-radius: 50%;
+        top: -200px;
+        right: -200px;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .dept-banner::after {
+        content: "";
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.1) 0%,
+          transparent 70%
+        );
+        border-radius: 50%;
+        bottom: -150px;
+        left: -150px;
+        animation: float 8s ease-in-out infinite reverse;
+      }
+
+      .banner-content {
+        z-index: 2;
+        max-width: 900px;
+        padding: 0 2rem;
+      }
+
+      .dept-icon {
+        font-size: 5rem;
+        margin-bottom: 1.5rem;
+        animation: pulse 3s ease-in-out infinite;
+      }
+
+      .banner-content h1 {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .banner-content p {
+        font-size: 1.3rem;
+        opacity: 0.95;
+        line-height: 1.6;
+      }
+
+      /* --- CONTAINER --- */
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 5rem 5%;
+      }
+
+      /* --- SECTION TITLE --- */
+      .section-title {
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+
+      .section-title h2 {
+        font-size: 2.5rem;
+        color: var(--dark-charcoal);
+        margin-bottom: 1rem;
+      }
+
+      .section-title-line {
+        width: 80px;
+        height: 4px;
+        background: var(--primary-red);
+        margin: 0 auto 1rem;
+        border-radius: 2px;
+      }
+
+      .section-title p {
+        color: var(--taupe-brown);
+        font-size: 1.1rem;
+      }
+
+      /* --- OVERVIEW SECTION --- */
+      .overview-section {
+        background: white;
+      }
+
+      .overview-content {
+        max-width: 1000px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .overview-content p {
+        font-size: 1.15rem;
+        line-height: 1.9;
+        color: var(--taupe-brown);
+        margin-bottom: 1.5rem;
+      }
+
+      .overview-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .stat-box {
+        padding: 2rem;
+        background: var(--bg-off-white);
+        border-radius: 15px;
+        border: 2px solid var(--neutral-gray);
+        transition: 0.3s;
+      }
+
+      .stat-box:hover {
+        transform: translateY(-5px);
+        border-color: var(--primary-red);
+        box-shadow: 0 10px 30px rgba(164, 31, 19, 0.15);
+      }
+
+      .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--primary-red);
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        font-size: 1.1rem;
+        color: var(--dark-charcoal);
+        font-weight: 600;
+      }
+
+      /* --- VISION & MISSION --- */
+      .vm-section {
+        background: var(--bg-off-white);
+      }
+
+      .vm-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+      }
+
+      .vm-card {
+        background: white;
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        border: 2px solid var(--neutral-gray);
+        transition: 0.4s;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .vm-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(
+          90deg,
+          var(--primary-red),
+          var(--dark-charcoal)
+        );
+      }
+
+      .vm-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 60px rgba(164, 31, 19, 0.2);
+        border-color: var(--primary-red);
+      }
+
+      .vm-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, var(--primary-red), #c92a1e);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        color: white;
+        box-shadow: 0 5px 20px rgba(164, 31, 19, 0.3);
+      }
+
+      .vm-card h3 {
+        font-size: 2rem;
+        color: var(--dark-charcoal);
+        margin-bottom: 1.5rem;
+      }
+
+      .vm-card p {
+        color: var(--taupe-brown);
+        line-height: 1.8;
+        font-size: 1.05rem;
+      }
+
+      /* --- PEOs SECTION --- */
+      .peos-section {
+        background: white;
+      }
+
+      .peos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .peo-card {
+        background: var(--bg-off-white);
+        padding: 2.5rem;
+        border-radius: 20px;
+        border: 2px solid var(--neutral-gray);
+        transition: 0.4s;
+        position: relative;
+      }
+
+      .peo-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--primary-red);
+        box-shadow: 0 15px 40px rgba(164, 31, 19, 0.15);
+      }
+
+      .peo-number {
+        position: absolute;
+        top: -20px;
+        left: 30px;
+        width: 50px;
+        height: 50px;
+        background: var(--primary-red);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-weight: 700;
+        box-shadow: 0 5px 15px rgba(164, 31, 19, 0.4);
+      }
+
+      .peo-card h4 {
+        font-size: 1.3rem;
+        color: var(--dark-charcoal);
+        margin: 1rem 0 1rem;
+      }
+
+      .peo-card p {
+        color: var(--taupe-brown);
+        line-height: 1.7;
+      }
+
+      /* --- POs SECTION --- */
+      .pos-section {
+        background: var(--bg-off-white);
+      }
+
+      .pos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .po-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        border-left: 4px solid var(--primary-red);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        transition: 0.3s;
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .po-card:hover {
+        transform: translateX(10px);
+        box-shadow: 0 10px 30px rgba(164, 31, 19, 0.15);
+      }
+
+      .po-icon {
+        width: 40px;
+        height: 40px;
+        background: var(--bg-off-white);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-red);
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      .po-card p {
+        color: var(--dark-charcoal);
+        font-weight: 500;
+        line-height: 1.6;
+      }
+
+      /* --- TIMELINE SECTION --- */
+      .timeline-section {
+        background: white;
+      }
+
+      .timeline {
+        position: relative;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem 0;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        width: 4px;
+        background: var(--primary-red);
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        margin-left: -2px;
+      }
+
+      .timeline-item {
+        position: relative;
+        margin-bottom: 3rem;
+        width: 50%;
+      }
+
+      .timeline-item.left {
+        left: 0;
+        padding-right: 3rem;
+      }
+
+      .timeline-item.right {
+        left: 50%;
+        padding-left: 3rem;
+      }
+
+      .timeline-content {
+        background: var(--bg-off-white);
+        padding: 2rem;
+        border-radius: 15px;
+        border: 2px solid var(--neutral-gray);
+        position: relative;
+        transition: 0.3s;
+      }
+
+      .timeline-content:hover {
+        border-color: var(--primary-red);
+        box-shadow: 0 10px 30px rgba(164, 31, 19, 0.15);
+        transform: scale(1.02);
+      }
+
+      .timeline-year {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--primary-red);
+        margin-bottom: 0.5rem;
+      }
+
+      .timeline-content h4 {
+        font-size: 1.3rem;
+        color: var(--dark-charcoal);
+        margin-bottom: 0.8rem;
+      }
+
+      .timeline-content p {
+        color: var(--taupe-brown);
+        line-height: 1.6;
+      }
+
+      .timeline-icon {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        background: white;
+        border: 4px solid var(--primary-red);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-red);
+        font-size: 1.3rem;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 2;
+      }
+
+      .timeline-item.left .timeline-icon {
+        right: -25px;
+      }
+
+      .timeline-item.right .timeline-icon {
+        left: -25px;
+      }
+
+      /* --- DEPARTMENT STATS --- */
+      .dept-stats-section {
+        background: linear-gradient(
+          135deg,
+          var(--primary-red),
+          var(--dark-charcoal)
+        );
+        color: white;
+        padding: 5rem 5%;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 3rem;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .stat-card {
+        text-align: center;
+        padding: 2rem;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        transition: 0.3s;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-10px);
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      .stat-card-icon {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        opacity: 0.9;
+      }
+
+      .stat-card-number {
+        font-size: 3.5rem;
+        font-weight: 700;
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-card-label {
+        font-size: 1.2rem;
+        opacity: 0.9;
+      }
+
+      /* --- FOOTER --- */
+      footer {
+        background: var(--dark-charcoal);
+        color: var(--bg-off-white);
+        padding: 4rem 10%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+      }
+
+      footer h4 {
+        color: var(--primary-red);
+        margin-bottom: 1.5rem;
+      }
+
+      footer ul {
+        list-style: none;
+      }
+
+      footer ul li {
+        margin-bottom: 0.8rem;
+      }
+
+      footer ul li a {
+        color: var(--neutral-gray);
+        text-decoration: none;
+        transition: 0.3s;
+      }
+
+      footer ul li a:hover {
+        color: white;
+      }
+
+      /* --- RESPONSIVE --- */
+      @media (max-width: 768px) {
+        .banner-content h1 {
+          font-size: 2.5rem;
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .vm-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .timeline::before {
+          left: 30px;
+        }
+
+        .timeline-item {
+          width: 100%;
+          padding-left: 70px !important;
+          padding-right: 0 !important;
+        }
+
+        .timeline-item.left,
+        .timeline-item.right {
+          left: 0;
+        }
+
+        .timeline-icon {
+          left: 5px !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- News Ticker -->
+    <div class="news-ticker">
+      <div class="ticker-content">
+        📢 Admissions Open for 2026 Batch | 🎉 CSE Student Wins National
+        Hackathon | 📅 Next Workshop: AI in Healthcare - Feb 20th | 🏆 AISAT
+        Ranked Top 10 in Innovation
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+      <div class="logo">
+        <div
+          style="
+            width: 40px;
+            height: 40px;
+            background: var(--primary-red);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            font-size: 10px;
+          "
+        >
+          AISAT
+        </div>
+        AISAT CSE
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about-cse.html" class="active">About</a></li>
+        <li><a href="academics.html">Academics</a></li>
+        <li><a href="faculty.html">Faculty</a></li>
+        <li><a href="placements.html">Placements</a></li>
+        <li><a href="library.html">Library</a></li>
+      </ul>
+      <a href="login.html" class="btn-login">Login</a>
+    </nav>
+
+    <!-- Department Banner -->
+    <section class="dept-banner">
+      <div class="banner-content">
+        <div class="dept-icon">💻</div>
+        <h1>Department of Computer Science & Engineering</h1>
+        <p>
+          Empowering innovation through cutting-edge technology and research
+          excellence. Building the next generation of software engineers and
+          tech leaders.
+        </p>
+      </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section class="overview-section">
+      <div class="container">
+        <div class="section-title reveal">
+          <h2>Department Overview</h2>
+          <div class="section-title-line"></div>
+          <p>Excellence in computing education since 2002</p>
+        </div>
+
+        <div class="overview-content reveal">
+          <p>
+            The Department of Computer Science and Engineering at AISAT is
+            dedicated to fostering excellence in computing education, research,
+            and innovation. Established in 2002, our department has consistently
+            produced skilled engineers who excel in both industry and academia.
+          </p>
+          <p>
+            With state-of-the-art laboratories, experienced faculty, and strong
+            industry collaborations, we provide a comprehensive learning
+            environment that nurtures technical expertise, problem-solving
+            skills, and ethical values. Our curriculum is designed to meet
+            global standards while addressing local industry needs.
+          </p>
+
+          <div class="overview-stats">
+            <div class="stat-box reveal">
+              <span class="stat-number">32+</span>
+              <span class="stat-label">Faculty Members</span>
+            </div>
+            <div class="stat-box reveal">
+              <span class="stat-number">450+</span>
+              <span class="stat-label">Students</span>
+            </div>
+            <div class="stat-box reveal">
+              <span class="stat-number">8</span>
+              <span class="stat-label">Advanced Labs</span>
+            </div>
+            <div class="stat-box reveal">
+              <span class="stat-number">98%</span>
+              <span class="stat-label">Placement Rate</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vision & Mission -->
+    <section class="vm-section">
+      <div class="container">
+        <div class="section-title reveal">
+          <h2>Vision & Mission</h2>
+          <div class="section-title-line"></div>
+          <p>Guiding our department towards excellence</p>
+        </div>
+
+        <div class="vm-grid">
+          <div class="vm-card reveal">
+            <div class="vm-icon">
+              <i class="fas fa-eye"></i>
+            </div>
+            <h3>Vision</h3>
+            <p>
+              To be recognized as a premier department of Computer Science and
+              Engineering, fostering innovation, research excellence, and
+              producing globally competent professionals who contribute to
+              technological advancement and societal development through ethical
+              practices.
+            </p>
+          </div>
+
+          <div class="vm-card reveal">
+            <div class="vm-icon">
+              <i class="fas fa-bullseye"></i>
+            </div>
+            <h3>Mission</h3>
+            <p>
+              To provide quality education with industry-relevant curriculum,
+              promote research and innovation, develop problem-solving and
+              leadership skills, foster ethical values and social
+              responsibility, and establish strong industry-academia
+              partnerships for holistic student development.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Program Educational Objectives (PEOs) -->
+    <section class="peos-section">
+      <div class="container">
+        <div class="section-title reveal">
+          <h2>Program Educational Objectives (PEOs)</h2>
+          <div class="section-title-line"></div>
+          <p>
+            Defining the career and professional accomplishments of our
+            graduates
+          </p>
+        </div>
+
+        <div class="peos-grid">
+          <div class="peo-card reveal">
+            <div class="peo-number">1</div>
+            <h4>Professional Excellence</h4>
+            <p>
+              Graduates will be employed in professional careers in computer
+              science and engineering or related fields, demonstrating technical
+              competence and professional growth.
+            </p>
+          </div>
+
+          <div class="peo-card reveal">
+            <div class="peo-number">2</div>
+            <h4>Problem Solving & Innovation</h4>
+            <p>
+              Graduates will analyze complex computing problems, design
+              innovative solutions, and implement them effectively using modern
+              tools and technologies.
+            </p>
+          </div>
+
+          <div class="peo-card reveal">
+            <div class="peo-number">3</div>
+            <h4>Lifelong Learning</h4>
+            <p>
+              Graduates will engage in continuous learning, adapt to emerging
+              technologies, and pursue advanced studies or professional
+              development in computing and related fields.
+            </p>
+          </div>
+
+          <div class="peo-card reveal">
+            <div class="peo-number">4</div>
+            <h4>Ethical & Social Responsibility</h4>
+            <p>
+              Graduates will demonstrate ethical behavior, social
+              responsibility, and effective communication skills in their
+              professional practice and contribute positively to society.
+            </p>
+          </div>
+
+          <div class="peo-card reveal">
+            <div class="peo-number">5</div>
+            <h4>Entrepreneurship & Leadership</h4>
+            <p>
+              Graduates will exhibit entrepreneurial mindset and leadership
+              qualities, capable of working in multidisciplinary teams and
+              managing projects effectively.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Program Outcomes (POs) -->
+    <section class="pos-section">
+      <div class="container">
+        <div class="section-title reveal">
+          <h2>Program Outcomes (POs)</h2>
+          <div class="section-title-line"></div>
+          <p>Skills and knowledge acquired by graduation</p>
+        </div>
+
+        <div class="pos-grid">
+          <div class="po-card reveal">
+            <div class="po-icon">01</div>
+            <p>
+              Apply knowledge of mathematics, science, and engineering
+              fundamentals
+            </p>
+          </div>
+
+          <div class="po-card reveal">
+            <div class="po-icon">02</div>
+            <p>Identify, formulate, and solve complex engineering problems</p>
+          </div>
+
+          <div class="po-card reveal">
+            <div class="po-icon">03</div>
+            <p>
+              Design solutions for complex problems considering public health,
+              safety, and welfare
+            </p>
+          </div>
+
+          <div class="po-card reveal">
+            <div class="po-icon">04</div>
+            <p>
+              Conduct investigations of complex problems using research-based
+              knowledge
+            </p>
+          </div>
+
+          <div class="po-card reveal">
+            <div class="po-icon">05</div>
+            <p>
+              Create, select, and apply appropriate techniques and modern
+              engineering tools
+            </p>
+          </div>
+
+          <div class="po-card reveal">
+            <div class="po-icon">06</div>
+            <p>
+              Apply reasoning to assess societal, health, safety, legal, and
+              cultural issues
+            </p>
+          </div>
+
+          <div class="po-card reveal">
+            <div class="po-icon">07</div>
+            <p>
+              Understand the impact of engineering solutions in environmental
+              contexts
+            </p>
+          </div>
+
+          <div class="po-card reveal">
+            <div class="po-icon">08</div>
+            <p>
+              Apply ethical principles and commit to professional ethics and
+              responsibilities
+            </p>
+          </div>
+
+          <div class="po-card reveal">
+            <div class="po-icon">09</div>
+            <p>
+              Function effectively as an individual and in diverse
+              multidisciplinary teams
+            </p>
+          </div>
+
+          <div class="po-card reveal">
+            <div class="po-icon">10</div>
+            <p>
+              Communicate effectively on complex engineering activities with
+              society
+            </p>
+          </div>
+
+          <div class="po-card reveal">
+            <div class="po-icon">11</div>
+            <p>
+              Demonstrate knowledge of project management and finance principles
+            </p>
+          </div>
+
+          <div class="po-card reveal">
+            <div class="po-icon">12</div>
+            <p>
+              Recognize the need for lifelong learning in technological
+              advancement
+            </p>
+          </div>
+        </div>
+
+        <div class="section-title reveal" style="margin-top: 5rem">
+          <h2>Program Specific Outcomes (PSOs)</h2>
+          <div class="section-title-line"></div>
+          <p>Specialized skills for Computer Science graduates</p>
+        </div>
+
+        <div class="pos-grid">
+          <div class="po-card reveal">
+            <div
+              class="po-icon"
+              style="
+                background: linear-gradient(
+                  135deg,
+                  var(--primary-red),
+                  #c92a1e
+                );
+                color: white;
+              "
+            >
+              PS1
+            </div>
+            <p>
+              Design, develop, test and maintain software systems using modern
+              programming languages and frameworks
+            </p>
+          </div>
+
+          <div class="po-card reveal">
+            <div
+              class="po-icon"
+              style="
+                background: linear-gradient(
+                  135deg,
+                  var(--primary-red),
+                  #c92a1e
+                );
+                color: white;
+              "
+            >
+              PS2
+            </div>
+            <p>
+              Apply computational thinking and algorithmic problem-solving to
+              real-world challenges
+            </p>
+          </div>
+
+          <div class="po-card reveal">
+            <div
+              class="po-icon"
+              style="
+                background: linear-gradient(
+                  135deg,
+                  var(--primary-red),
+                  #c92a1e
+                );
+                color: white;
+              "
+            >
+              PS3
+            </div>
+            <p>
+              Utilize emerging technologies like AI, Machine Learning, Cloud
+              Computing, and IoT in innovative solutions
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Milestones Timeline -->
+    <section class="timeline-section">
+      <div class="container">
+        <div class="section-title reveal">
+          <h2>Department Milestones</h2>
+          <div class="section-title-line"></div>
+          <p>Key achievements marking our journey of excellence</p>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item left reveal">
+            <div class="timeline-content">
+              <div class="timeline-year">2002</div>
+              <h4>Department Establishment</h4>
+              <p>
+                CSE Department established with first B.Tech batch of 60
+                students, marking the beginning of our journey in computing
+                education.
+              </p>
+            </div>
+            <div class="timeline-icon">
+              <i class="fas fa-flag"></i>
+            </div>
+          </div>
+
+          <div class="timeline-item right reveal">
+            <div class="timeline-content">
+              <div class="timeline-year">2008</div>
+              <h4>NBA Accreditation</h4>
+              <p>
+                Received NBA accreditation, validating our commitment to quality
+                education and continuous improvement in academic standards.
+              </p>
+            </div>
+            <div class="timeline-icon">
+              <i class="fas fa-award"></i>
+            </div>
+          </div>
+
+          <div class="timeline-item left reveal">
+            <div class="timeline-content">
+              <div class="timeline-year">2012</div>
+              <h4>Research Lab Setup</h4>
+              <p>
+                Established advanced research laboratories for IoT, AI, and
+                Network Security, fostering innovation and research culture.
+              </p>
+            </div>
+            <div class="timeline-icon">
+              <i class="fas fa-flask"></i>
+            </div>
+          </div>
+
+          <div class="timeline-item right reveal">
+            <div class="timeline-content">
+              <div class="timeline-year">2015</div>
+              <h4>M.Tech Program Launch</h4>
+              <p>
+                Introduced M.Tech program in Computer Science, expanding our
+                academic offerings to postgraduate research education.
+              </p>
+            </div>
+            <div class="timeline-icon">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+          </div>
+
+          <div class="timeline-item left reveal">
+            <div class="timeline-content">
+              <div class="timeline-year">2018</div>
+              <h4>100% Placement Achievement</h4>
+              <p>
+                Achieved unprecedented 100% placement record with students
+                placed in top MNCs like TCS, Infosys, and Wipro.
+              </p>
+            </div>
+            <div class="timeline-icon">
+              <i class="fas fa-briefcase"></i>
+            </div>
+          </div>
+
+          <div class="timeline-item right reveal">
+            <div class="timeline-content">
+              <div class="timeline-year">2020</div>
+              <h4>Industry Collaboration</h4>
+              <p>
+                Established MOUs with leading tech companies for internships,
+                training programs, and collaborative research projects.
+              </p>
+            </div>
+            <div class="timeline-icon">
+              <i class="fas fa-handshake"></i>
+            </div>
+          </div>
+
+          <div class="timeline-item left reveal">
+            <div class="timeline-content">
+              <div class="timeline-year">2022</div>
+              <h4>AI Lab Inauguration</h4>
+              <p>
+                Launched state-of-the-art AI and Machine Learning lab equipped
+                with high-performance computing infrastructure.
+              </p>
+            </div>
+            <div class="timeline-icon">
+              <i class="fas fa-robot"></i>
+            </div>
+          </div>
+
+          <div class="timeline-item right reveal">
+            <div class="timeline-content">
+              <div class="timeline-year">2024</div>
+              <h4>150+ Publications</h4>
+              <p>
+                Faculty and students achieved milestone of 150+ research
+                publications in reputed international journals and conferences.
+              </p>
+            </div>
+            <div class="timeline-icon">
+              <i class="fas fa-book"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Department Statistics -->
+    <section class="dept-stats-section">
+      <div class="section-title reveal">
+        <h2 style="color: white">Department at a Glance</h2>
+        <div class="section-title-line" style="background: white"></div>
+        <p style="color: rgba(255, 255, 255, 0.9)">
+          Key numbers that define our excellence
+        </p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card reveal">
+          <div class="stat-card-icon">👨‍🏫</div>
+          <span class="stat-card-number">32+</span>
+          <span class="stat-card-label">Experienced Faculty</span>
+        </div>
+
+        <div class="stat-card reveal">
+          <div class="stat-card-icon">👨‍🎓</div>
+          <span class="stat-card-number">450+</span>
+          <span class="stat-card-label">Current Students</span>
+        </div>
+
+        <div class="stat-card reveal">
+          <div class="stat-card-icon">🔬</div>
+          <span class="stat-card-number">8</span>
+          <span class="stat-card-label">Advanced Labs</span>
+        </div>
+
+        <div class="stat-card reveal">
+          <div class="stat-card-icon">📚</div>
+          <span class="stat-card-number">150+</span>
+          <span class="stat-card-label">Research Publications</span>
+        </div>
+
+        <div class="stat-card reveal">
+          <div class="stat-card-icon">🏆</div>
+          <span class="stat-card-number">25+</span>
+          <span class="stat-card-label">Awards & Recognitions</span>
+        </div>
+
+        <div class="stat-card reveal">
+          <div class="stat-card-icon">💼</div>
+          <span class="stat-card-number">98%</span>
+          <span class="stat-card-label">Placement Rate</span>
+        </div>
+
+        <div class="stat-card reveal">
+          <div class="stat-card-icon">🤝</div>
+          <span class="stat-card-number">20+</span>
+          <span class="stat-card-label">Industry Partners</span>
+        </div>
+
+        <div class="stat-card reveal">
+          <div class="stat-card-icon">🌍</div>
+          <span class="stat-card-number">1000+</span>
+          <span class="stat-card-label">Alumni Network</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div>
+        <h4>AISAT CSE</h4>
+        <p style="font-size: 0.9rem; color: var(--neutral-gray)">
+          Albertian Institute of Science and Technology,<br />
+          Kalamassery, Kochi.<br />
+          Kerala, India.
+        </p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="about-aisat.html">About AISAT</a></li>
+          <li><a href="academics.html">Academics</a></li>
+          <li><a href="faculty.html">Faculty</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Twitter</a></li>
+        </ul>
+      </div>
+    </footer>
+
+    <script>
+      // Scroll Reveal Animation
+      window.addEventListener("scroll", reveal);
+
+      function reveal() {
+        var reveals = document.querySelectorAll(".reveal");
+        for (var i = 0; i < reveals.length; i++) {
+          var windowheight = window.innerHeight;
+          var revealtop = reveals[i].getBoundingClientRect().top;
+          var revealpoint = 150;
+
+          if (revealtop < windowheight - revealpoint) {
+            reveals[i].classList.add("active");
+          }
+        }
+      }
+
+      reveal();
+    </script>
+    <!-- ========================================
+     FLOATING CHATBOT WIDGET
+     Add this before </body> on every page
+========================================= -->
+
+    <style>
+      /* --- FLOATING CHATBOT BUTTON --- */
+      .chatbot-float {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background: var(--primary-red, #a41f13);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        box-shadow: 0 10px 25px rgba(164, 31, 19, 0.4);
+        cursor: pointer;
+        z-index: 9998;
+        transition: all 0.3s ease;
+        animation: float-bounce 3s ease-in-out infinite;
+      }
+
+      @keyframes float-bounce {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .chatbot-float:hover {
+        transform: scale(1.1) translateY(-5px);
+        box-shadow: 0 15px 35px rgba(164, 31, 19, 0.6);
+      }
+
+      .chatbot-float.chat-open {
+        background: var(--dark-charcoal, #292f36);
+      }
+
+      /* Notification Badge */
+      .chat-notification {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        width: 20px;
+        height: 20px;
+        background: #ff4444;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: bold;
+        animation: pulse-badge 2s infinite;
+      }
+
+      @keyframes pulse-badge {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+      }
+
+      /* --- FLOATING CHAT WINDOW --- */
+      .floating-chat-window {
+        position: fixed;
+        bottom: 110px;
+        right: 30px;
+        width: 400px;
+        height: 600px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+        display: none;
+        flex-direction: column;
+        overflow: hidden;
+        z-index: 9999;
+        animation: slideInUp 0.3s ease;
+      }
+
+      @keyframes slideInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .floating-chat-window.active {
+        display: flex;
+      }
+
+      /* Chat Window Header */
+      .floating-chat-header {
+        background: linear-gradient(
+          135deg,
+          var(--primary-red, #a41f13),
+          #c92a1e
+        );
+        color: white;
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 3px solid var(--dark-charcoal, #292f36);
+      }
+
+      .floating-chat-header-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .floating-bot-avatar {
+        width: 45px;
+        height: 45px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+      }
+
+      .floating-header-text h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.2rem;
+      }
+
+      .floating-header-text p {
+        font-size: 0.8rem;
+        opacity: 0.9;
+      }
+
+      .floating-chat-controls {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .floating-control-btn {
+        width: 30px;
+        height: 30px;
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 50%;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+      }
+
+      .floating-control-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.1);
+      }
+
+      /* Chat Messages Area */
+      .floating-chat-messages {
+        flex: 1;
+        padding: 1.5rem;
+        overflow-y: auto;
+        background: var(--bg-off-white, #faf5f1);
+      }
+
+      .floating-chat-messages::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .floating-chat-messages::-webkit-scrollbar-track {
+        background: var(--neutral-gray, #e0dbd8);
+      }
+
+      .floating-chat-messages::-webkit-scrollbar-thumb {
+        background: var(--primary-red, #a41f13);
+        border-radius: 10px;
+      }
+
+      /* Message Styles */
+      .floating-message {
+        display: flex;
+        margin-bottom: 1rem;
+        animation: fadeInMessage 0.3s ease;
+      }
+
+      @keyframes fadeInMessage {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .floating-message.bot {
+        justify-content: flex-start;
+      }
+
+      .floating-message.user {
+        justify-content: flex-end;
+      }
+
+      .floating-message-avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        flex-shrink: 0;
+      }
+
+      .floating-message.bot .floating-message-avatar {
+        background: var(--primary-red, #a41f13);
+        color: white;
+        margin-right: 0.8rem;
+      }
+
+      .floating-message.user .floating-message-avatar {
+        background: var(--dark-charcoal, #292f36);
+        color: white;
+        margin-left: 0.8rem;
+        order: 2;
+      }
+
+      .floating-message-bubble {
+        max-width: 75%;
+        padding: 0.8rem 1.2rem;
+        border-radius: 15px;
+        line-height: 1.4;
+        font-size: 0.9rem;
+      }
+
+      .floating-message.bot .floating-message-bubble {
+        background: white;
+        color: var(--dark-charcoal, #292f36);
+        border-bottom-left-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      }
+
+      .floating-message.user .floating-message-bubble {
+        background: var(--primary-red, #a41f13);
+        color: white;
+        border-bottom-right-radius: 4px;
+        box-shadow: 0 2px 8px rgba(164, 31, 19, 0.3);
+      }
+
+      .floating-message-time {
+        font-size: 0.7rem;
+        opacity: 0.6;
+        margin-top: 0.3rem;
+      }
+
+      /* Typing Indicator */
+      .floating-typing {
+        display: none;
+        align-items: center;
+        gap: 0.8rem;
+        margin-bottom: 1rem;
+      }
+
+      .floating-typing.active {
+        display: flex;
+      }
+
+      .floating-typing-dots {
+        display: flex;
+        gap: 4px;
+        padding: 0.8rem 1.2rem;
+        background: white;
+        border-radius: 15px;
+        border-bottom-left-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      }
+
+      .floating-typing-dot {
+        width: 6px;
+        height: 6px;
+        background: var(--taupe-brown, #8f7a6e);
+        border-radius: 50%;
+        animation: typingDot 1.4s infinite;
+      }
+
+      .floating-typing-dot:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+
+      .floating-typing-dot:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+
+      @keyframes typingDot {
+        0%,
+        100% {
+          opacity: 0.4;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.2);
+        }
+      }
+
+      /* Quick Replies */
+      .floating-quick-replies {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.8rem;
+      }
+
+      .floating-quick-reply {
+        padding: 0.5rem 1rem;
+        background: white;
+        border: 2px solid var(--primary-red, #a41f13);
+        color: var(--primary-red, #a41f13);
+        border-radius: 15px;
+        cursor: pointer;
+        transition: 0.3s;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      .floating-quick-reply:hover {
+        background: var(--primary-red, #a41f13);
+        color: white;
+      }
+
+      /* Chat Input */
+      .floating-chat-input {
+        padding: 1rem;
+        background: white;
+        border-top: 2px solid var(--neutral-gray, #e0dbd8);
+      }
+
+      .floating-input-wrapper {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+
+      .floating-input-wrapper input {
+        flex: 1;
+        padding: 0.8rem 1rem;
+        border: 2px solid var(--neutral-gray, #e0dbd8);
+        border-radius: 20px;
+        font-size: 0.9rem;
+        outline: none;
+        transition: 0.3s;
+        font-family: inherit;
+      }
+
+      .floating-input-wrapper input:focus {
+        border-color: var(--primary-red, #a41f13);
+      }
+
+      .floating-send-btn {
+        width: 40px;
+        height: 40px;
+        background: var(--primary-red, #a41f13);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .floating-send-btn:hover {
+        background: var(--dark-charcoal, #292f36);
+        transform: scale(1.1);
+      }
+
+      /* Welcome Message */
+      .floating-welcome {
+        text-align: center;
+        padding: 2rem 1rem;
+      }
+
+      .floating-welcome-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .floating-welcome h4 {
+        color: var(--dark-charcoal, #292f36);
+        margin-bottom: 0.5rem;
+      }
+
+      .floating-welcome p {
+        color: var(--taupe-brown, #8f7a6e);
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+
+      .floating-welcome-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+        margin-top: 1rem;
+      }
+
+      .floating-welcome-option {
+        padding: 1rem;
+        background: white;
+        border: 2px solid var(--neutral-gray, #e0dbd8);
+        border-radius: 12px;
+        cursor: pointer;
+        transition: 0.3s;
+        text-align: center;
+      }
+
+      .floating-welcome-option:hover {
+        border-color: var(--primary-red, #a41f13);
+        transform: translateY(-3px);
+      }
+
+      .floating-welcome-option i {
+        font-size: 1.5rem;
+        color: var(--primary-red, #a41f13);
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+
+      .floating-welcome-option span {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--dark-charcoal, #292f36);
+      }
+
+      /* Mobile Responsive */
+      @media (max-width: 768px) {
+        .floating-chat-window {
+          width: calc(100vw - 20px);
+          height: calc(100vh - 120px);
+          right: 10px;
+          bottom: 80px;
+        }
+
+        .chatbot-float {
+          bottom: 20px;
+          right: 20px;
+        }
+      }
+    </style>
+
+    <!-- Floating Chatbot Button -->
+    <div class="chatbot-float" id="chatbotFloat" onclick="toggleFloatingChat()">
+      💬
+      <span
+        class="chat-notification"
+        id="chatNotification"
+        style="display: none"
+        >1</span
+      >
+    </div>
+
+    <!-- Floating Chat Window -->
+    <div class="floating-chat-window" id="floatingChatWindow">
+      <!-- Header -->
+      <div class="floating-chat-header">
+        <div class="floating-chat-header-info">
+          <div class="floating-bot-avatar">🤖</div>
+          <div class="floating-header-text">
+            <h3>CS CONNECT</h3>
+            <p>Online now</p>
+          </div>
+        </div>
+        <div class="floating-chat-controls">
+          <button
+            class="floating-control-btn"
+            onclick="clearFloatingChat()"
+            title="Clear"
+          >
+            <i class="fas fa-trash"></i>
+          </button>
+          <button
+            class="floating-control-btn"
+            onclick="openFullChatbot()"
+            title="Expand"
+          >
+            <i class="fas fa-expand"></i>
+          </button>
+          <button
+            class="floating-control-btn"
+            onclick="toggleFloatingChat()"
+            title="Close"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Messages Area -->
+      <div class="floating-chat-messages" id="floatingChatMessages">
+        <!-- Welcome Message -->
+        <div class="floating-welcome" id="floatingWelcome">
+          <div class="floating-welcome-icon">👋</div>
+          <h4>Hi! I'm your CS CONNECT Assistant</h4>
+          <p>How can I help you today?</p>
+
+          <div class="floating-welcome-options">
+            <div
+              class="floating-welcome-option"
+              onclick="sendFloatingQuick('Admissions')"
+            >
+              <i class="fas fa-graduation-cap"></i>
+              <span>Admissions</span>
+            </div>
+            <div
+              class="floating-welcome-option"
+              onclick="sendFloatingQuick('Syllabus')"
+            >
+              <i class="fas fa-book"></i>
+              <span>Syllabus</span>
+            </div>
+            <div
+              class="floating-welcome-option"
+              onclick="sendFloatingQuick('Faculty')"
+            >
+              <i class="fas fa-chalkboard-teacher"></i>
+              <span>Faculty</span>
+            </div>
+            <div
+              class="floating-welcome-option"
+              onclick="sendFloatingQuick('Library')"
+            >
+              <i class="fas fa-book-reader"></i>
+              <span>Library</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Typing Indicator -->
+        <div class="floating-typing" id="floatingTyping">
+          <div
+            class="floating-message-avatar"
+            style="background: var(--primary-red, #a41f13); color: white"
+          >
+            🤖
+          </div>
+          <div class="floating-typing-dots">
+            <div class="floating-typing-dot"></div>
+            <div class="floating-typing-dot"></div>
+            <div class="floating-typing-dot"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input Area -->
+      <div class="floating-chat-input">
+        <div class="floating-input-wrapper">
+          <input
+            type="text"
+            id="floatingInput"
+            placeholder="Type your message..."
+            onkeypress="handleFloatingEnter(event)"
+          />
+          <button class="floating-send-btn" onclick="sendFloatingMessage()">
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Floating Chat State
+      let floatingChatOpen = false;
+      let floatingMessageCount = 0;
+
+      // Knowledge Base (same as full chatbot)
+      const floatingKB = {
+        admissions: {
+          keywords: ["admission", "admissions", "join", "enroll", "apply"],
+          response:
+            "📚 Admissions are open for 2026!\n\nB.Tech: 120 seats\nM.Tech: 18 seats\n\nVisit our Admissions page for details!",
+          quickReplies: ["Eligibility", "Fee Structure", "Apply Now"],
+        },
+        syllabus: {
+          keywords: ["syllabus", "curriculum", "course", "subjects"],
+          response:
+            "📖 Our curriculum follows KTU 2019 scheme with industry-aligned courses.\n\nView semester-wise syllabus on our Academics page!",
+          quickReplies: ["View Syllabus", "Download Notes"],
+        },
+        faculty: {
+          keywords: ["faculty", "teachers", "professors", "hod"],
+          response:
+            "👨‍🏫 32+ experienced faculty members led by Dr. Jeswin Roy Decouth (HOD).\n\nVisit Faculty page to know more!",
+          quickReplies: ["View Faculty", "Contact Faculty"],
+        },
+        library: {
+          keywords: ["library", "books", "borrow", "qr"],
+          response:
+            "📚 1000+ books with QR code-based system!\n\nFeatures:\n• Online book issue\n• Digital resources\n• Study materials",
+          quickReplies: ["Browse Library", "QR Scanner"],
+        },
+        placement: {
+          keywords: ["placement", "job", "career", "package"],
+          response:
+            "💼 98% Placement Rate!\n\nHighest: ₹45 LPA\nAverage: ₹6.5 LPA\n\nTop companies: TCS, Infosys, Wipro",
+          quickReplies: ["View Companies", "Statistics"],
+        },
+        contact: {
+          keywords: ["contact", "phone", "email", "address"],
+          response:
+            "📞 Contact Us:\n\n📧 cse@aisat.ac.in\n📱 +91 98765 43210\n\n📍 Kalamassery, Kochi, Kerala",
+          quickReplies: ["Get Directions", "Email Us"],
+        },
+      };
+
+      // Toggle Chat Window
+      function toggleFloatingChat() {
+        const chatWindow = document.getElementById("floatingChatWindow");
+        const chatFloat = document.getElementById("chatbotFloat");
+
+        floatingChatOpen = !floatingChatOpen;
+
+        if (floatingChatOpen) {
+          chatWindow.classList.add("active");
+          chatFloat.classList.add("chat-open");
+          chatFloat.innerHTML = "✕";
+          hideNotification();
+          scrollFloatingToBottom();
+        } else {
+          chatWindow.classList.remove("active");
+          chatFloat.classList.remove("chat-open");
+          chatFloat.innerHTML = "💬";
+        }
+      }
+
+      // Send Message
+      function sendFloatingMessage() {
+        const input = document.getElementById("floatingInput");
+        const message = input.value.trim();
+
+        if (message) {
+          // Hide welcome
+          document.getElementById("floatingWelcome").style.display = "none";
+
+          // Add user message
+          addFloatingMessage(message, "user");
+
+          // Clear input
+          input.value = "";
+
+          // Show typing
+          showFloatingTyping();
+
+          // Get response
+          setTimeout(() => {
+            const response = getFloatingResponse(message);
+            hideFloatingTyping();
+            addFloatingMessage(response.text, "bot", response.quickReplies);
+          }, 1000);
+        }
+      }
+
+      // Add Message
+      function addFloatingMessage(text, type, quickReplies = null) {
+        const messagesDiv = document.getElementById("floatingChatMessages");
+        const messageDiv = document.createElement("div");
+        messageDiv.className = `floating-message ${type}`;
+
+        const time = new Date().toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+
+        let quickRepliesHTML = "";
+        if (quickReplies) {
+          quickRepliesHTML = `
+            <div class="floating-quick-replies">
+                ${quickReplies
+                  .map(
+                    (reply) =>
+                      `<button class="floating-quick-reply" onclick="sendFloatingQuick('${reply}')">${reply}</button>`,
+                  )
+                  .join("")}
+            </div>
+        `;
+        }
+
+        messageDiv.innerHTML = `
+        <div class="floating-message-avatar">${type === "bot" ? "🤖" : "👤"}</div>
+        <div>
+            <div class="floating-message-bubble">${text.replace(/\n/g, "<br>")}</div>
+            <div class="floating-message-time">${time}</div>
+            ${quickRepliesHTML}
+        </div>
+    `;
+
+        messagesDiv.appendChild(messageDiv);
+        scrollFloatingToBottom();
+        floatingMessageCount++;
+      }
+
+      // Get Response
+      function getFloatingResponse(message) {
+        const messageLower = message.toLowerCase();
+
+        for (const [key, data] of Object.entries(floatingKB)) {
+          if (
+            data.keywords &&
+            data.keywords.some((keyword) => messageLower.includes(keyword))
+          ) {
+            return {
+              text: data.response,
+              quickReplies: data.quickReplies,
+            };
+          }
+        }
+
+        return {
+          text: "I can help with:\n• Admissions\n• Syllabus\n• Faculty\n• Library\n• Placements\n\nWhat would you like to know?",
+          quickReplies: ["Admissions", "Faculty", "Library"],
+        };
+      }
+
+      // Send Quick Reply
+      function sendFloatingQuick(message) {
+        document.getElementById("floatingInput").value = message;
+        sendFloatingMessage();
+      }
+
+      // Show Typing
+      function showFloatingTyping() {
+        document.getElementById("floatingTyping").classList.add("active");
+        scrollFloatingToBottom();
+      }
+
+      // Hide Typing
+      function hideFloatingTyping() {
+        document.getElementById("floatingTyping").classList.remove("active");
+      }
+
+      // Scroll to Bottom
+      function scrollFloatingToBottom() {
+        const messagesDiv = document.getElementById("floatingChatMessages");
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+      }
+
+      // Handle Enter Key
+      function handleFloatingEnter(event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          sendFloatingMessage();
+        }
+      }
+
+      // Clear Chat
+      function clearFloatingChat() {
+        if (confirm("Clear chat history?")) {
+          const messagesDiv = document.getElementById("floatingChatMessages");
+          messagesDiv.innerHTML = `
+            <div class="floating-welcome" id="floatingWelcome">
+                <div class="floating-welcome-icon">👋</div>
+                <h4>Chat Cleared!</h4>
+                <p>How can I help you?</p>
+            </div>
+            <div class="floating-typing" id="floatingTyping">
+                <div class="floating-message-avatar" style="background: var(--primary-red, #a41f13); color: white;">🤖</div>
+                <div class="floating-typing-dots">
+                    <div class="floating-typing-dot"></div>
+                    <div class="floating-typing-dot"></div>
+                    <div class="floating-typing-dot"></div>
+                </div>
+            </div>
+        `;
+          floatingMessageCount = 0;
+        }
+      }
+
+      // Open Full Chatbot
+      function openFullChatbot() {
+        window.location.href = "chatbot.html";
+      }
+
+      // Show Notification
+      function showNotification() {
+        document.getElementById("chatNotification").style.display = "flex";
+      }
+
+      // Hide Notification
+      function hideNotification() {
+        document.getElementById("chatNotification").style.display = "none";
+      }
+
+      // Auto-show notification after 5 seconds (optional)
+      setTimeout(() => {
+        if (!floatingChatOpen && floatingMessageCount === 0) {
+          showNotification();
+        }
+      }, 5000);
+    </script>
+  </body>
+</html>
