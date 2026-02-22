@@ -164,30 +164,23 @@
         background: var(--primary-red);
       }
 
-      /* --- 5. CINEMATIC HERO SECTION --- */
       .hero {
-        height: 90vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        position: relative;
-        /* Gradient using palette */
-        background: linear-gradient(
-          -45deg,
-          var(--primary-red),
-          #5e110a,
-          var(--dark-charcoal),
-          #1a1e22
-        );
-        background-size: 400% 400%;
-        animation: bg-glow 15s ease infinite;
-        color: white;
-        padding: 0 20px;
-        overflow: hidden;
-      }
+    /* We jump out of 'css', then out of 'frontend' to find the root 'assets' */
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                url('../../assets/image/college.jpg');
+    
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
 
-      /* Animated Particles/Glow overlay */
       .hero::before {
         content: "";
         position: absolute;
