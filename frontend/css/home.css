@@ -1,0 +1,568 @@
+    /* --- 1. CORE VARIABLES & RESET --- */
+      :root {
+        --primary-red: #a41f13;
+        --bg-off-white: #faf5f1;
+        --neutral-gray: #e0dbd8;
+        --dark-charcoal: #292f36;
+        --taupe-brown: #8f7a6e;
+        --glass: rgba(255, 255, 255, 0.85);
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+
+      body {
+        background-color: var(--bg-off-white);
+        color: var(--dark-charcoal);
+        overflow-x: hidden;
+      }
+
+      /* --- 2. ANIMATIONS --- */
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      @keyframes bg-glow {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      @keyframes slideInUp {
+        from {
+          opacity: 0;
+          transform: translateY(50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .reveal {
+        opacity: 0;
+        transition: all 1s ease-out;
+        transform: translateY(30px);
+      }
+
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* --- 3. NEWS TICKER --- */
+      .news-ticker {
+        background: var(--dark-charcoal);
+        color: #fff;
+        padding: 8px 0;
+        font-size: 0.9rem;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      .ticker-content {
+        display: inline-block;
+        animation: scroll-left 20s linear infinite;
+        padding-left: 100%;
+      }
+
+      @keyframes scroll-left {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-100%);
+        }
+      }
+
+      /* --- 4. STICKY GLASS NAVBAR --- */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: var(--glass);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 5%;
+        transition: 0.3s;
+      }
+
+      .logo {
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: var(--primary-red);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo img {
+        height: 40px;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--dark-charcoal);
+        font-weight: 600;
+        position: relative;
+        transition: 0.3s;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 0;
+        background-color: var(--primary-red);
+        transition: 0.3s;
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      .btn-login {
+        padding: 0.5rem 1.5rem;
+        background: var(--dark-charcoal);
+        color: white;
+        border-radius: 50px;
+        text-decoration: none;
+        transition: 0.3s;
+      }
+
+      .btn-login:hover {
+        background: var(--primary-red);
+      }
+
+      /* --- 5. CINEMATIC HERO SECTION --- */
+      .hero {
+        height: 90vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        position: relative;
+        /* Gradient using palette */
+        background: linear-gradient(
+          -45deg,
+          var(--primary-red),
+          #5e110a,
+          var(--dark-charcoal),
+          #1a1e22
+        );
+        background-size: 400% 400%;
+        animation: bg-glow 15s ease infinite;
+        color: white;
+        padding: 0 20px;
+        overflow: hidden;
+      }
+
+      /* Animated Particles/Glow overlay */
+      .hero::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle at 50% 50%,
+          rgba(255, 255, 255, 0.1) 0%,
+          transparent 60%
+        );
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .hero-content {
+        z-index: 2;
+        max-width: 800px;
+      }
+
+      .hero h1 {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        letter-spacing: 2px;
+        text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .hero h2 {
+        font-size: 1.5rem;
+        font-weight: 300;
+        margin-bottom: 2rem;
+        color: var(--neutral-gray);
+      }
+
+      .hero-btns {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+      }
+
+      .btn-main {
+        padding: 1rem 2.5rem;
+        font-size: 1.1rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+        font-weight: bold;
+      }
+
+      .btn-primary {
+        background: var(--bg-off-white);
+        color: var(--primary-red);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn-outline {
+        background: transparent;
+        border: 2px solid var(--bg-off-white);
+        color: var(--bg-off-white);
+      }
+
+      .btn-outline:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      /* --- 6. LIVE STATS STRIP --- */
+      .stats-strip {
+        display: flex;
+        justify-content: space-around;
+        background: white;
+        padding: 2rem 5%;
+        margin-top: -3rem;
+        position: relative;
+        z-index: 10;
+        width: 90%;
+        margin-left: 5%;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+      }
+
+      .stat-item {
+        text-align: center;
+      }
+
+      .stat-number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: var(--primary-red);
+        display: block;
+      }
+
+      .stat-label {
+        color: var(--taupe-brown);
+        font-weight: 600;
+        letter-spacing: 1px;
+      }
+
+      /* --- 7. FEATURE CARDS --- */
+      .features {
+        padding: 5rem 10%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+      }
+
+      .card {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        border: 1px solid var(--neutral-gray);
+        transition: 0.4s;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+      }
+
+      .card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--shadow);
+        border-color: var(--primary-red);
+      }
+
+      .card h3 {
+        margin-bottom: 1rem;
+        color: var(--dark-charcoal);
+      }
+
+      .card p {
+        color: var(--taupe-brown);
+        line-height: 1.6;
+      }
+
+      .card-icon {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: var(--primary-red);
+      }
+
+      /* --- 8. EVENTS SLIDER (Horizontal) --- */
+      .events-section {
+        background: var(--neutral-gray); /* Using palette light gray */
+        padding: 5rem 5%;
+        overflow: hidden;
+      }
+
+      .section-header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .section-header h2 {
+        font-size: 2.5rem;
+        color: var(--dark-charcoal);
+      }
+
+      .event-slider {
+        display: flex;
+        gap: 2rem;
+        overflow-x: auto;
+        padding-bottom: 2rem;
+        scroll-behavior: smooth;
+      }
+
+      .event-card {
+        min-width: 300px;
+        background: var(--bg-off-white);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: 0.3s;
+      }
+
+      .event-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        filter: grayscale(20%); /* Artistic touch */
+        transition: 0.3s;
+      }
+
+      .event-card:hover img {
+        filter: grayscale(0%);
+      }
+
+      .event-info {
+        padding: 1.5rem;
+      }
+
+      .date-badge {
+        background: var(--primary-red);
+        color: white;
+        padding: 3px 10px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        margin-bottom: 10px;
+        display: inline-block;
+      }
+
+      /* --- 9. FACULTY SPOTLIGHT (Parallax) --- */
+      .faculty-parallax {
+        background-image:
+          linear-gradient(rgba(41, 47, 54, 0.9), rgba(164, 31, 19, 0.8)),
+          url("path-to-lab-image.jpg");
+        /* Fallback color if image missing */
+        background-color: var(--dark-charcoal);
+        background-attachment: fixed;
+        background-position: center;
+        background-size: cover;
+        padding: 6rem 10%;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+
+      .faculty-text {
+        flex: 1;
+        min-width: 300px;
+      }
+
+      .faculty-image-container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        min-width: 300px;
+      }
+
+      .faculty-card {
+        background: var(--bg-off-white);
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        color: var(--dark-charcoal);
+        max-width: 300px;
+        transform: rotate(3deg); /* Artistic tilt */
+      }
+
+      .faculty-card img {
+        width: 100%;
+        border-radius: 5px;
+      }
+
+      /* --- 10. LIBRARY & CHATBOT --- */
+      .library-search {
+        background: var(--bg-off-white);
+        padding: 4rem 10%;
+        text-align: center;
+      }
+
+      .search-bar {
+        margin-top: 2rem;
+        display: flex;
+        justify-content: center;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .search-bar input {
+        width: 70%;
+        padding: 1rem;
+        border: 2px solid var(--neutral-gray);
+        border-right: none;
+        border-radius: 5px 0 0 5px;
+        outline: none;
+      }
+
+      .search-bar button {
+        width: 30%;
+        background: var(--dark-charcoal);
+        color: white;
+        border: none;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+      }
+
+      /* Floating Chatbot */
+      .chatbot-float {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background: var(--primary-red);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        box-shadow: 0 10px 20px rgba(164, 31, 19, 0.4);
+        cursor: pointer;
+        z-index: 2000;
+        transition: 0.3s;
+        animation: float 3s ease-in-out infinite;
+      }
+
+      .chatbot-float:hover {
+        transform: scale(1.1);
+      }
+
+      /* Chat Window (Hidden by default) */
+      .chat-window {
+        position: fixed;
+        bottom: 100px;
+        right: 30px;
+        width: 300px;
+        height: 400px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: var(--shadow);
+        z-index: 1999;
+        display: none; /* Toggled by JS */
+        flex-direction: column;
+        overflow: hidden;
+        border: 1px solid var(--neutral-gray);
+      }
+
+      .chat-header {
+        background: var(--dark-charcoal);
+        color: white;
+        padding: 15px;
+        font-weight: bold;
+      }
+
+      .chat-body {
+        flex: 1;
+        padding: 15px;
+        background: var(--bg-off-white);
+        font-size: 0.9rem;
+        color: var(--taupe-brown);
+      }
+
+      /* --- FOOTER --- */
+      footer {
+        background: var(--dark-charcoal);
+        color: var(--bg-off-white);
+        padding: 4rem 10%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+      }
+
+      footer h4 {
+        color: var(--primary-red);
+        margin-bottom: 1.5rem;
+      }
+
+      footer ul {
+        list-style: none;
+      }
+
+      footer ul li {
+        margin-bottom: 0.8rem;
+      }
+
+      footer ul li a {
+        color: var(--neutral-gray);
+        text-decoration: none;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+        .stats-strip {
+          flex-direction: column;
+          gap: 2rem;
+        }
+        .nav-links {
+          display: none;
+        } /* Mobile menu implementation usually goes here */
+      }
