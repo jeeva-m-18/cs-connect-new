@@ -1,6 +1,3 @@
-// ===================================
-// FACULTY PAGE JAVASCRIPT
-// ===================================
 
 // Scroll Reveal Animation
 window.addEventListener("scroll", reveal);
