@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CS Connect | Page Name</title>
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/home.css">
-    <link rel="stylesheet" href="../../css/library.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/library.css') }}" />
 </head>
   <body>
     <!-- News Ticker -->
@@ -820,8 +820,8 @@
       </div>
     </div>
 
-    <script src="../../js/main.js"></script>
-    <script src="../../js/faculty.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/faculty.js') }}"></script>
     <!-- ========================================
      FLOATING CHATBOT WIDGET
      Add this before </body> on every page
