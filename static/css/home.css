@@ -167,7 +167,7 @@
       .hero {
     /* We jump out of 'css', then out of 'frontend' to find the root 'assets' */
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                url('../../assets/image/college.jpg');
+                url('../media/college.jpg');
     
     background-size: cover;
     background-position: center;
