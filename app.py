@@ -10,7 +10,7 @@ def home():
 
 @app.route('/faculty')
 def faculty():
-    return render_template('faculty.html')
+    return render_template('faculty/faculty.html')
 
 @app.route('/about-cse')
 def about_cse():
@@ -28,33 +28,6 @@ def academics():
 def library():
     return render_template('library/library.html')
 
-@app.route('/login', methods=['GET','POST'])
-def login():
-    if request.method == 'POST':
-        print("POST request received")   # ADD THIS
-        email = request.form['email']
-        password = request.form['password']
-        print(email, password)           # ADD THIS
-        conn = sqlite3.connect('users.db')
-        cursor = conn.cursor()
-
-        try:
-            cursor.execute("""
-                INSERT INTO users (name,email,password,role,user_id)
-                VALUES (?,?,?,?,?)
-            """,(name,email,password,role,user_id))
-
-            conn.commit()
-            flash("Registration successful! Please login.")
-            return redirect(url_for('login'))
-
-        except:
-            flash("Email already registered!")
-
-        finally:
-            conn.close()
-
-    return render_template('register.html')
 
 if __name__=="__main__":
     app.run(debug=True)

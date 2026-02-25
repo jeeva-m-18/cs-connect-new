@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CS Connect | Page Name</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/faculty.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/library.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/faculty.css') }}">
+  
 </head>
   <body>
     <!-- News Ticker -->
@@ -25,13 +25,13 @@
         AISAT CSE
     </div>
     <ul class="nav-links">
-        <li><a href="../indexn.html">Home</a></li>
+        <li><a href="{{ url_for('home') }}">Home</a></li>
         <a href="{{ url_for('about_aisat') }}">About AISAT</a>
-        <li><a href="../about/about-cse.html">About CSE</a></li>
+        <a href="{{ url_for('about_cse') }}">About CSE</a>
         <a href="{{ url_for('academics') }}">Academics</a>
         <li><a href="{{ url_for('faculty') }}">Faculty</a></li>
-        <li><a href="../placements.html">Placements</a></li>
-        <li><a href="../library/library.html">Library</a></li>
+        <li><a href="placements.html">Placements</a></li>
+        <li><a href="{{ url_for('library') }}">Library</a></li>
     </ul>
     <a href="#login" class="btn-login">Login</a>
 </nav>
