@@ -1,5 +1,3 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
-import sqlite3
 from flask import Flask, render_template
 
 app = Flask(__name__)
@@ -29,5 +27,13 @@ def library():
     return render_template('library/library.html')
 
 
-if __name__=="__main__":
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+@app.route('/register')
+def register():
+    return render_template('register.html')
+
+if __name__ == "__main__":
     app.run(debug=True)

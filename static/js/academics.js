@@ -16,25 +16,6 @@ function toggleAccordion(header) {
   header.classList.toggle("active");
 }
 
-// Scroll Reveal Animation (if not already in main.js)
-window.addEventListener("scroll", reveal);
-
-function reveal() {
-  var reveals = document.querySelectorAll(".reveal");
-  for (var i = 0; i < reveals.length; i++) {
-    var windowheight = window.innerHeight;
-    var revealtop = reveals[i].getBoundingClientRect().top;
-    var revealpoint = 150;
-
-    if (revealtop < windowheight - revealpoint) {
-      reveals[i].classList.add("active");
-    }
-  }
-}
-
-// Trigger on page load
-reveal();
-
 // Smooth scroll to syllabus section
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   anchor.addEventListener("click", function (e) {
