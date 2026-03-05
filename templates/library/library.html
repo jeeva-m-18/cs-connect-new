@@ -1,476 +1,124 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self' ws://127.0.0.1:5500 http://127.0.0.1:5500;">
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Library | CS CONNECT - AISAT</title>
-    
-    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/library.css') }}" />
-  </head>
-  <body>
-    <!-- News Ticker -->
-    <div class="news-ticker">
-      <div class="ticker-content">
-        📢 Admissions Open for 2026 Batch | 🎉 CSE Student Wins National
-        Hackathon | 📅 Next Workshop: AI in Healthcare - Feb 20th | 🏆 AISAT
-        Ranked Top 10 in Innovation
+{% extends "base.html" %}
+
+{% block title %}Library | CS CONNECT - AISAT{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/library.css') }}" />
+{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<section class="page-header">
+  <div class="header-overlay">
+    <div class="header-content reveal">
+      <h1>Department Library</h1>
+      <p>Your Gateway to Knowledge and Technical Resources</p>
+    </div>
+  </div>
+</section>
+
+<!-- Library Container -->
+<div class="library-container">
+
+  <!-- Search & Filter - Glassmorphic -->
+  <div class="search-filter-section reveal">
+    <div class="search-box-main">
+      <input type="text" id="searchInput" placeholder="Search by title, author, or ISBN..." />
+      <button class="search-btn" onclick="searchBooks()">
+        <i class="fas fa-search"></i> Search
+      </button>
+      <a href="#" class="btn-scan-qr">
+        <i class="fas fa-qrcode"></i> QR Scanner
+      </a>
+    </div>
+
+    <!-- Filter Section inside the glass box -->
+    <div class="filter-section">
+      <span class="filter-label">Filter by:</span>
+      <div class="filter-chip active" onclick="filterBooks('all')">All Books</div>
+      <div class="filter-chip" onclick="filterBooks('textbook')">Textbooks</div>
+      <div class="filter-chip" onclick="filterBooks('reference')">Reference</div>
+      <div class="filter-chip" onclick="filterBooks('journal')">Journals</div>
+      <div class="filter-chip" onclick="filterBooks('available')">Available</div>
+      <div class="filter-chip" onclick="filterBooks('issued')">Issued</div>
+    </div>
+  </div>
+
+  <!-- Quick Actions Bar -->
+  <div class="quick-actions-bar reveal">
+    <div class="qa-info">
+      <h3>Internal Resources</h3>
+      <p>Browse, scan, or request books instantly from the CSE library database</p>
+    </div>
+    <div class="quick-actions-btns">
+      <button onclick="flashNotice('Coming Soon: Special Request Feature')" class="action-btn">
+        <i class="fas fa-plus"></i> Request New Title
+      </button>
+      <a href="#" class="action-btn">
+        <i class="fas fa-history"></i> My Borrowing History
+      </a>
+    </div>
+  </div>
+
+  <!-- Books Grid -->
+  <div class="books-grid" id="booksGrid">
+    {% for book in books %}
+    <div class="book-card reveal" data-category="{{ book.category }}" data-status="{{ book.status }}"
+      data-title="{{ book.title }}" data-author="{{ book.author }}">
+      <div class="book-cover" style="background: {{ book.cover_gradient }}">
+        <i class="{{ book.cover_icon }}"></i>
       </div>
-    </div>
-
-    <!-- Navigation -->
-        <nav>
-    <div class="logo">
-        <div style="
-            width: 40px;
-            height: 40px;
-            background: var(--primary-red);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 5px;
-            font-size: 10px;
-        ">
-            AISAT
+      <div class="book-info">
+        <h3 class="book-title">{{ book.title }}</h3>
+        <p class="book-author">by {{ book.author }}</p>
+        <div class="book-meta">
+          <span class="book-category">{{ book.category | capitalize }}</span>
+          <span class="book-status status-{{ book.status }}">
+            {{ book.status | capitalize }}
+          </span>
         </div>
-        AISAT CSE
-    </div>
-    <ul class="nav-links">
-        <li><a href="{{ url_for('home') }}">Home</a></li>
-        <a href="{{ url_for('about_aisat') }}">About AISAT</a>
-        <a href="{{ url_for('about_cse') }}">About CSE</a>
-        <a href="{{ url_for('academics') }}">Academics</a>
-        <li><a href="{{ url_for('faculty') }}">Faculty</a></li>
-        <li><a href="placements.html">Placements</a></li>
-        <li><a href="{{ url_for('library') }}">Library</a></li>
-    </ul>
-    <a href="{{ url_for('login') }}" class="btn-login">Login</a>
-</nav>
-
-    <!-- Page Header -->
-    <section class="page-header">
-      <h1><i class="fas fa-book"></i> Department Library</h1>
-      <p>Your gateway to knowledge and resources</p>
-    </section>
-
-    <!-- Library Container -->
-    <div class="library-container">
-      <!-- Search & Filter Section -->
-      <div class="search-filter-section reveal">
-        <div class="search-box-main">
-          <input
-            type="text"
-            id="searchInput"
-            placeholder="Search by title, author, or ISBN..."
-          />
-          <button class="search-btn" onclick="searchBooks()">
-            <i class="fas fa-search"></i> Search
+        <div class="book-shelf">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>Shelf Location: {{ book.shelf }}</span>
+        </div>
+        <div class="book-actions">
+          {% if book.status == 'available' %}
+          <button class="btn-book-action btn-request" onclick="flashNotice('Request sent for {{ book.title }}')">
+            <i class="fas fa-hand-paper"></i> Request
           </button>
-          <a href="library-scanner.html" class="qr-scanner-link">
-            <i class="fas fa-qrcode"></i> QR Scanner
-          </a>
+          {% else %}
+          <button class="btn-book-action btn-request" disabled style="opacity: 0.5">
+            <i class="fas fa-ban"></i> Not Available
+          </button>
+          {% endif %}
+          <button class="btn-book-action btn-qr" onclick="flashNotice('QR Details for {{ book.title }}')">
+            <i class="fas fa-qrcode"></i>
+          </button>
         </div>
-        <!-- After search-filter-section -->
-<div class="search-filter-section reveal">
-    <!-- ... existing search box ... -->
-</div>
-
-<!-- ✅ ADD THIS QUICK ACTIONS BAR -->
-<div style="background: white; padding: 1.5rem; border-radius: 15px; margin-bottom: 2rem; box-shadow: var(--shadow);">
-    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-        <div>
-            <h3 style="color: var(--dark-charcoal); margin-bottom: 0.5rem;">Quick Actions</h3>
-            <p style="color: var(--taupe-brown); font-size: 0.9rem;">Browse, scan, or request books instantly</p>
-        </div>
-        <div style="display: flex; gap: 1rem;">
-            <a href="library-scanner.html" style="padding: 1rem 2rem; background: var(--primary-red); color: white; text-decoration: none; border-radius: 50px; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; transition: 0.3s;">
-                <i class="fas fa-qrcode"></i> Scan Book QR
-            </a>
-            <button onclick="alert('Coming Soon: Book Request Feature')" style="padding: 1rem 2rem; background: var(--dark-charcoal); color: white; border: none; border-radius: 50px; font-weight: 600; cursor: pointer; transition: 0.3s;">
-                <i class="fas fa-book"></i> Request Book
-            </button>
-        </div>
-    </div>
-</div>
-
-<!-- Books Grid -->
-<div class="books-grid" id="booksGrid">
-
-        <div class="filter-section">
-          <span class="filter-label">Filter by:</span>
-          <div class="filter-chip active" onclick="filterBooks('all')">
-            All Books
-          </div>
-          <div class="filter-chip" onclick="filterBooks('textbook')">
-            Textbooks
-          </div>
-          <div class="filter-chip" onclick="filterBooks('reference')">
-            Reference
-          </div>
-          <div class="filter-chip" onclick="filterBooks('journal')">
-            Journals
-          </div>
-          <div class="filter-chip" onclick="filterBooks('available')">
-            Available
-          </div>
-          <div class="filter-chip" onclick="filterBooks('issued')">Issued</div>
-        </div>
-      </div>
-
-        <!-- Book Card 1 -->
-        <div
-          class="book-card reveal"
-          data-category="textbook"
-          data-status="available"
-          data-title="Data Structures and Algorithms"
-          data-author="Thomas Cormen"
-        >
-          <div class="book-cover">
-            <i class="fas fa-book-open"></i>
-          </div>
-          <div class="book-info">
-            <h3 class="book-title">Data Structures and Algorithms</h3>
-            <p class="book-author">by Thomas H. Cormen</p>
-            <div class="book-meta">
-              <span class="book-category">Textbook</span>
-              <span class="book-status status-available">Available</span>
-            </div>
-            <div class="book-shelf">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>Shelf: A-42</span>
-            </div>
-            <div class="book-actions">
-              <button class="btn-book-action btn-request">
-                <i class="fas fa-hand-paper"></i> Request
-              </button>
-              <button
-                class="btn-book-action btn-qr"
-                onclick="window.location.href = 'library-scanner.html'"
-              >
-                <i class="fas fa-qrcode"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Book Card 2 -->
-        <div
-          class="book-card reveal"
-          data-category="textbook"
-          data-status="issued"
-          data-title="Operating System Concepts"
-          data-author="Abraham Silberschatz"
-        >
-          <div
-            class="book-cover"
-            style="
-              background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            "
-          >
-            <i class="fas fa-laptop"></i>
-          </div>
-          <div class="book-info">
-            <h3 class="book-title">Operating System Concepts</h3>
-            <p class="book-author">by Abraham Silberschatz</p>
-            <div class="book-meta">
-              <span class="book-category">Textbook</span>
-              <span class="book-status status-issued">Issued</span>
-            </div>
-            <div class="book-shelf">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>Shelf: A-38</span>
-            </div>
-            <div class="book-actions">
-              <button
-                class="btn-book-action btn-request"
-                disabled
-                style="opacity: 0.5"
-              >
-                <i class="fas fa-ban"></i> Not Available
-              </button>
-              <button class="btn-book-action btn-qr">
-                <i class="fas fa-qrcode"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Book Card 3 -->
-        <div
-          class="book-card reveal"
-          data-category="reference"
-          data-status="available"
-          data-title="Machine Learning"
-          data-author="Tom Mitchell"
-        >
-          <div
-            class="book-cover"
-            style="
-              background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            "
-          >
-            <i class="fas fa-brain"></i>
-          </div>
-          <div class="book-info">
-            <h3 class="book-title">Machine Learning</h3>
-            <p class="book-author">by Tom M. Mitchell</p>
-            <div class="book-meta">
-              <span class="book-category">Reference</span>
-              <span class="book-status status-available">Available</span>
-            </div>
-            <div class="book-shelf">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>Shelf: B-15</span>
-            </div>
-            <div class="book-actions">
-              <button class="btn-book-action btn-request">
-                <i class="fas fa-hand-paper"></i> Request
-              </button>
-              <button class="btn-book-action btn-qr">
-                <i class="fas fa-qrcode"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Book Card 4 -->
-        <div
-          class="book-card reveal"
-          data-category="textbook"
-          data-status="available"
-          data-title="Computer Networks"
-          data-author="Andrew Tanenbaum"
-        >
-          <div
-            class="book-cover"
-            style="
-              background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-            "
-          >
-            <i class="fas fa-network-wired"></i>
-          </div>
-          <div class="book-info">
-            <h3 class="book-title">Computer Networks</h3>
-            <p class="book-author">by Andrew S. Tanenbaum</p>
-            <div class="book-meta">
-              <span class="book-category">Textbook</span>
-              <span class="book-status status-available">Available</span>
-            </div>
-            <div class="book-shelf">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>Shelf: A-29</span>
-            </div>
-            <div class="book-actions">
-              <button class="btn-book-action btn-request">
-                <i class="fas fa-hand-paper"></i> Request
-              </button>
-              <button class="btn-book-action btn-qr">
-                <i class="fas fa-qrcode"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Book Card 5 -->
-        <div
-          class="book-card reveal"
-          data-category="journal"
-          data-status="available"
-          data-title="IEEE Transactions on AI"
-          data-author="IEEE"
-        >
-          <div
-            class="book-cover"
-            style="
-              background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-            "
-          >
-            <i class="fas fa-newspaper"></i>
-          </div>
-          <div class="book-info">
-            <h3 class="book-title">IEEE Transactions on AI</h3>
-            <p class="book-author">by IEEE</p>
-            <div class="book-meta">
-              <span class="book-category">Journal</span>
-              <span class="book-status status-available">Available</span>
-            </div>
-            <div class="book-shelf">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>Shelf: C-12</span>
-            </div>
-            <div class="book-actions">
-              <button class="btn-book-action btn-request">
-                <i class="fas fa-hand-paper"></i> Request
-              </button>
-              <button class="btn-book-action btn-qr">
-                <i class="fas fa-qrcode"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Book Card 6 -->
-        <div
-          class="book-card reveal"
-          data-category="reference"
-          data-status="available"
-          data-title="Artificial Intelligence: A Modern Approach"
-          data-author="Stuart Russell"
-        >
-          <div
-            class="book-cover"
-            style="
-              background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
-            "
-          >
-            <i class="fas fa-robot"></i>
-          </div>
-          <div class="book-info">
-            <h3 class="book-title">
-              Artificial Intelligence: A Modern Approach
-            </h3>
-            <p class="book-author">by Stuart Russell & Peter Norvig</p>
-            <div class="book-meta">
-              <span class="book-category">Reference</span>
-              <span class="book-status status-available">Available</span>
-            </div>
-            <div class="book-shelf">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>Shelf: B-08</span>
-            </div>
-            <div class="book-actions">
-              <button class="btn-book-action btn-request">
-                <i class="fas fa-hand-paper"></i> Request
-              </button>
-              <button class="btn-book-action btn-qr">
-                <i class="fas fa-qrcode"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- No Results Message -->
-      <div class="no-results" id="noResults" style="display: none">
-        <i class="fas fa-search"></i>
-        <h3>No Books Found</h3>
-        <p>Try adjusting your search or filter criteria</p>
-      </div>
-
-      <!-- Pagination -->
-      <div class="pagination">
-        <button class="page-btn active">1</button>
-        <button class="page-btn">2</button>
-        <button class="page-btn">3</button>
-        <button class="page-btn">
-          Next <i class="fas fa-chevron-right"></i>
-        </button>
       </div>
     </div>
+    {% endfor %}
+  </div>
 
-    <!-- Footer -->
-    <footer>
-      <div>
-        <h4>AISAT CSE</h4>
-        <p style="font-size: 0.9rem; color: var(--neutral-gray)">
-          Albertian Institute of Science and Technology,<br />
-          Kalamassery, Kochi.<br />
-          Kerala, India.
-        </p>
-      </div>
-      <div>
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="#">Admissions</a></li>
-          <li><a href="#">Contact Us</a></li>
-          <li><a href="#">Student Portal</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Connect</h4>
-        <ul>
-          <li><a href="#">LinkedIn</a></li>
-          <li><a href="#">Instagram</a></li>
-          <li><a href="#">Twitter</a></li>
-        </ul>
-      </div>
-    </footer>
-    <script>
-      // Scroll Reveal Animation
-      window.addEventListener("scroll", reveal);
+  <!-- No Results -->
+  <div class="no-results" id="noResults" style="display: none">
+    <i class="fas fa-search"></i>
+    <h3>No Books Found</h3>
+    <p>Try adjusting your search or filter criteria</p>
+  </div>
 
-      function reveal() {
-        var reveals = document.querySelectorAll(".reveal");
-        for (var i = 0; i < reveals.length; i++) {
-          var windowheight = window.innerHeight;
-          var revealtop = reveals[i].getBoundingClientRect().top;
-          var revealpoint = 150;
+  <!-- Pagination -->
+  <div class="pagination reveal">
+    <button class="page-btn active">1</button>
+    <button class="page-btn">2</button>
+    <button class="page-btn">3</button>
+    <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+  </div>
+</div>
 
-          if (revealtop < windowheight - revealpoint) {
-            reveals[i].classList.add("active");
-          }
-        }
-      }
+{% endblock %}
 
-      reveal();
-
-      // Search Books Function
-      function searchBooks() {
-        const searchTerm = document
-          .getElementById("searchInput")
-          .value.toLowerCase();
-        const books = document.querySelectorAll(".book-card");
-        let visibleCount = 0;
-
-        books.forEach((book) => {
-          const title = book.getAttribute("data-title").toLowerCase();
-          const author = book.getAttribute("data-author").toLowerCase();
-
-          if (title.includes(searchTerm) || author.includes(searchTerm)) {
-            book.style.display = "block";
-            visibleCount++;
-          } else {
-            book.style.display = "none";
-          }
-        });
-
-        document.getElementById("noResults").style.display =
-          visibleCount === 0 ? "block" : "none";
-      }
-
-      // Filter Books Function
-      function filterBooks(filter) {
-        const books = document.querySelectorAll(".book-card");
-        const chips = document.querySelectorAll(".filter-chip");
-        let visibleCount = 0;
-
-        // Update active chip
-        chips.forEach((chip) => chip.classList.remove("active"));
-        event.target.classList.add("active");
-
-        books.forEach((book) => {
-          const category = book.getAttribute("data-category");
-          const status = book.getAttribute("data-status");
-
-          if (filter === "all" || category === filter || status === filter) {
-            book.style.display = "block";
-            visibleCount++;
-          } else {
-            book.style.display = "none";
-          }
-        });
-
-        document.getElementById("noResults").style.display =
-          visibleCount === 0 ? "block" : "none";
-      }
-
-      // Live search on input
-      document
-        .getElementById("searchInput")
-        .addEventListener("input", searchBooks);
-    </script>
-    
-  </body>
-</html>
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/library.js') }}"></script>
+{% endblock %}

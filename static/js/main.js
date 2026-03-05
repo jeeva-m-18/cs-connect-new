@@ -1,6 +1,6 @@
 // ===================================
 // CS CONNECT - SHARED UTILITIES
-// Used on all pages
+// Used on all pages via base.html
 // ===================================
 
 // 1. SCROLL REVEAL ANIMATION
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!statsSection) return;
 
   const animateCounters = () => {
-    document.querySelectorAll(".stat-number").forEach((counter) => {
+    document.querySelectorAll(".stat-number[data-target]").forEach((counter) => {
       const updateCount = () => {
         const target = +counter.getAttribute("data-target");
         const count = +counter.innerText;
@@ -47,4 +47,25 @@ document.addEventListener("DOMContentLoaded", () => {
   }, { threshold: 0.5 });
 
   observer.observe(statsSection);
+});
+
+// 3. MOBILE HAMBURGER NAVIGATION TOGGLE
+function toggleNav() {
+  const navLinks = document.getElementById("navLinks");
+  const hamburger = document.getElementById("hamburger");
+  if (!navLinks) return;
+  navLinks.classList.toggle("nav-open");
+  hamburger && hamburger.classList.toggle("is-open");
+}
+
+// Close nav when a link is clicked on mobile
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".nav-links a").forEach(link => {
+    link.addEventListener("click", () => {
+      const navLinks = document.getElementById("navLinks");
+      const hamburger = document.getElementById("hamburger");
+      if (navLinks) navLinks.classList.remove("nav-open");
+      if (hamburger) hamburger.classList.remove("is-open");
+    });
+  });
 });

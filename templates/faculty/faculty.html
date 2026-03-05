@@ -1,473 +1,96 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Faculty | CS Connect</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/faculty.css') }}" />
-  </head>
-  <body>
-    <div class="news-ticker">
-      <div class="ticker-content">
-        📢 Admissions Open 2026 | 🎉 Faculty Achievement Award | 📅 Research Seminar Feb 25
+{% extends "base.html" %}
+
+{% block title %}Faculty | CS Connect{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/faculty.css') }}" />
+{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<section class="page-header">
+  <div class="header-overlay">
+    <h1>Faculty &amp; Staff</h1>
+    <p>Meet our distinguished team of educators and researchers</p>
+  </div>
+</section>
+
+<!-- Filter Section -->
+<section class="filter-section">
+  <div class="container">
+    <div class="filter-bar">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="Search by name..." />
+      </div>
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">All Faculty</button>
+        <button class="filter-btn" data-filter="hod">Head of Department</button>
+        <button class="filter-btn" data-filter="assistant">Assistant Professors</button>
       </div>
     </div>
+  </div>
+</section>
 
-    <nav class="navbar">
-      <div class="nav-container">
-        <div class="logo">AISAT CSE</div>
-        <ul class="nav-links">
-          <li><a href="{{ url_for('home') }}">Home</a></li>
-          <li><a href="{{ url_for('about_aisat') }}">About AISAT</a></li>
-          <li><a href="{{ url_for('about_cse') }}">About CSE</a></li>
-          <li><a href="{{ url_for('academics') }}">Academics</a></li>
-          <li><a href="{{ url_for('faculty') }}" class="active">Faculty</a></li>
-          <li><a href="#">Placements</a></li>
-          <li><a href="{{ url_for('library') }}">Library</a></li>
-        </ul>
-        <a href="{{ url_for('login') }}" class="btn-login">Login</a>
-      </div>
-    </nav>
-
-    <section class="page-header">
-      <div class="header-overlay">
-        <h1>Faculty & Staff</h1>
-        <p>Meet our distinguished team of educators and researchers</p>
-      </div>
-    </section>
-
-    <section class="filter-section">
-      <div class="container">
-        <div class="filter-bar">
-          <div class="search-box">
-            <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" placeholder="Search by name..." />
+<!-- Faculty Grid -->
+<section class="faculty-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Our Faculty</h2>
+      <div class="header-line"></div>
+    </div>
+    <div class="faculty-grid" id="facultyGrid">
+      {% for member in faculty %}
+      <div class="faculty-card reveal" data-designation="{{ member.designation_key }}">
+        <div class="faculty-photo">
+          <img src="{{ member.photo }}" alt="{{ member.name }}" />
+          <div class="photo-overlay">
+            <button class="view-profile-btn">View Profile</button>
           </div>
-          <div class="filter-buttons">
-            <button class="filter-btn active" data-filter="all">All Faculty</button>
-            <button class="filter-btn" data-filter="hod">Head of Department</button>
-            <button class="filter-btn" data-filter="assistant">Assistant Professors</button>
+        </div>
+        <div class="faculty-info">
+          <h3>{{ member.name }}</h3>
+          <span class="designation">{{ member.designation }}</span>
+          <div class="qualification">{{ member.qualification }}</div>
+          <div class="experience"><i class="fas fa-briefcase"></i> Joined: {{ member.joined }}</div>
+          <div class="research-interests"><strong>Research:</strong> {{ member.research }}</div>
+          <div class="contact-info">
+            <div class="contact-item"><i class="fas fa-envelope"></i> {{ member.email }}</div>
           </div>
         </div>
       </div>
-    </section>
+      {% endfor %}
+    </div>
+    <div class="no-results" id="noResults" style="display: none">
+      <i class="fas fa-search"></i>
+      <h3>No faculty members found</h3>
+      <p>Try adjusting your search or filter criteria</p>
+    </div>
+  </div>
+</section>
 
-    <section class="faculty-section">
-      <div class="container">
-        <div class="section-header">
-          <h2>Our Faculty</h2>
-          <div class="header-line"></div>
-        </div>
-        <div class="faculty-grid" id="facultyGrid">
-
-          <!-- HOD -->
-          <div class="faculty-card reveal" data-designation="hod">
-            <div class="faculty-photo">
-              <img src="https://aisat.ac.in/wp-content/uploads/2024/01/dr.-jeswin-300x287.jpg" alt="Dr. Jeswin Roy Dcouth" />
-              <div class="photo-overlay">
-                <button class="view-profile-btn">View Profile</button>
-              </div>
-            </div>
-            <div class="faculty-info">
-              <h3>Dr. Jeswin Roy Dcouth</h3>
-              <span class="designation">Associate Professor & Head of Department</span>
-              <div class="qualification">Ph.D Computer Science and Engineering, PGDCL</div>
-              <div class="experience"><i class="fas fa-briefcase"></i> Joined: 02.06.2014</div>
-              <div class="research-interests"><strong>Research:</strong> Cyber Security</div>
-              <div class="contact-info">
-                <div class="contact-item"><i class="fas fa-envelope"></i> jeswin@aisat.ac.in</div>
-              </div>
-              <div class="social-links">
-                <a href="#" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Ms. Divya Mohan -->
-          <div class="faculty-card reveal" data-designation="assistant">
-            <div class="faculty-photo">
-              <img src="https://aisat.ac.in/wp-content/uploads/2024/01/Ms.-Divya-Mohan-e1706040948144.jpg" alt="Ms. Divya Mohan" />
-              <div class="photo-overlay">
-                <button class="view-profile-btn">View Profile</button>
-              </div>
-            </div>
-            <div class="faculty-info">
-              <h3>Ms. Divya Mohan</h3>
-              <span class="designation">Assistant Professor</span>
-              <div class="qualification">M.Tech Software Engineering</div>
-              <div class="experience"><i class="fas fa-briefcase"></i> Joined: 10.06.2015</div>
-              <div class="research-interests"><strong>Research:</strong> Machine Learning</div>
-              <div class="contact-info">
-                <div class="contact-item"><i class="fas fa-envelope"></i> divya@aisat.ac.in</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Ms. Nisy John Panicker -->
-          <div class="faculty-card reveal" data-designation="assistant">
-            <div class="faculty-photo">
-              <img src="https://aisat.ac.in/wp-content/uploads/2024/01/nisy-e1706206510394.jpg" alt="Ms. Nisy John Panicker" />
-              <div class="photo-overlay">
-                <button class="view-profile-btn">View Profile</button>
-              </div>
-            </div>
-            <div class="faculty-info">
-              <h3>Ms. Nisy John Panicker</h3>
-              <span class="designation">Assistant Professor (Senior Scale)</span>
-              <div class="qualification">M.Tech CSE</div>
-              <div class="experience"><i class="fas fa-briefcase"></i> Joined: 29.08.2022</div>
-              <div class="research-interests"><strong>Research:</strong> Machine Learning, Data Science, AI</div>
-              <div class="contact-info">
-                <div class="contact-item"><i class="fas fa-envelope"></i> nisy@aisat.ac.in</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Ms. Lima Sebastian -->
-          <div class="faculty-card reveal" data-designation="assistant">
-            <div class="faculty-photo">
-              <img src="https://aisat.ac.in/wp-content/uploads/2024/01/lima-e1706206284280.jpg" alt="Ms. Lima Sebastian" />
-              <div class="photo-overlay">
-                <button class="view-profile-btn">View Profile</button>
-              </div>
-            </div>
-            <div class="faculty-info">
-              <h3>Ms. Lima Sebastian</h3>
-              <span class="designation">Assistant Professor</span>
-              <div class="qualification">M.Tech Computer Science and Engineering</div>
-              <div class="experience"><i class="fas fa-briefcase"></i> Joined: 28.12.2014</div>
-              <div class="research-interests"><strong>Research:</strong> Theory of Computation</div>
-              <div class="contact-info">
-                <div class="contact-item"><i class="fas fa-envelope"></i> lima@aisat.ac.in</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Ms. Teenu Jose -->
-          <div class="faculty-card reveal" data-designation="assistant">
-            <div class="faculty-photo">
-              <img src="https://aisat.ac.in/wp-content/uploads/2024/01/teenu1-242x300-1-e1706205964261.png" alt="Ms. Teenu Jose" />
-              <div class="photo-overlay">
-                <button class="view-profile-btn">View Profile</button>
-              </div>
-            </div>
-            <div class="faculty-info">
-              <h3>Ms. Teenu Jose</h3>
-              <span class="designation">Assistant Professor</span>
-              <div class="qualification">M.Tech Computer Science & Engineering</div>
-              <div class="experience"><i class="fas fa-briefcase"></i> Joined: 06.01.2020</div>
-              <div class="research-interests"><strong>Research:</strong> Machine Learning</div>
-              <div class="contact-info">
-                <div class="contact-item"><i class="fas fa-envelope"></i> teenu@aisat.ac.in</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Ms. Sini P Joy -->
-          <div class="faculty-card reveal" data-designation="assistant">
-            <div class="faculty-photo">
-              <img src="https://aisat.ac.in/wp-content/uploads/2024/01/sini-e1706206307301.jpg" alt="Ms. Sini P Joy" />
-              <div class="photo-overlay">
-                <button class="view-profile-btn">View Profile</button>
-              </div>
-            </div>
-            <div class="faculty-info">
-              <h3>Ms. Sini P Joy</h3>
-              <span class="designation">Assistant Professor</span>
-              <div class="qualification">M.E Computer Science and Engineering</div>
-              <div class="experience"><i class="fas fa-briefcase"></i> Joined: 02.06.2014</div>
-              <div class="research-interests"><strong>Research:</strong> Cyber Physical Systems, Intrusion Detection</div>
-              <div class="contact-info">
-                <div class="contact-item"><i class="fas fa-envelope"></i> sini@aisat.ac.in</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Mr. Anson Antony Fertal -->
-          <div class="faculty-card reveal" data-designation="assistant">
-            <div class="faculty-photo">
-              <img src="https://aisat.ac.in/wp-content/uploads/2024/01/Anson-Antony-Fertal-e1706206225672.jpeg" alt="Mr. Anson Antony Fertal" />
-              <div class="photo-overlay">
-                <button class="view-profile-btn">View Profile</button>
-              </div>
-            </div>
-            <div class="faculty-info">
-              <h3>Mr. Anson Antony Fertal</h3>
-              <span class="designation">Assistant Professor</span>
-              <div class="qualification">M.Tech CSE</div>
-              <div class="experience"><i class="fas fa-briefcase"></i> Joined: 25.08.2023</div>
-              <div class="research-interests"><strong>Research:</strong> Cloud Computing</div>
-              <div class="contact-info">
-                <div class="contact-item"><i class="fas fa-envelope"></i> anson@aisat.ac.in</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Ms. Sharija PM -->
-          <div class="faculty-card reveal" data-designation="assistant">
-            <div class="faculty-photo">
-              <img src="https://via.placeholder.com/300x300/8F7A6E/FFFFFF?text=Ms.+Sharija" alt="Ms. Sharija PM" />
-              <div class="photo-overlay">
-                <button class="view-profile-btn">View Profile</button>
-              </div>
-            </div>
-            <div class="faculty-info">
-              <h3>Ms. Sharija PM</h3>
-              <span class="designation">Assistant Professor</span>
-              <div class="qualification">M.Tech Computer Science & Engineering</div>
-              <div class="experience"><i class="fas fa-briefcase"></i> Joined: 15.01.2024</div>
-              <div class="research-interests"><strong>Research:</strong> Cyber Security</div>
-              <div class="contact-info">
-                <div class="contact-item"><i class="fas fa-envelope"></i> sharija@aisat.ac.in</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Ms. Ashwathy Anda Chacko -->
-          <div class="faculty-card reveal" data-designation="assistant">
-            <div class="faculty-photo">
-              <img src="https://via.placeholder.com/300x300/8F7A6E/FFFFFF?text=Ms.+Ashwathy" alt="Ms. Ashwathy Anda Chacko" />
-              <div class="photo-overlay">
-                <button class="view-profile-btn">View Profile</button>
-              </div>
-            </div>
-            <div class="faculty-info">
-              <h3>Ms. Ashwathy Anda Chacko</h3>
-              <span class="designation">Assistant Professor</span>
-              <div class="qualification">M.Tech Computer Science and Engineering</div>
-              <div class="experience"><i class="fas fa-briefcase"></i> Joined: 07.07.2024</div>
-              <div class="research-interests"><strong>Research:</strong> Cloud Computing, Networking</div>
-              <div class="contact-info">
-                <div class="contact-item"><i class="fas fa-envelope"></i> ashwathy@aisat.ac.in</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Ms. A Thilakavathy -->
-          <div class="faculty-card reveal" data-designation="assistant">
-            <div class="faculty-photo">
-              <img src="https://via.placeholder.com/300x300/8F7A6E/FFFFFF?text=Ms.+Thilakavathy" alt="Ms. A Thilakavathy" />
-              <div class="photo-overlay">
-                <button class="view-profile-btn">View Profile</button>
-              </div>
-            </div>
-            <div class="faculty-info">
-              <h3>Ms. A Thilakavathy</h3>
-              <span class="designation">Assistant Professor</span>
-              <div class="qualification">M.Tech CSE</div>
-              <div class="experience"><i class="fas fa-briefcase"></i> Joined: 07.02.2024</div>
-              <div class="research-interests"><strong>Research:</strong> Network Security, Machine Learning</div>
-              <div class="contact-info">
-                <div class="contact-item"><i class="fas fa-envelope"></i> thilakavathy@aisat.ac.in</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Ms. Krishna C J -->
-          <div class="faculty-card reveal" data-designation="assistant">
-            <div class="faculty-photo">
-              <img src="https://via.placeholder.com/300x300/8F7A6E/FFFFFF?text=Ms.+Krishna" alt="Ms. Krishna C J" />
-              <div class="photo-overlay">
-                <button class="view-profile-btn">View Profile</button>
-              </div>
-            </div>
-            <div class="faculty-info">
-              <h3>Ms. Krishna C J</h3>
-              <span class="designation">Assistant Professor</span>
-              <div class="qualification">M.Tech CSE</div>
-              <div class="experience"><i class="fas fa-briefcase"></i> Joined: 25.08.2023</div>
-              <div class="research-interests"><strong>Research:</strong> IOT, Cloud Computing</div>
-              <div class="contact-info">
-                <div class="contact-item"><i class="fas fa-envelope"></i> krishna@aisat.ac.in</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Ms. Sweety Joy C -->
-          <div class="faculty-card reveal" data-designation="assistant">
-            <div class="faculty-photo">
-              <img src="https://via.placeholder.com/300x300/8F7A6E/FFFFFF?text=Ms.+Sweety" alt="Ms. Sweety Joy C" />
-              <div class="photo-overlay">
-                <button class="view-profile-btn">View Profile</button>
-              </div>
-            </div>
-            <div class="faculty-info">
-              <h3>Ms. Sweety Joy C</h3>
-              <span class="designation">Assistant Professor</span>
-              <div class="qualification">M.Tech Computer Science & Engineering</div>
-              <div class="experience"><i class="fas fa-briefcase"></i> Joined: 01.02.2024</div>
-              <div class="research-interests"><strong>Research:</strong> Fuzzy Logic, Cyber Security</div>
-              <div class="contact-info">
-                <div class="contact-item"><i class="fas fa-envelope"></i> sweety@aisat.ac.in</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Ms. Thara Raveendran -->
-          <div class="faculty-card reveal" data-designation="assistant">
-            <div class="faculty-photo">
-              <img src="https://via.placeholder.com/300x300/8F7A6E/FFFFFF?text=Ms.+Thara" alt="Ms. Thara Raveendran" />
-              <div class="photo-overlay">
-                <button class="view-profile-btn">View Profile</button>
-              </div>
-            </div>
-            <div class="faculty-info">
-              <h3>Ms. Thara Raveendran</h3>
-              <span class="designation">Assistant Professor</span>
-              <div class="qualification">M.Tech CSE</div>
-              <div class="experience"><i class="fas fa-briefcase"></i> Joined: 01.07.2024</div>
-              <div class="research-interests"><strong>Research:</strong> Data Analytics</div>
-              <div class="contact-info">
-                <div class="contact-item"><i class="fas fa-envelope"></i> thara@aisat.ac.in</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Ms. Anna Isabel John -->
-          <div class="faculty-card reveal" data-designation="assistant">
-            <div class="faculty-photo">
-              <img src="https://via.placeholder.com/300x300/8F7A6E/FFFFFF?text=Ms.+Anna" alt="Ms. Anna Isabel John" />
-              <div class="photo-overlay">
-                <button class="view-profile-btn">View Profile</button>
-              </div>
-            </div>
-            <div class="faculty-info">
-              <h3>Ms. Anna Isabel John</h3>
-              <span class="designation">Assistant Professor</span>
-              <div class="qualification">M.Tech Computer Science and Systems Engineering</div>
-              <div class="experience"><i class="fas fa-briefcase"></i> Joined: 01.08.2024</div>
-              <div class="research-interests"><strong>Research:</strong> Data Analytics</div>
-              <div class="contact-info">
-                <div class="contact-item"><i class="fas fa-envelope"></i> anna@aisat.ac.in</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Ms. Shruthi Chandran -->
-          <div class="faculty-card reveal" data-designation="assistant">
-            <div class="faculty-photo">
-              <img src="https://via.placeholder.com/300x300/8F7A6E/FFFFFF?text=Ms.+Shruthi" alt="Ms. Shruthi Chandran" />
-              <div class="photo-overlay">
-                <button class="view-profile-btn">View Profile</button>
-              </div>
-            </div>
-            <div class="faculty-info">
-              <h3>Ms. Shruthi Chandran</h3>
-              <span class="designation">Assistant Professor</span>
-              <div class="qualification">M.Tech Computer Science and Engineering</div>
-              <div class="experience"><i class="fas fa-briefcase"></i> Joined: 01.06.2025</div>
-              <div class="research-interests"><strong>Research:</strong> Data Mining</div>
-              <div class="contact-info">
-                <div class="contact-item"><i class="fas fa-envelope"></i> shruthi@aisat.ac.in</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Ms. Angel Mathai -->
-          <div class="faculty-card reveal" data-designation="assistant">
-            <div class="faculty-photo">
-              <img src="https://via.placeholder.com/300x300/8F7A6E/FFFFFF?text=Ms.+Angel" alt="Ms. Angel Mathai" />
-              <div class="photo-overlay">
-                <button class="view-profile-btn">View Profile</button>
-              </div>
-            </div>
-            <div class="faculty-info">
-              <h3>Ms. Angel Mathai</h3>
-              <span class="designation">Assistant Professor</span>
-              <div class="qualification">M.Tech Computer Engineering</div>
-              <div class="experience"><i class="fas fa-briefcase"></i> Joined: 01.06.2024</div>
-              <div class="research-interests"><strong>Research:</strong> Computer Security</div>
-              <div class="contact-info">
-                <div class="contact-item"><i class="fas fa-envelope"></i> angel@aisat.ac.in</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Ms. Kalyani S -->
-          <div class="faculty-card reveal" data-designation="assistant">
-            <div class="faculty-photo">
-              <img src="https://via.placeholder.com/300x300/8F7A6E/FFFFFF?text=Ms.+Kalyani" alt="Ms. Kalyani S" />
-              <div class="photo-overlay">
-                <button class="view-profile-btn">View Profile</button>
-              </div>
-            </div>
-            <div class="faculty-info">
-              <h3>Ms. Kalyani S</h3>
-              <span class="designation">Assistant Professor</span>
-              <div class="qualification">M.Tech Computer Vision and Image Processing</div>
-              <div class="experience"><i class="fas fa-briefcase"></i> Joined: 15.02.2025</div>
-              <div class="research-interests"><strong>Research:</strong> Computer Vision, Image Processing</div>
-              <div class="contact-info">
-                <div class="contact-item"><i class="fas fa-envelope"></i> kalyani@aisat.ac.in</div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <div class="no-results" id="noResults" style="display: none">
-          <i class="fas fa-search"></i>
-          <h3>No faculty members found</h3>
-          <p>Try adjusting your search or filter criteria</p>
-        </div>
+<!-- Instructors / Staff -->
+<section class="staff-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Instructors</h2>
+      <div class="header-line"></div>
+    </div>
+    <div class="staff-grid">
+      {% for staff in staff_members %}
+      <div class="staff-card reveal">
+        <div class="staff-icon"><i class="{{ staff.icon }}"></i></div>
+        <h3>{{ staff.name }}</h3>
+        <span class="role">{{ staff.role }}</span>
       </div>
-    </section>
+      {% endfor %}
+    </div>
+  </div>
+</section>
 
-    <!-- Instructors -->
-    <section class="staff-section">
-      <div class="container">
-        <div class="section-header">
-          <h2>Instructors</h2>
-          <div class="header-line"></div>
-        </div>
-        <div class="staff-grid">
-          <div class="staff-card reveal">
-            <div class="staff-icon"><i class="fas fa-flask"></i></div>
-            <h3>Mr. Denny Peter</h3>
-            <span class="role">Lab Instructor</span>
-          </div>
-          <div class="staff-card reveal">
-            <div class="staff-icon"><i class="fas fa-desktop"></i></div>
-            <h3>Ms. Ashmy Antony</h3>
-            <span class="role">Lab Instructor</span>
-          </div>
-          <div class="staff-card reveal">
-            <div class="staff-icon"><i class="fas fa-desktop"></i></div>
-            <h3>Ms. Saranya P K</h3>
-            <span class="role">Lab Instructor</span>
-          </div>
-          <div class="staff-card reveal">
-            <div class="staff-icon"><i class="fas fa-desktop"></i></div>
-            <h3>Ms. Aleena P</h3>
-            <span class="role">Lab Instructor</span>
-          </div>
-        </div>
-      </div>
-    </section>
+{% endblock %}
 
-    <footer>
-      <div>
-        <h4>AISAT CSE</h4>
-        <p>Albertian Institute of Science and Technology, Kalamassery, Kochi, Kerala.</p>
-      </div>
-      <div>
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="#">Admissions</a></li>
-          <li><a href="#">Contact</a></li>
-          <li><a href="#">Portal</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Connect</h4>
-        <ul>
-          <li><a href="#">LinkedIn</a></li>
-          <li><a href="#">Instagram</a></li>
-          <li><a href="#">Twitter</a></li>
-        </ul>
-      </div>
-    </footer>
-
-    <script src="{{ url_for('static', filename='js/faculty.js') }}"></script>
-  </body>
-</html>
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/faculty.js') }}"></script>
+{% endblock %}

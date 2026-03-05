@@ -1,501 +1,170 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self' ws://127.0.0.1:5500 http://127.0.0.1:5500;">
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About CSE Department | CS CONNECT</title>
-    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/aboutcse.css') }}" />
+{% extends "base.html" %}
 
-  </head>
-  <body>
-    <!-- News Ticker -->
-    <div class="news-ticker">
-      <div class="ticker-content">
-        📢 Admissions Open for 2026 Batch | 🎉 CSE Student Wins National
-        Hackathon | 📅 Next Workshop: AI in Healthcare - Feb 20th | 🏆 AISAT
-        Ranked Top 10 in Innovation
+{% block title %}About CSE Department | CS CONNECT{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/aboutcse.css') }}" />
+{% endblock %}
+
+{% block content %}
+
+<!-- Department Banner -->
+<section class="dept-banner">
+  <div class="banner-content">
+    <div class="dept-icon">💻</div>
+    <h1>Department of Computer Science &amp; Engineering</h1>
+    <p>
+      Empowering innovation through cutting-edge technology and research
+      excellence. Building the next generation of software engineers and
+      tech leaders.
+    </p>
+  </div>
+</section>
+
+<!-- Overview Section -->
+<section class="overview-section">
+  <div class="container">
+    <div class="section-title reveal">
+      <h2>Department Overview</h2>
+      <div class="section-title-line"></div>
+      <p>Excellence in computing education since 2002</p>
+    </div>
+    <div class="overview-content reveal">
+      <p>
+        The Department of Computer Science and Engineering at AISAT is
+        dedicated to fostering excellence in computing education, research,
+        and innovation. Established in 2002, our department has consistently
+        produced skilled engineers who excel in both industry and academia.
+      </p>
+      <p>
+        With state-of-the-art laboratories, experienced faculty, and strong
+        industry collaborations, we provide a comprehensive learning
+        environment that nurtures technical expertise, problem-solving
+        skills, and ethical values. Our curriculum is designed to meet
+        global standards while addressing local industry needs.
+      </p>
+      <div class="overview-stats">
+        {% for stat in dept_stats %}
+        <div class="stat-box reveal">
+          <span class="stat-number">{{ stat.value }}</span>
+          <span class="stat-label">{{ stat.label }}</span>
+        </div>
+        {% endfor %}
       </div>
     </div>
+  </div>
+</section>
 
-    <!-- Navigation -->
-         <nav>
-    <div class="logo">
-        <div style="
-            width: 40px;
-            height: 40px;
-            background: var(--primary-red);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 5px;
-            font-size: 10px;
-        ">
-            AISAT
-        </div>
-        AISAT CSE
+<!-- Vision & Mission -->
+<section class="vm-section">
+  <div class="container">
+    <div class="section-title reveal">
+      <h2>Vision &amp; Mission</h2>
+      <div class="section-title-line"></div>
+      <p>Guiding our department towards excellence</p>
     </div>
-    <ul class="nav-links">
-        <li><a href="{{ url_for('home') }}">Home</a></li>
-        <a href="{{ url_for('about_aisat') }}">About AISAT</a>
-        <a href="{{ url_for('about_cse') }}">About CSE</a>
-        <a href="{{ url_for('academics') }}">Academics</a>
-        <li><a href="{{ url_for('faculty') }}">Faculty</a></li>
-        <li><a href="placements.html">Placements</a></li>
-        <li><a href="{{ url_for('library') }}">Library</a></li>
-    </ul>
-    <a href="{{ url_for('login') }}" class="btn-login">Login</a>
-</nav>
-
-    <!-- Department Banner -->
-    <section class="dept-banner">
-      <div class="banner-content">
-        <div class="dept-icon">💻</div>
-        <h1>Department of Computer Science & Engineering</h1>
-        <p>
-          Empowering innovation through cutting-edge technology and research
-          excellence. Building the next generation of software engineers and
-          tech leaders.
-        </p>
+    <div class="vm-grid">
+      <div class="vm-card reveal">
+        <div class="vm-icon"><i class="fas fa-eye"></i></div>
+        <h3>Vision</h3>
+        <p>To develop a leading centre for creating highly competent computer science and engineering professionals who
+          are technically sound, employable and socially committed towards sustainable development and growth.</p>
       </div>
-    </section>
-
-    <!-- Overview Section -->
-    <section class="overview-section">
-      <div class="container">
-        <div class="section-title reveal">
-          <h2>Department Overview</h2>
-          <div class="section-title-line"></div>
-          <p>Excellence in computing education since 2002</p>
-        </div>
-
-        <div class="overview-content reveal">
-          <p>
-            The Department of Computer Science and Engineering at AISAT is
-            dedicated to fostering excellence in computing education, research,
-            and innovation. Established in 2002, our department has consistently
-            produced skilled engineers who excel in both industry and academia.
-          </p>
-          <p>
-            With state-of-the-art laboratories, experienced faculty, and strong
-            industry collaborations, we provide a comprehensive learning
-            environment that nurtures technical expertise, problem-solving
-            skills, and ethical values. Our curriculum is designed to meet
-            global standards while addressing local industry needs.
-          </p>
-
-          <div class="overview-stats">
-            <div class="stat-box reveal">
-              <span class="stat-number">32+</span>
-              <span class="stat-label">Faculty Members</span>
-            </div>
-            <div class="stat-box reveal">
-              <span class="stat-number">450+</span>
-              <span class="stat-label">Students</span>
-            </div>
-            <div class="stat-box reveal">
-              <span class="stat-number">4</span>
-              <span class="stat-label">Advanced Labs</span>
-            </div>
-            <div class="stat-box reveal">
-              <span class="stat-number">98%</span>
-              <span class="stat-label">Placement Rate</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Vision & Mission -->
-    <section class="vm-section">
-      <div class="container">
-        <div class="section-title reveal">
-          <h2>Vision & Mission</h2>
-          <div class="section-title-line"></div>
-          <p>Guiding our department towards excellence</p>
-        </div>
-
-        <div class="vm-grid">
-          <div class="vm-card reveal">
-            <div class="vm-icon">
-              <i class="fas fa-eye"></i>
-            </div>
-            <h3>Vision</h3>
-            <p>
-              To develop a leading centre for creating highly competent computer science and engineering professionals who are technically sound, employable and socially committed towards sustainable development and growth.
-            </p>
-          </div>
-
-          <div class="vm-card reveal">
-            <div class="vm-icon">
-              <i class="fas fa-bullseye"></i>
-            </div>
-            <h3>Mission</h3>
-            <p>
-              <li>
-    Groom competent computer science engineers by providing high-quality 
-    professional training and a research-oriented ambience in alignment 
-    with sustainable development initiatives.
-  </li>
-
-  <li>
-    Enhance innovation, leadership qualities, team spirit, and ethical 
-    value-based living through multidisciplinary collaboration for 
-    sustainable societal progress.
-  </li>
-
-  <li>
-    Promote IT industry interaction and encourage entrepreneurship 
-    skills among students.
-  </li>
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Program Educational Objectives (PEOs) -->
-    <section class="peos-section">
-      <div class="container">
-        <div class="section-title reveal">
-          <h2>Program Educational Objectives (PEOs)</h2>
-          <div class="section-title-line"></div>
-          <p>
-            Graduates of Computer Science and Engineering shall
-          </p>
-        </div>
-
-        <div class="peos-grid">
-          <div class="peo-card reveal">
-            <div class="peo-number">1</div>
-            <h4>Evolve</h4>
-            <p>
-             Evolve as globally competent IT professionals, researchers and entrepreneurs in the field of Computer Science.
-            </p>
-          </div>
-
-          <div class="peo-card reveal">
-            <div class="peo-number">2</div>
-            <h4>Develop</h4>
-            <p>
-              Develop innovative computing solutions for real world problems.
-            </p>
-          </div>
-
-          <div class="peo-card reveal">
-            <div class="peo-number">3</div>
-            <h4>Demonstrate</h4>
-            <p>
-              Demonstrate communication skills, leadership skills, ethical values and team work in IT professions.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-        
-    
-      <!-- Program Specific Outcomes (PSOs) -->
-        <div class="section-title reveal" style="margin-top: 5rem">
-          <h2>Program Specific Outcomes (PSOs)</h2>
-          <div class="section-title-line"></div>
-          <p>Graduates of Computer Science and Engincering will be able to</p>
-        </div>
-
-        <div class="pos-grid">
-          <div class="po-card reveal">
-            <div
-              class="po-icon"
-              style="
-                background: linear-gradient(
-                  135deg,
-                  var(--primary-red),
-                  #c92a1e
-                );
-                color: white;
-              "
-            >
-              PS1
-            </div>
-            <p>
-              Design and develop computer programs and computer based systems of moderate complexity in the areas relevant to the current computational demands of the global society.
-            </p>
-          </div>
-
-          <div class="po-card reveal">
-            <div
-              class="po-icon"
-              style="
-                background: linear-gradient(
-                  135deg,
-                  var(--primary-red),
-                  #c92a1e
-                );
-                color: white;
-              "
-            >
-              PS2
-            </div>
-            <p>
-              Gather knowledge in the various domains of computer science and identify a suitable career path to succeed in life.
-            </p>
-          </div>
-
-          <div class="po-card reveal">
-            <div
-              class="po-icon"
-              style="
-                background: linear-gradient(
-                  135deg,
-                  var(--primary-red),
-                  #c92a1e
-                );
-                color: white;
-              "
-            >
-              PS3
-            </div>
-            <p>
-              Apply the fundamentals of computer science in order to evaluate potential risks and provide creative solutions to meet the needs of society.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Milestones Timeline -->
-    <section class="timeline-section">
-      <div class="container">
-        <div class="section-title reveal">
-          <h2>Department Milestones</h2>
-          <div class="section-title-line"></div>
-          <p>Key achievements marking our journey of excellence</p>
-        </div>
-
-        <div class="timeline">
-          <div class="timeline-item left reveal">
-            <div class="timeline-content">
-              <div class="timeline-year">2002</div>
-              <h4>Department Establishment</h4>
-              <p>
-                CSE Department established with first B.Tech batch of 60
-                students, marking the beginning of our journey in computing
-                education.
-              </p>
-            </div>
-            <div class="timeline-icon">
-              <i class="fas fa-flag"></i>
-            </div>
-          </div>
-          <div class="timeline-item right reveal">
-            <div class="timeline-content">
-              <div class="timeline-year">2008</div>
-              <h4>Publications</h4>
-              <p>
-                Faculty and students started research
-                publications in reputed international journals and conferences.
-              </p>
-            </div>
-            <div class="timeline-icon">
-              <i class="fas fa-book"></i>
-            </div>
-          </div>
-
-          <div class="timeline-item left reveal">
-            <div class="timeline-content">
-              <div class="timeline-year">2012</div>
-              <h4>Research Lab Setup</h4>
-              <p>
-                Established advanced research laboratories for IoT, AI, and
-                Network Security, fostering innovation and research culture.
-              </p>
-            </div>
-            <div class="timeline-icon">
-              <i class="fas fa-flask"></i>
-            </div>
-          </div>
-
-          <div class="timeline-item right reveal">
-            <div class="timeline-content">
-              <div class="timeline-year">2015</div>
-              <h4>M.Tech Program Launch</h4>
-              <p>
-                Introduced M.Tech program in Computer Science, expanding our
-                academic offerings to postgraduate research education.
-              </p>
-            </div>
-            <div class="timeline-icon">
-              <i class="fas fa-graduation-cap"></i>
-            </div>
-          </div>
-
-          <div class="timeline-item left reveal">
-            <div class="timeline-content">
-              <div class="timeline-year">2018</div>
-              <h4>100% Placement Achievement</h4>
-              <p>
-                Achieved unprecedented 100% placement record with students
-                placed in top MNCs like TCS, Infosys, and Wipro.
-              </p>
-            </div>
-            <div class="timeline-icon">
-              <i class="fas fa-briefcase"></i>
-            </div>
-          </div>
-
-          <div class="timeline-item right reveal">
-            <div class="timeline-content">
-              <div class="timeline-year">2020</div>
-              <h4>Industry Collaboration</h4>
-              <p>
-                Established MOUs with leading tech companies for internships,
-                training programs, and collaborative research projects.
-              </p>
-            </div>
-            <div class="timeline-icon">
-              <i class="fas fa-handshake"></i>
-            </div>
-          </div>
-
-          <div class="timeline-item left reveal">
-            <div class="timeline-content">
-              <div class="timeline-year">2022</div>
-              <h4>AI Lab Inauguration</h4>
-              <p>
-                Launched state-of-the-art AI and Machine Learning lab equipped
-                with high-performance computing infrastructure.
-              </p>
-            </div>
-            <div class="timeline-icon">
-              <i class="fas fa-robot"></i>
-            </div>
-          </div>
-          <div class="timeline-item right reveal">
-            <div class="timeline-content">
-              <div class="timeline-year">2024</div>
-              <h4>NBA Accreditation</h4>
-              <p>
-                Received NBA accreditation, validating our commitment to quality
-                education and continuous improvement in academic standards.
-              </p>
-            </div>
-            <div class="timeline-icon">
-              <i class="fas fa-award"></i>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- Department Statistics -->
-    <section class="dept-stats-section">
-      <div class="section-title reveal">
-        <h2 style="color: white">Department at a Glance</h2>
-        <div class="section-title-line" style="background: white"></div>
-        <p style="color: rgba(255, 255, 255, 0.9)">
-          Key numbers that define our excellence
-        </p>
-      </div>
-
-      <div class="stats-grid">
-        <div class="stat-card reveal">
-          <div class="stat-card-icon">👨‍🏫</div>
-          <span class="stat-card-number">32+</span>
-          <span class="stat-card-label">Experienced Faculty</span>
-        </div>
-
-        <div class="stat-card reveal">
-          <div class="stat-card-icon">👨‍🎓</div>
-          <span class="stat-card-number">450+</span>
-          <span class="stat-card-label">Current Students</span>
-        </div>
-
-        <div class="stat-card reveal">
-          <div class="stat-card-icon">🔬</div>
-          <span class="stat-card-number">4</span>
-          <span class="stat-card-label">Advanced Labs</span>
-        </div>
-
-        <div class="stat-card reveal">
-          <div class="stat-card-icon">📚</div>
-          <span class="stat-card-number">22</span>
-          <span class="stat-card-label">Research Publications</span>
-        </div>
-
-        <div class="stat-card reveal">
-          <div class="stat-card-icon">🏆</div>
-          <span class="stat-card-number">25+</span>
-          <span class="stat-card-label">Awards & Recognitions</span>
-        </div>
-
-        <div class="stat-card reveal">
-          <div class="stat-card-icon">💼</div>
-          <span class="stat-card-number">98%</span>
-          <span class="stat-card-label">Placement Rate</span>
-        </div>
-
-        <div class="stat-card reveal">
-          <div class="stat-card-icon">🤝</div>
-          <span class="stat-card-number">20+</span>
-          <span class="stat-card-label">Industry Partners</span>
-        </div>
-
-        <div class="stat-card reveal">
-          <div class="stat-card-icon">🌍</div>
-          <span class="stat-card-number">1000+</span>
-          <span class="stat-card-label">Alumni Network</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-      <div>
-        <h4>AISAT CSE</h4>
-        <p style="font-size: 0.9rem; color: var(--neutral-gray)">
-          Albertian Institute of Science and Technology,<br />
-          Kalamassery, Kochi.<br />
-          Kerala, India.
-        </p>
-      </div>
-      <div>
-        <h4>Quick Links</h4>
+      <div class="vm-card reveal">
+        <div class="vm-icon"><i class="fas fa-bullseye"></i></div>
+        <h3>Mission</h3>
         <ul>
-          <li><a href="about-aisat.html">About AISAT</a></li>
-          <li><a href="academics.html">Academics</a></li>
-          <li><a href="faculty.html">Faculty</a></li>
+          <li>Groom competent computer science engineers by providing high-quality professional training and a
+            research-oriented ambience in alignment with sustainable development initiatives.</li>
+          <li>Enhance innovation, leadership qualities, team spirit, and ethical value-based living through
+            multidisciplinary collaboration for sustainable societal progress.</li>
+          <li>Promote IT industry interaction and encourage entrepreneurship skills among students.</li>
         </ul>
       </div>
-      <div>
-        <h4>Connect</h4>
-        <ul>
-          <li><a href="#">LinkedIn</a></li>
-          <li><a href="#">Instagram</a></li>
-          <li><a href="#">Twitter</a></li>
-        </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PEOs -->
+<section class="peos-section">
+  <div class="container">
+    <div class="section-title reveal">
+      <h2>Program Educational Objectives (PEOs)</h2>
+      <div class="section-title-line"></div>
+      <p>Graduates of Computer Science and Engineering shall</p>
+    </div>
+    <div class="peos-grid">
+      {% for peo in peos %}
+      <div class="peo-card reveal">
+        <div class="peo-number">{{ loop.index }}</div>
+        <h4>{{ peo.title }}</h4>
+        <p>{{ peo.description }}</p>
       </div>
-    </footer>
+      {% endfor %}
+    </div>
+  </div>
+</section>
 
-    <script>
-      // Scroll Reveal Animation
-      window.addEventListener("scroll", reveal);
+<!-- PSOs -->
+<section class="psos-section">
+  <div class="container">
+    <div class="section-title reveal" style="margin-top: 5rem">
+      <h2>Program Specific Outcomes (PSOs)</h2>
+      <div class="section-title-line"></div>
+      <p>Graduates of Computer Science and Engineering will be able to</p>
+    </div>
+    <div class="pos-grid">
+      {% for pso in psos %}
+      <div class="po-card reveal">
+        <div class="po-icon" style="background: linear-gradient(135deg, var(--primary-red), #c92a1e); color: white;">
+          {{ pso.code }}
+        </div>
+        <p>{{ pso.description }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
 
-      function reveal() {
-        var reveals = document.querySelectorAll(".reveal");
-        for (var i = 0; i < reveals.length; i++) {
-          var windowheight = window.innerHeight;
-          var revealtop = reveals[i].getBoundingClientRect().top;
-          var revealpoint = 150;
+<!-- Milestones Timeline -->
+<section class="timeline-section">
+  <div class="container">
+    <div class="section-title reveal">
+      <h2>Department Milestones</h2>
+      <div class="section-title-line"></div>
+      <p>Key achievements marking our journey of excellence</p>
+    </div>
+    <div class="timeline">
+      {% for item in milestones %}
+      <div class="timeline-item {{ 'left' if loop.index is odd else 'right' }} reveal">
+        <div class="timeline-content">
+          <div class="timeline-year">{{ item.year }}</div>
+          <h4>{{ item.title }}</h4>
+          <p>{{ item.description }}</p>
+        </div>
+        <div class="timeline-icon"><i class="{{ item.icon }}"></i></div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
 
-          if (revealtop < windowheight - revealpoint) {
-            reveals[i].classList.add("active");
-          }
-        }
-      }
+<!-- Department Stats -->
+<section class="dept-stats-section">
+  <div class="section-title reveal">
+    <h2 style="color: white">Department at a Glance</h2>
+    <div class="section-title-line" style="background: white"></div>
+    <p style="color: rgba(255, 255, 255, 0.9)">Key numbers that define our excellence</p>
+  </div>
+  <div class="stats-grid">
+    {% for stat in dept_glance %}
+    <div class="stat-card reveal">
+      <div class="stat-card-icon">{{ stat.icon }}</div>
+      <span class="stat-card-number">{{ stat.value }}</span>
+      <span class="stat-card-label">{{ stat.label }}</span>
+    </div>
+    {% endfor %}
+  </div>
+</section>
 
-      reveal();
-    </script>
-  </body>
-</html>
+{% endblock %}

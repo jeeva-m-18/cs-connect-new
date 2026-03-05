@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CS Connect | AISAT CSE{% endblock %}</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Global Design System -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Page-specific CSS -->
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+    <!-- ===============================
+         NEWS TICKER (shared)
+    =============================== -->
+    <div class="news-ticker">
+        <div class="ticker-content">
+            {{ ticker_text }}
+        </div>
+    </div>
+
+    <!-- ===============================
+         NAVIGATION (shared partial)
+    =============================== -->
+    {% include 'partials/nav.html' %}
+
+    <!-- ===============================
+         PAGE CONTENT
+    =============================== -->
+    {% block content %}{% endblock %}
+
+    <!-- ===============================
+         FOOTER (shared partial)
+    =============================== -->
+    {% include 'partials/footer.html' %}
+
+    <!-- ===============================
+         CHATBOT WIDGET (shared partial)
+    =============================== -->
+    {% include 'partials/chatbot.html' %}
+
+    <!-- ===============================
+         SHARED JS
+    =============================== -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
+
+    <!-- Page-specific JS -->
+    {% block extra_js %}{% endblock %}
+
+</body>
+
+</html>

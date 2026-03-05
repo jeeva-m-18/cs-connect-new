@@ -2,19 +2,10 @@
 /*        REGISTER PAGE          */
 /* ============================= */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+/* Global styles from style.css */
 
 body {
-    font-family: 'Segoe UI', sans-serif;
-    height: 100vh;
     background: linear-gradient(135deg, #8b1e1e, #2c2f4a);
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 /* Wrapper */
@@ -26,6 +17,8 @@ body {
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    margin: 80px auto;
+    min-height: calc(100vh - 300px);
 }
 
 /* Left Panel */

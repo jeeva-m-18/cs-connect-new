@@ -1,0 +1,28 @@
+<nav>
+    <div class="logo">
+        <img src="{{ url_for('static', filename='media/aisat_logo.png') }}"
+             alt="AISAT Logo"
+             style="width: 40px; height: 40px; object-fit: contain; margin-right: 10px;">
+        AISAT CSE
+    </div>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="{{ url_for('home') }}" class="{{ 'active' if active_page == 'home' }}">Home</a></li>
+        <li><a href="{{ url_for('about_aisat') }}" class="{{ 'active' if active_page == 'about_aisat' }}">About AISAT</a></li>
+        <li><a href="{{ url_for('about_cse') }}" class="{{ 'active' if active_page == 'about_cse' }}">About CSE</a></li>
+        <li><a href="{{ url_for('academics') }}" class="{{ 'active' if active_page == 'academics' }}">Academics</a></li>
+        <li><a href="{{ url_for('faculty') }}" class="{{ 'active' if active_page == 'faculty' }}">Faculty</a></li>
+        <li><a href="{{ url_for('placements') }}" class="{{ 'active' if active_page == 'placements' }}">Placements</a></li>
+        <li><a href="{{ url_for('library') }}" class="{{ 'active' if active_page == 'library' }}">Library</a></li>
+    </ul>
+    <div class="nav-actions">
+        {% if session.get('user_id') %}
+            <span class="nav-user">👤 {{ session.get('name') }}</span>
+            <a href="{{ url_for('logout') }}" class="btn-login">Logout</a>
+        {% else %}
+            <a href="{{ url_for('login') }}" class="btn-login">Login</a>
+        {% endif %}
+        <button class="hamburger" id="hamburger" onclick="toggleNav()" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>

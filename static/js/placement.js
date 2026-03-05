@@ -1,184 +1,171 @@
-// Animated Counter
-function animateCounter() {
+// Animated Counter Function
+function animateCounters() {
   const counters = document.querySelectorAll(".stat-number");
+  const speed = 200;
 
   counters.forEach((counter) => {
-    const target = parseFloat(counter.getAttribute("data-target"));
-    const increment = target / 100;
-    let current = 0;
+    const target = +counter.getAttribute("data-target");
+    const isDecimal = counter.getAttribute("data-decimal") === "true";
 
-    const timer = setInterval(() => {
-      current += increment;
-      if (current >= target) {
-        counter.textContent = target;
-        clearInterval(timer);
+    const updateCount = () => {
+      const count = +counter.innerText;
+      const inc = target / speed;
+
+      if (count < target) {
+        let nextVal = count + inc;
+        if (nextVal > target) nextVal = target;
+        counter.innerText = isDecimal ? nextVal.toFixed(2) : Math.ceil(nextVal);
+        setTimeout(updateCount, 1);
       } else {
-        counter.textContent = Math.floor(current * 10) / 10;
+        counter.innerText = isDecimal ? target.toFixed(2) : target;
       }
-    }, 20);
+    };
+    updateCount();
   });
 }
 
-// Scroll Reveal
-function reveal() {
+// Scroll Reveal Implementation
+function scrollReveal() {
   const reveals = document.querySelectorAll(".reveal");
-
-  reveals.forEach((element) => {
+  for (let i = 0; i < reveals.length; i++) {
     const windowHeight = window.innerHeight;
-    const elementTop = element.getBoundingClientRect().top;
-    const revealPoint = 100;
+    const elementTop = reveals[i].getBoundingClientRect().top;
+    const elementVisible = 150;
+    if (elementTop < windowHeight - elementVisible) {
+      reveals[i].classList.add("active");
+    }
+  }
+}
 
-    if (elementTop < windowHeight - revealPoint) {
-      element.classList.add("active");
+// Chart.js Initialization
+function initCharts() {
+  const chartConfigs = {
+    'batch9': {
+      labels: ['IT/Software', 'Core Engineering', 'Finance', 'Others'],
+      data: [65, 20, 10, 5],
+      colors: ['#a41f13', '#292f36', '#8f7a6e', '#e0dbd8']
+    },
+    'batch10': {
+      labels: ['IT/Software', 'Core Engineering', 'Sales', 'Others'],
+      data: [70, 15, 10, 5],
+      colors: ['#a41f13', '#292f36', '#8f7a6e', '#e0dbd8']
+    }
+  };
+
+  Object.keys(chartConfigs).forEach(batchKey => {
+    const ctx = document.getElementById(`chart-${batchKey}`);
+    if (ctx) {
+      new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: chartConfigs[batchKey].labels,
+          datasets: [{
+            data: chartConfigs[batchKey].data,
+            backgroundColor: chartConfigs[batchKey].colors,
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom' },
+            title: { display: true, text: 'Industry Sector Distribution' }
+          }
+        }
+      });
     }
   });
 }
 
-window.addEventListener("scroll", reveal);
-window.addEventListener("load", () => {
-  reveal();
-  animateCounter();
-});
+// Year Tab Logic
+function initTabs() {
+  const tabs = document.querySelectorAll(".year-tab");
+  const contents = document.querySelectorAll(".year-content");
 
-// Company Category Filter
-document.querySelectorAll(".cat-btn").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    document
-      .querySelectorAll(".cat-btn")
-      .forEach((b) => b.classList.remove("active"));
-    btn.classList.add("active");
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      tabs.forEach(t => t.classList.remove("active"));
+      contents.forEach(c => c.classList.remove("active"));
 
-    const category = btn.getAttribute("data-cat");
-    document.querySelectorAll(".company-logo").forEach((logo) => {
-      if (
-        category === "all" ||
-        logo.getAttribute("data-category") === category
-      ) {
-        logo.style.display = "flex";
-      } else {
-        logo.style.display = "none";
-      }
+      tab.classList.add("active");
+      const target = tab.getAttribute("data-year");
+      document.getElementById(`year-${target}`).classList.add("active");
     });
   });
-});
+}
 
-// Year Tabs
-document.querySelectorAll(".year-tab").forEach((tab) => {
-  tab.addEventListener("click", () => {
-    document
-      .querySelectorAll(".year-tab")
-      .forEach((t) => t.classList.remove("active"));
-    tab.classList.add("active");
-
-    const year = tab.getAttribute("data-year");
-    document.querySelectorAll(".year-content").forEach((content) => {
-      content.classList.remove("active");
-    });
-    document.getElementById("year-" + year).classList.add("active");
-  });
-});
-
-// Alumni Slider
-let alumniPosition = 0;
-
-function slideAlumni(direction) {
+// Alumni Slider Logic
+let currentSlide = 0;
+function initSlider() {
   const track = document.querySelector(".alumni-track");
   const cards = document.querySelectorAll(".alumni-card");
-  const cardWidth = cards[0].offsetWidth + 32; // card width + gap
+  const nextBtn = document.querySelector(".slider-btn.next");
+  const prevBtn = document.querySelector(".slider-btn.prev");
 
-  alumniPosition += direction;
+  if (!track || cards.length === 0) return;
 
-  if (alumniPosition < 0) {
-    alumniPosition = 0;
-  }
-  if (alumniPosition > cards.length - 3) {
-    alumniPosition = cards.length - 3;
-  }
+  const updateSlider = () => {
+    const cardWidth = cards[0].offsetWidth + 32; // width + gap
+    track.style.transform = `translateX(-${currentSlide * cardWidth}px)`;
+  };
 
-  track.style.transform = `translateX(-${alumniPosition * cardWidth}px)`;
+  nextBtn?.addEventListener("click", () => {
+    const visibleCards = window.innerWidth > 968 ? 3 : (window.innerWidth > 600 ? 2 : 1);
+    if (currentSlide < cards.length - visibleCards) {
+      currentSlide++;
+      updateSlider();
+    }
+  });
+
+  prevBtn?.addEventListener("click", () => {
+    if (currentSlide > 0) {
+      currentSlide--;
+      updateSlider();
+    }
+  });
+
+  window.addEventListener("resize", updateSlider);
 }
 
-// Chart.js
-const ctx = document.getElementById("chart2024");
-if (ctx) {
-  new Chart(ctx, {
-    type: "bar",
-    data: {
-      labels: ["0-5 LPA", "5-10 LPA", "10-15 LPA", "15-20 LPA", "20+ LPA"],
-      datasets: [
-        {
-          label: "Number of Students",
-          data: [15, 40, 35, 20, 8],
-          backgroundColor: [
-            "#a41f13",
-            "#c92a1e",
-            "#e74c3c",
-            "#3498db",
-            "#2ecc71",
-          ],
-          borderWidth: 0,
-          borderRadius: 8,
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          display: false,
-        },
-        title: {
-          display: true,
-          text: "Salary Distribution - 2024 Batch",
-          font: {
-            size: 16,
-            weight: "bold",
-          },
-        },
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          title: {
-            display: true,
-            text: "Number of Students",
-          },
-        },
-        x: {
-          title: {
-            display: true,
-            text: "Salary Range",
-          },
-        },
-      },
-    },
+// Marquee Filter logic
+function initMarqueeFilter() {
+  const buttons = document.querySelectorAll(".cat-btn");
+  const logos = document.querySelectorAll(".company-logo");
+
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      buttons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const sector = btn.getAttribute("data-sector");
+      logos.forEach(logo => {
+        if (sector === "all" || logo.getAttribute("data-sector") === sector) {
+          logo.style.display = "flex";
+          logo.style.opacity = "1";
+        } else {
+          logo.style.opacity = "0.2"; // Dim instead of hiding to prevent marquee jumps
+        }
+      });
+    });
   });
 }
 
-// Button Actions
-document.querySelectorAll(".apply-btn").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    alert("Application form will open here! Connect with placement cell.");
-  });
-});
+// Flash Notice Utility
+window.flashNotice = function (msg) {
+  alert(msg); // Placeholder for a prettier toast
+};
 
-const downloadBtn = document.querySelector(".download-btn");
-if (downloadBtn) {
-  downloadBtn.addEventListener("click", () => {
-    alert("Resume templates are being downloaded...");
-  });
-}
+// Global Chatbot Toggle (handled by base.html / chatbot.js)
+// But we can trigger it here too if needed.
 
-const chatbotBtn = document.querySelector(".chatbot-btn");
-if (chatbotBtn) {
-  chatbotBtn.addEventListener("click", () => {
-    alert("Mock interview chatbot will open here!");
-  });
-}
-
-// Initialize on load
+// Initialize Everything
 document.addEventListener("DOMContentLoaded", () => {
-  reveal();
-  animateCounter();
+  window.addEventListener("scroll", scrollReveal);
+  scrollReveal();
+  animateCounters();
+  initCharts();
+  initTabs();
+  initSlider();
+  initMarqueeFilter();
 });

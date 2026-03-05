@@ -1,641 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- ADD THIS LINE -->
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <title>CS Connect | Home</title>
-    
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}" />
-</head>
-<body>
-     <!-- News Ticker -->
-    <div class="news-ticker">
-      <div class="ticker-content">
-        📢 Admissions Open for 2026 Batch | 🎉 Our Students Become All Kerala Champions At APJ KTU Kerala Karate Championship (Men's Section )  | 📅 Next Workshop: AI in Healthcare - Feb 20th | 🏆 AISAT
-        Achieved Autonomous Status For 5 Years 2026-2031 | 
+{% extends "base.html" %}
+
+{% block title %}CS Connect | Home{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}" />
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h2 class="reveal">Albertian Institute of Science and Technology</h2>
+    <h1 class="reveal">CS CONNECT</h1>
+    <p class="reveal" style="margin-bottom: 2rem; font-size: 1.2rem; opacity: 0.9">
+      Department of Computer Science &amp; Engineering. <br />
+      Innovate. Create. Lead the Future.
+    </p>
+    <div class="hero-btns reveal">
+      <a href="{{ url_for('about_cse') }}" class="btn-main btn-primary">Explore CSE</a>
+      <a href="{{ url_for('about_aisat') }}" class="btn-main btn-outline">About AISAT</a>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Strip -->
+<div class="stats-strip reveal">
+  {% for stat in stats %}
+  <div class="stat-item">
+    <span class="stat-number" data-target="{{ stat.value }}">0</span>
+    <span class="stat-label">{{ stat.label }}</span>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- Feature Cards -->
+<section class="features" id="academics">
+  {% for card in feature_cards %}
+  {% set target_url = url_for('placements') if card.title == 'Placements' else (url_for('academics') if card.title ==
+  'Syllabus & Curriculum' else '#') %}
+  <a href="{{ target_url }}" class="card reveal" style="text-decoration: none; color: inherit; display: block;">
+    <div class="card-icon">{{ card.icon }}</div>
+    <h3>{{ card.title }}</h3>
+    <p>{{ card.description }}</p>
+  </a>
+  {% endfor %}
+</section>
+
+<!-- Faculty Parallax -->
+<section class="faculty-parallax" id="faculty">
+  <div class="faculty-text reveal">
+    <h2 style="font-size: 3rem; margin-bottom: 1rem; color: #fff">Meet Our Visionaries</h2>
+    <p style="font-size: 1.2rem; margin-bottom: 2rem; color: var(--neutral-gray)">
+      Led by <strong>Dr. Jeswin Roy Dcouth</strong>, our faculty comprises
+      industry experts and seasoned researchers dedicated to shaping the
+      next generation of engineers.
+    </p>
+    <a href="{{ url_for('faculty') }}" class="btn-main btn-primary">View All Faculty</a>
+  </div>
+  <div class="faculty-image-container reveal">
+    <div class="faculty-card">
+      <img src="{{ url_for('static', filename='media/hod.jpg') }}" alt="Dr. Jeswin Roy Dcouth"
+        style="width: 100%; height: 250px; object-fit: cover; border-radius: 4px;">
+      <h3 style="margin-top: 15px">Dr. Jeswin Roy Dcouth</h3>
+      <p style="color: var(--primary-red); font-weight: bold">HOD &amp; Associate Professor</p>
+    </div>
+  </div>
+</section>
+
+<!-- Department Highlights / Events -->
+<section class="events-section">
+  <div class="section-header reveal">
+    <h2>Department Highlights</h2>
+    <p style="color: var(--taupe-brown)">Upcoming Events and Recent Activities</p>
+  </div>
+  <div class="event-slider reveal">
+    {% for event in events %}
+    <div class="event-card">
+      <div style="height: 180px; background-color: {{ event.bg_color | default('#eee') }};"></div>
+      <div class="event-info">
+        <span class="date-badge">{{ event.date }}</span>
+        <h4>{{ event.title }}</h4>
+        <p style="font-size: 0.9rem; margin-top: 5px">{{ event.description }}</p>
       </div>
     </div>
+    {% endfor %}
+  </div>
+</section>
 
-    <div class="chatbot-float" onclick="toggleChat()">...</div>
-    <div class="chat-window" id="chatWindow">...</div>
-
-    <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
-</body>
-    <nav>
-    <div class="logo">
-       <img src="static/media/aisat_logo.png" 
-       alt="AISAT Logo" 
-       style="width: 40px; height: 40px; object-fit: contain; margin-right: 10px;"> 
-        AISAT CSE
-    </div>
-    <ul class="nav-links">
-        <li><a href="{{ url_for('home') }}">Home</a></li>
-        <a href="{{ url_for('about_aisat') }}">About AISAT</a>
-        <a href="{{ url_for('about_cse') }}">About CSE</a>
-        <a href="{{ url_for('academics') }}">Academics</a>
-        <li><a href="{{ url_for('faculty') }}">Faculty</a></li>
-        <li><a href="placements.html">Placements</a></li>
-        <li><a href="{{ url_for('library') }}">Library</a></li>
-    </ul>
-    <a href="{{ url_for('login') }}" class="btn-login">Login</a>
-</nav>
-
-    <section class="hero" id="home">
-      <div class="hero-overlay"></div>
-      <div class="hero-content">
-        <h2 class="reveal">Albertian Institute of Science and Technology</h2>
-        <h1 class="reveal">CS CONNECT</h1>
-        <p
-          class="reveal"
-          style="margin-bottom: 2rem; font-size: 1.2rem; opacity: 0.9"
-        >
-          Department of Computer Science & Engineering. <br />
-          Innovate. Create. Lead the Future.
-        </p>
-        <div class="hero-btns reveal">
-          <button class="btn-main btn-primary">Explore CSE</button>
-          <button class="btn-main btn-outline">Virtual Tour</button>
-        </div>
-      </div>
-    </section>
-
-    <div class="stats-strip reveal">
-      <div class="stat-item">
-        <span class="stat-number" data-target="420">0</span>
-        <span class="stat-label">STUDENTS</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-number" data-target="17">0</span>
-        <span class="stat-label">FACULTY</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-number" data-target="98">0</span>
-        <span class="stat-label">% PLACEMENT</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-number" data-target="22">0</span>
-        <span class="stat-label">PUBLICATIONS</span>
-      </div>
-    </div>
-
-    <section class="features" id="academics">
-      <div class="card reveal">
-        <div class="card-icon">📚</div>
-        <h3>Syllabus & Curriculum</h3>
-        <p>
-          Access the latest KTU scheme, lecture notes, and lab manuals directly
-          from the department repository.
-        </p>
-      </div>
-      <div class="card reveal">
-        <div class="card-icon">🎓</div>
-        <h3>Placements</h3>
-        <p>
-          Our students are placed in top MNCs. Check out the latest placement
-          statistics and recruitment drives.
-        </p>
-      </div>
-      <div class="card reveal">
-        <div class="card-icon">🔬</div>
-        <h3>Research Labs</h3>
-        <p>
-          State-of-the-art IoT, AI, and Big Data labs available for student
-          projects and research.
-        </p>
-      </div>
-      <div class="card reveal">
-        <div class="card-icon">🏆</div>
-        <h3>Achievements</h3>
-        <p>
-          Celebrating the victories of our students in Hackathons, Sports, and
-          Arts festivals.
-        </p>
-      </div>
-    </section>
-
-    <section class="faculty-parallax" id="faculty">
-      <div class="faculty-text reveal">
-        <h2 style="font-size: 3rem; margin-bottom: 1rem; color: #fff">
-          Meet Our Visionaries
-        </h2>
-        <p
-          style="
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            color: var(--neutral-gray);
-          "
-        >
-          Led by <strong>Dr. Jeswin Roy Decouth</strong>, our faculty comprises
-          industry experts and seasoned researchers dedicated to shaping the
-          next generation of engineers.
-        </p>
-        <button class="btn-main btn-primary">View All Faculty</button>
-      </div>
-      <div class="faculty-image-container reveal">
-        <div class="faculty-card">
-          <img 
-            src="static/media/hod.jpg" 
-            alt="Dr. Jeswin Roy Decouth" 
-            style="width: 100%; height: 250px; object-fit: cover; border-radius: 4px;"
-          >
-          <h3 style="margin-top: 15px">Dr. Jeswin Roy Decouth</h3>
-          <p style="color: var(--primary-red); font-weight: bold">
-            HOD & Associate Professor
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="events-section">
-      <div class="section-header reveal">
-        <h2>Department Highlights</h2>
-        <p style="color: var(--taupe-brown)">
-          Upcoming Events and Recent Activities
-        </p>
-      </div>
-      <div class="event-slider reveal">
-        <div class="event-card">
-          <div style="height: 180px; background: #ccc"></div>
-          <div class="event-info">
-            <span class="date-badge">MAR 15</span>
-            <h4>National Tech Fest</h4>
-            <p style="font-size: 0.9rem; margin-top: 5px">
-              Join us for the biggest tech fest in the region.
-            </p>
-          </div>
-        </div>
-        <div class="event-card">
-          <div style="height: 180px; background: #bbb"></div>
-          <div class="event-info">
-            <span class="date-badge">APR 02</span>
-            <h4>AI Workshop</h4>
-            <p style="font-size: 0.9rem; margin-top: 5px">
-              Hands-on session on Generative AI.
-            </p>
-          </div>
-        </div>
-        <div class="event-card">
-          <div style="height: 180px; background: #aaa"></div>
-          <div class="event-info">
-            <span class="date-badge">MAY 10</span>
-            <h4>Alumni Meet</h4>
-            <p style="font-size: 0.9rem; margin-top: 5px">
-              Reconnecting with our past graduates.
-            </p>
-          </div>
-        </div>
-        <div class="event-card">
-          <div style="height: 180px; background: #999"></div>
-          <div class="event-info">
-            <span class="date-badge">JUN 01</span>
-            <h4>Project Expo</h4>
-            <p style="font-size: 0.9rem; margin-top: 5px">
-              Final year project exhibition.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      <div>
-        <h4>AISAT CSE</h4>
-        <p style="font-size: 0.9rem; color: var(--neutral-gray)">
-          Albertian Institute of Science and Technology,<br />
-          Kalamassery, Kochi.<br />
-          Kerala, India.
-        </p>
-      </div>
-      <div>
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="#">Admissions</a></li>
-          <li><a href="#">Contact Us</a></li>
-          <li><a href="#">Student Portal</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Connect</h4>
-        <ul>
-          <li><a href="#">LinkedIn</a></li>
-          <li><a href="#">Instagram</a></li>
-          <li><a href="#">Twitter</a></li>
-        </ul>
-      </div>
-    </footer>
-
-
-
-    <script>
-      // 1. SCROLL REVEAL ANIMATION
-      window.addEventListener("scroll", reveal);
-
-      function reveal() {
-        var reveals = document.querySelectorAll(".reveal");
-        for (var i = 0; i < reveals.length; i++) {
-          var windowheight = window.innerHeight;
-          var revealtop = reveals[i].getBoundingClientRect().top;
-          var revealpoint = 150;
-
-          if (revealtop < windowheight - revealpoint) {
-            reveals[i].classList.add("active");
-          }
-        }
-      }
-
-      // Trigger once on load
-      reveal();
-
-      // 2. LIVE STATS COUNTER
-      const counters = document.querySelectorAll(".stat-number");
-      const speed = 200;
-
-      const animateStats = () => {
-        counters.forEach((counter) => {
-          const updateCount = () => {
-            const target = +counter.getAttribute("data-target");
-            const count = +counter.innerText;
-            const inc = target / speed;
-
-            if (count < target) {
-              counter.innerText = Math.ceil(count + inc);
-              setTimeout(updateCount, 20);
-            } else {
-              counter.innerText = target;
-            }
-          };
-          updateCount();
-        });
-      };
-
-      // Trigger stats animation when stats section is in view
-      let statsSection = document.querySelector(".stats-strip");
-      let statsObserver = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-          animateStats();
-          statsObserver.disconnect();
-        }
-      });
-      statsObserver.observe(statsSection);
-
-    </script>
-    <!-- ========================================
-     FLOATING CHATBOT WIDGET
-     Add this before </body> on every page
-=======================================
-
-
-    <!-- Floating Chatbot Button -->
-    <div class="chatbot-float" id="chatbotFloat" onclick="toggleFloatingChat()">
-      💬
-      <span
-        class="chat-notification"
-        id="chatNotification"
-        style="display: none"
-        >1</span
-      >
-    </div>
-
-    <!-- Floating Chat Window -->
-    <div class="floating-chat-window" id="floatingChatWindow">
-      <!-- Header -->
-      <div class="floating-chat-header">
-        <div class="floating-chat-header-info">
-          <div class="floating-bot-avatar">🤖</div>
-          <div class="floating-header-text">
-            <h3>CS CONNECT</h3>
-            <p>Online now</p>
-          </div>
-        </div>
-        <div class="floating-chat-controls">
-          <button
-            class="floating-control-btn"
-            onclick="clearFloatingChat()"
-            title="Clear"
-          >
-            <i class="fas fa-trash"></i>
-          </button>
-          <button
-            class="floating-control-btn"
-            onclick="openFullChatbot()"
-            title="Expand"
-          >
-            <i class="fas fa-expand"></i>
-          </button>
-          <button
-            class="floating-control-btn"
-            onclick="toggleFloatingChat()"
-            title="Close"
-          >
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Messages Area -->
-      <div class="floating-chat-messages" id="floatingChatMessages">
-        <!-- Welcome Message -->
-        <div class="floating-welcome" id="floatingWelcome">
-          <div class="floating-welcome-icon">👋</div>
-          <h4>Hi! I'm your CS CONNECT Assistant</h4>
-          <p>How can I help you today?</p>
-
-          <div class="floating-welcome-options">
-            <div
-              class="floating-welcome-option"
-              onclick="sendFloatingQuick('Admissions')"
-            >
-              <i class="fas fa-graduation-cap"></i>
-              <span>Admissions</span>
-            </div>
-            <div
-              class="floating-welcome-option"
-              onclick="sendFloatingQuick('Syllabus')"
-            >
-              <i class="fas fa-book"></i>
-              <span>Syllabus</span>
-            </div>
-            <div
-              class="floating-welcome-option"
-              onclick="sendFloatingQuick('Faculty')"
-            >
-              <i class="fas fa-chalkboard-teacher"></i>
-              <span>Faculty</span>
-            </div>
-            <div
-              class="floating-welcome-option"
-              onclick="sendFloatingQuick('Library')"
-            >
-              <i class="fas fa-book-reader"></i>
-              <span>Library</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Typing Indicator -->
-        <div class="floating-typing" id="floatingTyping">
-          <div
-            class="floating-message-avatar"
-            style="background: var(--primary-red, #a41f13); color: white"
-          >
-            🤖
-          </div>
-          <div class="floating-typing-dots">
-            <div class="floating-typing-dot"></div>
-            <div class="floating-typing-dot"></div>
-            <div class="floating-typing-dot"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Input Area -->
-      <div class="floating-chat-input">
-        <div class="floating-input-wrapper">
-          <input
-            type="text"
-            id="floatingInput"
-            placeholder="Type your message..."
-            onkeypress="handleFloatingEnter(event)"
-          />
-          <button class="floating-send-btn" onclick="sendFloatingMessage()">
-            <i class="fas fa-paper-plane"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <script>
-      // Floating Chat State
-      let floatingChatOpen = false;
-      let floatingMessageCount = 0;
-
-      // Knowledge Base (same as full chatbot)
-      const floatingKB = {
-        admissions: {
-          keywords: ["admission", "admissions", "join", "enroll", "apply"],
-          response:
-            "📚 Admissions are open for 2026!\n\nB.Tech: 120 seats\nM.Tech: 18 seats\n\nVisit our Admissions page for details!",
-          quickReplies: ["Eligibility", "Fee Structure", "Apply Now"],
-        },
-        syllabus: {
-          keywords: ["syllabus", "curriculum", "course", "subjects"],
-          response:
-            "📖 Our curriculum follows KTU 2019 scheme with industry-aligned courses.\n\nView semester-wise syllabus on our Academics page!",
-          quickReplies: ["View Syllabus", "Download Notes"],
-        },
-        faculty: {
-          keywords: ["faculty", "teachers", "professors", "hod"],
-          response:
-            "👨‍🏫 32+ experienced faculty members led by Dr. Jeswin Roy Decouth (HOD).\n\nVisit Faculty page to know more!",
-          quickReplies: ["View Faculty", "Contact Faculty"],
-        },
-        library: {
-          keywords: ["library", "books", "borrow", "qr"],
-          response:
-            "📚 1000+ books with QR code-based system!\n\nFeatures:\n• Online book issue\n• Digital resources\n• Study materials",
-          quickReplies: ["Browse Library", "QR Scanner"],
-        },
-        placement: {
-          keywords: ["placement", "job", "career", "package"],
-          response:
-            "💼 98% Placement Rate!\n\nHighest: ₹45 LPA\nAverage: ₹6.5 LPA\n\nTop companies: TCS, Infosys, Wipro",
-          quickReplies: ["View Companies", "Statistics"],
-        },
-        contact: {
-          keywords: ["contact", "phone", "email", "address"],
-          response:
-            "📞 Contact Us:\n\n📧 cse@aisat.ac.in\n📱 +91 98765 43210\n\n📍 Kalamassery, Kochi, Kerala",
-          quickReplies: ["Get Directions", "Email Us"],
-        },
-      };
-
-      // Toggle Chat Window
-      function toggleFloatingChat() {
-        const chatWindow = document.getElementById("floatingChatWindow");
-        const chatFloat = document.getElementById("chatbotFloat");
-
-        floatingChatOpen = !floatingChatOpen;
-
-        if (floatingChatOpen) {
-          chatWindow.classList.add("active");
-          chatFloat.classList.add("chat-open");
-          chatFloat.innerHTML = "✕";
-          hideNotification();
-          scrollFloatingToBottom();
-        } else {
-          chatWindow.classList.remove("active");
-          chatFloat.classList.remove("chat-open");
-          chatFloat.innerHTML = "💬";
-        }
-      }
-
-      // Send Message
-      function sendFloatingMessage() {
-        const input = document.getElementById("floatingInput");
-        const message = input.value.trim();
-
-        if (message) {
-          // Hide welcome
-          document.getElementById("floatingWelcome").style.display = "none";
-
-          // Add user message
-          addFloatingMessage(message, "user");
-
-          // Clear input
-          input.value = "";
-
-          // Show typing
-          showFloatingTyping();
-
-          // Get response
-          setTimeout(() => {
-            const response = getFloatingResponse(message);
-            hideFloatingTyping();
-            addFloatingMessage(response.text, "bot", response.quickReplies);
-          }, 1000);
-        }
-      }
-
-      // Add Message
-      function addFloatingMessage(text, type, quickReplies = null) {
-        const messagesDiv = document.getElementById("floatingChatMessages");
-        const messageDiv = document.createElement("div");
-        messageDiv.className = `floating-message ${type}`;
-
-        const time = new Date().toLocaleTimeString("en-US", {
-          hour: "2-digit",
-          minute: "2-digit",
-        });
-
-        let quickRepliesHTML = "";
-        if (quickReplies) {
-          quickRepliesHTML = `
-            <div class="floating-quick-replies">
-                ${quickReplies
-                  .map(
-                    (reply) =>
-                      `<button class="floating-quick-reply" onclick="sendFloatingQuick('${reply}')">${reply}</button>`,
-                  )
-                  .join("")}
-            </div>
-        `;
-        }
-
-        messageDiv.innerHTML = `
-        <div class="floating-message-avatar">${type === "bot" ? "🤖" : "👤"}</div>
-        <div>
-            <div class="floating-message-bubble">${text.replace(/\n/g, "<br>")}</div>
-            <div class="floating-message-time">${time}</div>
-            ${quickRepliesHTML}
-        </div>
-    `;
-
-        messagesDiv.appendChild(messageDiv);
-        scrollFloatingToBottom();
-        floatingMessageCount++;
-      }
-
-      // Get Response
-      function getFloatingResponse(message) {
-        const messageLower = message.toLowerCase();
-
-        for (const [key, data] of Object.entries(floatingKB)) {
-          if (
-            data.keywords &&
-            data.keywords.some((keyword) => messageLower.includes(keyword))
-          ) {
-            return {
-              text: data.response,
-              quickReplies: data.quickReplies,
-            };
-          }
-        }
-
-        return {
-          text: "I can help with:\n• Admissions\n• Syllabus\n• Faculty\n• Library\n• Placements\n\nWhat would you like to know?",
-          quickReplies: ["Admissions", "Faculty", "Library"],
-        };
-      }
-
-      // Send Quick Reply
-      function sendFloatingQuick(message) {
-        document.getElementById("floatingInput").value = message;
-        sendFloatingMessage();
-      }
-
-      // Show Typing
-      function showFloatingTyping() {
-        document.getElementById("floatingTyping").classList.add("active");
-        scrollFloatingToBottom();
-      }
-
-      // Hide Typing
-      function hideFloatingTyping() {
-        document.getElementById("floatingTyping").classList.remove("active");
-      }
-
-      // Scroll to Bottom
-      function scrollFloatingToBottom() {
-        const messagesDiv = document.getElementById("floatingChatMessages");
-        messagesDiv.scrollTop = messagesDiv.scrollHeight;
-      }
-
-      // Handle Enter Key
-      function handleFloatingEnter(event) {
-        if (event.key === "Enter") {
-          event.preventDefault();
-          sendFloatingMessage();
-        }
-      }
-
-      // Clear Chat
-      function clearFloatingChat() {
-        if (confirm("Clear chat history?")) {
-          const messagesDiv = document.getElementById("floatingChatMessages");
-          messagesDiv.innerHTML = `
-            <div class="floating-welcome" id="floatingWelcome">
-                <div class="floating-welcome-icon">👋</div>
-                <h4>Chat Cleared!</h4>
-                <p>How can I help you?</p>
-            </div>
-            <div class="floating-typing" id="floatingTyping">
-                <div class="floating-message-avatar" style="background: var(--primary-red, #a41f13); color: white;">🤖</div>
-                <div class="floating-typing-dots">
-                    <div class="floating-typing-dot"></div>
-                    <div class="floating-typing-dot"></div>
-                    <div class="floating-typing-dot"></div>
-                </div>
-            </div>
-        `;
-          floatingMessageCount = 0;
-        }
-      }
-
-      // Open Full Chatbot
-      function openFullChatbot() {
-        window.location.href = "chatbot.html";
-      }
-
-      // Show Notification
-      function showNotification() {
-        document.getElementById("chatNotification").style.display = "flex";
-      }
-
-      // Hide Notification
-      function hideNotification() {
-        document.getElementById("chatNotification").style.display = "none";
-      }
-
-      // Auto-show notification after 5 seconds (optional)
-      setTimeout(() => {
-        if (!floatingChatOpen && floatingMessageCount === 0) {
-          showNotification();
-        }
-      }, 5000);
-    </script>
-  </body>
-</html>
+{% endblock %}

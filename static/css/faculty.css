@@ -5,37 +5,44 @@
   --dark-charcoal: #292f36;
   --taupe-brown: #8f7a6e;
 }
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Segoe UI", Roboto, Arial, sans-serif;
 }
+
 body {
   background: var(--bg-off-white);
   color: var(--dark-charcoal);
   overflow-x: hidden;
 }
+
 .news-ticker {
   background: var(--dark-charcoal);
   color: #fff;
   padding: 8px 0;
   overflow: hidden;
 }
+
 .ticker-content {
   display: inline-block;
   animation: scroll 20s linear infinite;
   white-space: nowrap;
   padding-left: 100%;
 }
+
 @keyframes scroll {
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-100%);
   }
 }
+
 .navbar {
   position: sticky;
   top: 0;
@@ -45,6 +52,7 @@ body {
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
+
 .nav-container {
   max-width: 1400px;
   margin: 0 auto;
@@ -53,16 +61,19 @@ body {
   justify-content: space-between;
   align-items: center;
 }
+
 .logo {
   font-weight: 700;
   font-size: 1.5rem;
   color: var(--primary-red);
 }
+
 .nav-links {
   display: flex;
   gap: 2rem;
   list-style: none;
 }
+
 .nav-links a {
   text-decoration: none;
   color: var(--dark-charcoal);
@@ -71,6 +82,7 @@ body {
   transition: 0.3s;
   padding: 0.5rem 0;
 }
+
 .nav-links a::after {
   content: "";
   position: absolute;
@@ -81,14 +93,17 @@ body {
   background: var(--primary-red);
   transition: 0.3s;
 }
+
 .nav-links a:hover::after,
 .nav-links a.active::after {
   width: 100%;
 }
+
 .nav-links a:hover,
 .nav-links a.active {
   color: var(--primary-red);
 }
+
 .btn-login {
   padding: 0.6rem 1.8rem;
   background: var(--dark-charcoal);
@@ -98,10 +113,12 @@ body {
   font-weight: 600;
   transition: 0.3s;
 }
+
 .btn-login:hover {
   background: var(--primary-red);
   transform: translateY(-2px);
 }
+
 .page-header {
   height: 40vh;
   background: linear-gradient(135deg, var(--primary-red), var(--dark-charcoal));
@@ -111,20 +128,24 @@ body {
   text-align: center;
   color: #fff;
 }
+
 .page-header h1 {
   font-size: 3.5rem;
   margin-bottom: 1rem;
   text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
+
 .page-header p {
   font-size: 1.2rem;
   opacity: 0.9;
 }
+
 .filter-section {
   background: #fff;
   padding: 2rem 0;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
+
 .filter-bar {
   display: flex;
   justify-content: space-between;
@@ -132,11 +153,13 @@ body {
   gap: 2rem;
   flex-wrap: wrap;
 }
+
 .search-box {
   flex: 1;
   min-width: 300px;
   position: relative;
 }
+
 .search-box i {
   position: absolute;
   left: 1rem;
@@ -144,6 +167,7 @@ body {
   transform: translateY(-50%);
   color: var(--taupe-brown);
 }
+
 .search-box input {
   width: 100%;
   padding: 0.8rem 1rem 0.8rem 3rem;
@@ -152,15 +176,18 @@ body {
   font-size: 1rem;
   transition: 0.3s;
 }
+
 .search-box input:focus {
   outline: none;
   border-color: var(--primary-red);
 }
+
 .filter-buttons {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
 }
+
 .filter-btn {
   padding: 0.6rem 1.5rem;
   background: #fff;
@@ -171,29 +198,35 @@ body {
   font-weight: 600;
   transition: 0.3s;
 }
+
 .filter-btn:hover {
   border-color: var(--primary-red);
   color: var(--primary-red);
 }
+
 .filter-btn.active {
   background: var(--primary-red);
   color: #fff;
   border-color: var(--primary-red);
 }
+
 .container {
   max-width: 1400px;
   margin: 0 auto;
   padding: 4rem 5%;
 }
+
 .section-header {
   text-align: center;
   margin-bottom: 3rem;
 }
+
 .section-header h2 {
   font-size: 2.5rem;
   color: var(--dark-charcoal);
   margin-bottom: 1rem;
 }
+
 .header-line {
   width: 80px;
   height: 4px;
@@ -201,11 +234,13 @@ body {
   margin: 0 auto;
   border-radius: 2px;
 }
+
 .faculty-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 2rem;
 }
+
 .faculty-card {
   background: #fff;
   border-radius: 20px;
@@ -214,28 +249,34 @@ body {
   border: 2px solid var(--neutral-gray);
   transition: 0.3s;
 }
+
 .faculty-card:hover {
   transform: translateY(-10px);
   border-color: var(--primary-red);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
+
 .faculty-card.hidden {
   display: none;
 }
+
 .faculty-photo {
   position: relative;
   height: 300px;
   overflow: hidden;
 }
+
 .faculty-photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: 0.3s;
 }
+
 .faculty-card:hover .faculty-photo img {
   transform: scale(1.05);
 }
+
 .photo-overlay {
   position: absolute;
   top: 0;
@@ -250,9 +291,11 @@ body {
   opacity: 0;
   transition: 0.3s;
 }
+
 .faculty-card:hover .photo-overlay {
   opacity: 1;
 }
+
 .view-profile-btn {
   padding: 0.6rem 2rem;
   background: var(--primary-red);
@@ -263,18 +306,22 @@ body {
   font-weight: 600;
   transition: 0.3s;
 }
+
 .view-profile-btn:hover {
   background: #fff;
   color: var(--primary-red);
 }
+
 .faculty-info {
   padding: 1.5rem;
 }
+
 .faculty-info h3 {
   font-size: 1.5rem;
   color: var(--dark-charcoal);
   margin-bottom: 0.3rem;
 }
+
 .designation {
   display: inline-block;
   padding: 0.3rem 1rem;
@@ -285,12 +332,14 @@ body {
   font-weight: 600;
   margin-bottom: 1rem;
 }
+
 .qualification {
   color: var(--taupe-brown);
   font-size: 0.9rem;
   margin-bottom: 1rem;
   font-style: italic;
 }
+
 .experience,
 .research-interests,
 .publications,
@@ -300,17 +349,20 @@ body {
   font-size: 0.9rem;
   color: var(--taupe-brown);
 }
+
 .experience i,
 .publications i,
 .office-hours i {
   color: var(--primary-red);
   margin-right: 0.5rem;
 }
+
 .research-interests strong,
 .publications strong,
 .subjects strong {
   color: var(--dark-charcoal);
 }
+
 .contact-info {
   display: grid;
   grid-template-columns: 1fr;
@@ -320,6 +372,7 @@ body {
   border-top: 1px solid var(--neutral-gray);
   border-bottom: 1px solid var(--neutral-gray);
 }
+
 .contact-item {
   display: flex;
   align-items: center;
@@ -327,16 +380,19 @@ body {
   font-size: 0.85rem;
   color: var(--taupe-brown);
 }
+
 .contact-item i {
   color: var(--primary-red);
   width: 20px;
 }
+
 .social-links {
   display: flex;
   gap: 1rem;
   justify-content: center;
   margin-top: 1rem;
 }
+
 .social-links a {
   width: 40px;
   height: 40px;
@@ -349,19 +405,23 @@ body {
   transition: 0.3s;
   font-size: 1.2rem;
 }
+
 .social-links a:hover {
   background: var(--primary-red);
   color: #fff;
   transform: translateY(-3px);
 }
+
 .staff-section {
   background: #fff;
 }
+
 .staff-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 2rem;
 }
+
 .staff-card {
   background: var(--bg-off-white);
   padding: 2rem;
@@ -370,11 +430,13 @@ body {
   border: 2px solid var(--neutral-gray);
   transition: 0.3s;
 }
+
 .staff-card:hover {
   transform: translateY(-5px);
   border-color: var(--primary-red);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
+
 .staff-icon {
   width: 80px;
   height: 80px;
@@ -387,11 +449,13 @@ body {
   border-radius: 50%;
   font-size: 2rem;
 }
+
 .staff-card h3 {
   font-size: 1.3rem;
   color: var(--dark-charcoal);
   margin-bottom: 0.5rem;
 }
+
 .role {
   display: inline-block;
   padding: 0.3rem 1rem;
@@ -401,10 +465,12 @@ body {
   font-size: 0.85rem;
   margin-bottom: 1rem;
 }
+
 .staff-details {
   text-align: left;
   margin-top: 1.5rem;
 }
+
 .staff-details p {
   margin-bottom: 0.8rem;
   font-size: 0.9rem;
@@ -413,10 +479,12 @@ body {
   align-items: center;
   gap: 0.5rem;
 }
+
 .staff-details i {
   color: var(--primary-red);
   width: 20px;
 }
+
 footer {
   background: var(--dark-charcoal);
   color: var(--bg-off-white);
@@ -425,49 +493,62 @@ footer {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 2rem;
 }
+
 footer h4 {
   color: var(--primary-red);
   margin-bottom: 1rem;
 }
+
 footer ul {
   list-style: none;
 }
+
 footer ul li {
   margin-bottom: 0.5rem;
 }
+
 footer ul li a {
   color: var(--neutral-gray);
   text-decoration: none;
   transition: 0.3s;
 }
+
 footer ul li a:hover {
   color: #fff;
 }
+
 footer p {
   color: var(--neutral-gray);
   font-size: 0.9rem;
 }
+
 .reveal {
   opacity: 0;
   transform: translateY(30px);
   transition: all 1s ease-out;
 }
+
 .reveal.active {
   opacity: 1;
   transform: translateY(0);
 }
+
 @media (max-width: 768px) {
+
   .nav-links,
   .btn-login {
     display: none;
   }
+
   .filter-bar {
     flex-direction: column;
   }
+
   .filter-buttons {
     width: 100%;
     justify-content: center;
   }
+
   .faculty-grid,
   .staff-grid {
     grid-template-columns: 1fr;

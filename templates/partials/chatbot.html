@@ -1,0 +1,77 @@
+{# =========================================
+FLOATING CHATBOT WIDGET — loaded on every page via base.html
+JS is in static/js/chatbot.js
+========================================= #}
+
+<!-- Floating Chatbot Button -->
+<div class="chatbot-float" id="chatbotFloat" onclick="toggleFloatingChat()">
+    💬
+    <span class="chat-notification" id="chatNotification" style="display: none">1</span>
+</div>
+
+<!-- Floating Chat Window -->
+<div class="floating-chat-window" id="floatingChatWindow">
+    <!-- Header -->
+    <div class="floating-chat-header">
+        <div class="floating-chat-header-info">
+            <div class="floating-bot-avatar">🤖</div>
+            <div class="floating-header-text">
+                <h3>CS CONNECT</h3>
+                <p>Online now</p>
+            </div>
+        </div>
+        <div class="floating-chat-controls">
+            <button class="floating-control-btn" onclick="clearFloatingChat()" title="Clear">
+                <i class="fas fa-trash"></i>
+            </button>
+            <button class="floating-control-btn" onclick="toggleFloatingChat()" title="Close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Messages Area -->
+    <div class="floating-chat-messages" id="floatingChatMessages">
+        <!-- Welcome Message -->
+        <div class="floating-welcome" id="floatingWelcome">
+            <div class="floating-welcome-icon">👋</div>
+            <h4>Hi! I'm your CS CONNECT Assistant</h4>
+            <p>How can I help you today?</p>
+            <div class="floating-welcome-options">
+                <div class="floating-welcome-option" onclick="sendFloatingQuick('Admissions')">
+                    <i class="fas fa-graduation-cap"></i><span>Admissions</span>
+                </div>
+                <div class="floating-welcome-option" onclick="sendFloatingQuick('Syllabus')">
+                    <i class="fas fa-book"></i><span>Syllabus</span>
+                </div>
+                <div class="floating-welcome-option" onclick="sendFloatingQuick('Faculty')">
+                    <i class="fas fa-chalkboard-teacher"></i><span>Faculty</span>
+                </div>
+                <div class="floating-welcome-option" onclick="sendFloatingQuick('Library')">
+                    <i class="fas fa-book-reader"></i><span>Library</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Typing Indicator -->
+        <div class="floating-typing" id="floatingTyping">
+            <div class="floating-message-avatar" style="background: var(--primary-red); color: white">🤖</div>
+            <div class="floating-typing-dots">
+                <div class="floating-typing-dot"></div>
+                <div class="floating-typing-dot"></div>
+                <div class="floating-typing-dot"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Input Area -->
+    <div class="floating-chat-input">
+        <div class="floating-input-wrapper">
+            <input type="text" id="floatingInput" placeholder="Type your message..."
+                onkeypress="handleFloatingEnter(event)" />
+            <button class="floating-send-btn" onclick="sendFloatingMessage()">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+</div>
