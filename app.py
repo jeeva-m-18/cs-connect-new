@@ -3,25 +3,20 @@ import psycopg2
 import psycopg2.extras
 from werkzeug.security import generate_password_hash, check_password_hash
 
-# Import mock data (replace with DB queries later)
-from data import (
-    NEWS_TICKER,
-    HOME_STATS, HOME_FEATURE_CARDS, HOME_EVENTS,
-    STAFF_DATA,
-    DEPT_STATS_OVERVIEW, DEPT_STATS_GLANCE, PEOS, PSOS, MILESTONES,
-    ACCREDITATIONS, INFRASTRUCTURE,
-    PLACEMENT_TEAM,
-)
 
 app = Flask(__name__)
 app.secret_key = "csconnectsecret"
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # PostgreSQL Connection details
-DB_HOST = "localhost"
-DB_NAME = "login"
-DB_USER = "postgres"
-DB_PASS = "1234"
+DB_HOST = os.environ.get("DB_HOST", "localhost")
+DB_NAME = os.environ.get("DB_NAME", "login")
+DB_USER = os.environ.get("DB_USER", "postgres")
+DB_PASS = os.environ.get("DB_PASS", "1234")
 
 class DBConnection:
     def __init__(self):
@@ -49,6 +44,48 @@ class DBConnection:
 def get_db_connection():
     return DBConnection()
 
+import json
+
+def get_site_data(key, default_val=None):
+    conn = get_db_connection()
+    row = conn.execute("SELECT data FROM site_data WHERE key = %s", (key,)).fetchone()
+    conn.close()
+    if row and row[0]:
+        # Handle if it's already a string or a dict/list because of jsonb
+        if isinstance(row[0], str):
+            return json.loads(row[0])
+        return row[0]
+    return default_val if default_val is not None else []
+
+def get_news_ticker():
+    conn = get_db_connection()
+    row = conn.execute("SELECT text FROM news_ticker ORDER BY id DESC LIMIT 1").fetchone()
+    conn.close()
+    return row[0] if row else ""
+
+def get_home_stats():
+    conn = get_db_connection()
+    rows = conn.execute("SELECT value, label FROM home_stats ORDER BY id ASC").fetchall()
+    conn.close()
+    return [{"value": r[0], "label": r[1]} for r in rows]
+
+def get_placement_batches():
+    conn = get_db_connection()
+    rows = conn.execute("SELECT batch_key, label, stats, companies FROM placement_batches ORDER BY id ASC").fetchall()
+    conn.close()
+    batches = []
+    for r in rows:
+        stats = r[2] if not isinstance(r[2], str) else json.loads(r[2])
+        companies = r[3] if not isinstance(r[3], str) else json.loads(r[3])
+        batches.append({
+            "key": r[0],
+            "label": r[1],
+            "stats": stats,
+            "companies": companies
+        })
+    return batches
+
+
 
 # ─────────────────────────────────────────────────
 # CONTEXT PROCESSOR — injects globals into every template
@@ -56,7 +93,7 @@ def get_db_connection():
 @app.context_processor
 def inject_globals():
     return {
-        "ticker_text": NEWS_TICKER,
+        "ticker_text": get_news_ticker(),
         "active_page": "",   # overridden per route
     }
 
@@ -67,7 +104,9 @@ def inject_globals():
 def init_db():
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("""
+    
+    # 1. users
+    cursor.execute('''
         CREATE TABLE IF NOT EXISTS users (
             id SERIAL PRIMARY KEY,
             name TEXT NOT NULL,
@@ -76,7 +115,145 @@ def init_db():
             password TEXT NOT NULL,
             role TEXT DEFAULT 'student'
         )
-    """)
+    ''')
+    
+    # 2. faculty
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS faculty (
+            id SERIAL PRIMARY KEY,
+            name TEXT NOT NULL,
+            designation TEXT,
+            designation_key TEXT,
+            qualification TEXT,
+            joined TEXT,
+            research TEXT,
+            email TEXT,
+            photo TEXT
+        )
+    ''')
+    
+    # 3. books
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS books (
+            id SERIAL PRIMARY KEY,
+            title TEXT NOT NULL,
+            author TEXT,
+            category TEXT,
+            status TEXT,
+            shelf TEXT,
+            cover_gradient TEXT,
+            cover_icon TEXT
+        )
+    ''')
+    
+    # 4. placement_summary
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS placement_summary (
+            id SERIAL PRIMARY KEY,
+            icon TEXT,
+            value TEXT,
+            label TEXT,
+            decimal_bool INTEGER,
+            company TEXT
+        )
+    ''')
+    
+    # 5. placement_companies
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS placement_companies (
+            id SERIAL PRIMARY KEY,
+            name TEXT NOT NULL,
+            url TEXT,
+            sector TEXT
+        )
+    ''')
+    
+    # 6. alumni
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS alumni (
+            id SERIAL PRIMARY KEY,
+            name TEXT NOT NULL,
+            batch TEXT,
+            company TEXT,
+            package TEXT,
+            photo TEXT,
+            testimonial TEXT
+        )
+    ''')
+    
+    # 7. internships
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS internships (
+            id SERIAL PRIMARY KEY,
+            title TEXT NOT NULL,
+            company TEXT,
+            domain TEXT,
+            location TEXT,
+            description TEXT,
+            link TEXT
+        )
+    ''')
+    
+    # 8. programs
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS programs (
+            id SERIAL PRIMARY KEY,
+            name TEXT NOT NULL,
+            duration TEXT,
+            intake TEXT,
+            eligibility TEXT,
+            extra_icon TEXT,
+            extra_label TEXT,
+            extra_value TEXT,
+            highlights TEXT
+        )
+    ''')
+    
+    # 9. semesters
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS semesters (
+            id SERIAL PRIMARY KEY,
+            title TEXT NOT NULL,
+            subjects TEXT
+        )
+    ''')
+    
+    # 10. news_ticker
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS news_ticker (
+            id SERIAL PRIMARY KEY,
+            text TEXT
+        )
+    ''')
+    
+    # 11. home_stats
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS home_stats (
+            id SERIAL PRIMARY KEY,
+            value TEXT,
+            label TEXT
+        )
+    ''')
+    
+    # 12. placement_batches
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS placement_batches (
+            id SERIAL PRIMARY KEY,
+            batch_key TEXT,
+            label TEXT,
+            stats JSONB,
+            companies JSONB
+        )
+    ''')
+    
+    # 13. site_data
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS site_data (
+            key TEXT PRIMARY KEY,
+            data JSONB
+        )
+    ''')
+
     conn.commit()
     conn.close()
 
@@ -90,9 +267,9 @@ def home():
     return render_template(
         'indexn.html',
         active_page='home',
-        stats=HOME_STATS,
-        feature_cards=HOME_FEATURE_CARDS,
-        events=HOME_EVENTS,
+        stats=get_home_stats(),
+        feature_cards=get_site_data('home_feature_cards'),
+        events=get_site_data('home_events'),
     )
 
 
@@ -108,7 +285,7 @@ def faculty():
         'faculty/faculty.html',
         active_page='faculty',
         faculty=faculty_list,
-        staff_members=STAFF_DATA,
+        staff_members=get_site_data('staff_data'),
     )
 
 
@@ -117,11 +294,11 @@ def about_cse():
     return render_template(
         'about/about-cse.html',
         active_page='about_cse',
-        dept_stats=DEPT_STATS_OVERVIEW,
-        dept_glance=DEPT_STATS_GLANCE,
-        peos=PEOS,
-        psos=PSOS,
-        milestones=MILESTONES,
+        dept_stats=get_site_data('dept_stats_overview'),
+        dept_glance=get_site_data('dept_stats_glance'),
+        peos=get_site_data('peos'),
+        psos=get_site_data('psos'),
+        milestones=get_site_data('milestones'),
     )
 
 
@@ -130,8 +307,8 @@ def about_aisat():
     return render_template(
         'about/about-aisat.html',
         active_page='about_aisat',
-        accreditations=ACCREDITATIONS,
-        infrastructure=INFRASTRUCTURE,
+        accreditations=get_site_data('accreditations'),
+        infrastructure=get_site_data('infrastructure'),
     )
 
 
@@ -203,8 +380,7 @@ def placements():
     # The batch data is nested, so let's mock the fetch to keep templates working
     # We will need a `placement_batches` table later or just parse a JSON
     # For now, let's just fetch the rest and hardcode PLACEMENT_BATCHES
-    from data import PLACEMENT_BATCHES
-    batches = PLACEMENT_BATCHES
+    batches = get_placement_batches()
 
     conn.close()
 
@@ -216,7 +392,7 @@ def placements():
         companies=companies,
         alumni=alumni,
         internships=internships,
-        team=PLACEMENT_TEAM,
+        team=get_site_data('placement_team', {}),
     )
 
 
@@ -291,18 +467,16 @@ def api_placements():
         d['decimal'] = bool(d['decimal_bool'])
         placement_summary.append(d)
         
-    from data import PLACEMENT_BATCHES
-        
     return jsonify({
         "summary": placement_summary,
-        "batches": PLACEMENT_BATCHES,
+        "batches": get_placement_batches(),
     })
 
 
 @app.route('/api/stats')
 def api_stats():
     """Return homepage stats as JSON."""
-    return jsonify(HOME_STATS)
+    return jsonify(get_home_stats())
 
 
 # ─────────────────────────────────────────────────
