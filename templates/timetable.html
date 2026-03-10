@@ -238,12 +238,13 @@
                 {% for day in days %}
                 <tr>
                     <td class="day-label">{{ day | upper }}</td>
-                    {% set skip_until = [0] %}
+                    {% set skip = namespace(until=0) %}
                     {% for pnum, ptime in periods %}
-                    {% if pnum <= skip_until[0] %} {# This period was consumed by a spanning lab — skip #} {% else %} {%
+                    {% if pnum <= skip.until %} {# This period was consumed by a spanning lab — skip #} {% else %} {%
                         set slot=slot_map.get((day, pnum)) %} {% if slot %} {% set code=slot.subject_code %} {% set
-                        color=colors.get(code, '#607d8b' ) %} {% set sp=slot.span %} {% if sp> 1 %}{% if
-                        skip_until.append(pnum + sp - 1) %}{% endif %}{% endif %}
+                        color=colors.get(code, '#607d8b' ) %} {% set sp=slot.span %} {% if sp> 1 %}
+                        {% set skip.until = pnum + sp - 1 %}
+                        {% endif %}
                         <td colspan="{{ sp }}" style="padding:0;">
                             <div class="tt-slot" data-color="{{ color }}" title="{{ code }} — {{ slot.faculty_code }}">
                                 <span class="subj">{{ code }}</span>

@@ -182,7 +182,6 @@ def request_book(book_id):
         )
         
         # Check if book is currently issued, and notify the current issuer
-        from models.issue import Issue
         is_avail = book.get("availability", True)
         # Using string check as well just in case
         if is_avail is False or is_avail == 'False' or is_avail == 0:

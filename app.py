@@ -1,22 +1,23 @@
+import json
+import os
+
+from dotenv import load_dotenv
 from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 import psycopg2
 import psycopg2.extras
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 
+load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = "csconnectsecret"
+app.secret_key = os.environ.get("SECRET_KEY", "csconnectsecret")
 
 from routes.library_routes import library_bp
 from routes.admin_routes import admin_bp
 
 app.register_blueprint(library_bp)
 app.register_blueprint(admin_bp)
-
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
 
 # PostgreSQL Connection details
 DB_HOST = os.environ.get("DB_HOST", "localhost")
@@ -50,7 +51,6 @@ class DBConnection:
 def get_db_connection():
     return DBConnection()
 
-import json
 
 def get_site_data(key, default_val=None):
     conn = get_db_connection()
@@ -559,7 +559,6 @@ def academics():
     semesters_raw = conn.execute('SELECT * FROM semesters').fetchall()
     conn.close()
 
-    import json
     programs = []
     for p in programs_raw:
         d = dict(p)
@@ -823,8 +822,7 @@ def faculty_upload():
         flash("No file selected. Please choose a file to upload.", "danger")
         return redirect(url_for('faculty_dashboard'))
 
-    import os
-    from werkzeug.utils import secure_filename
+    # os and secure_filename already imported at top
 
     ALLOWED_EXTENSIONS = {'pdf', 'doc', 'docx', 'ppt', 'pptx', 'txt', 'zip'}
     filename = secure_filename(uploaded_file.filename)
@@ -857,15 +855,49 @@ def student_dashboard():
                            active_page='student_dashboard')
 
 
-
-
 # ─────────────────────────────────────────────────
 # ADMIN HELPER
 # ─────────────────────────────────────────────────
 
 def admin_required():
-    """Returns True if user is NOT admin (i.e. should be denied)."""
-    return session.get("role") != "admin"
+    """Returns True if user IS admin."""
+    return session.get("role") == "admin"
+
+
+@app.route('/admin/timetable/upload', methods=['POST'])
+def admin_timetable_upload():
+    if not admin_required():
+        flash("Access denied! Admins only.", "danger")
+        return redirect(url_for('login'))
+
+    batch = request.form.get('batch', '').strip()
+    uploaded_file = request.files.get('file')
+
+    if not batch:
+        flash("Batch name is required.", "danger")
+        return redirect(url_for('admin_panel'))
+
+    if not uploaded_file or uploaded_file.filename == '':
+        flash("No file selected. Please choose a file.", "danger")
+        return redirect(url_for('admin_panel'))
+
+    if not uploaded_file.filename.lower().endswith('.csv'):
+        flash("Only .csv files are supported for timetable upload.", "danger")
+        return redirect(url_for('admin_panel'))
+
+    # os and secure_filename already imported at top
+    
+    upload_dir = os.path.join(app.root_path, 'static', 'uploads', 'timetable')
+    os.makedirs(upload_dir, exist_ok=True)
+    
+    filename = secure_filename(f"{batch.replace(' ', '_')}_{uploaded_file.filename}")
+    save_path = os.path.join(upload_dir, filename)
+    uploaded_file.save(save_path)
+    
+    # Future parsing logic and saving to `timetable` table can go here
+    
+    flash(f"✅ Timetable for '{batch}' uploaded successfully.", "success")
+    return redirect(url_for('admin_panel'))
 
 
 # ─────────────────────────────────────────────────
@@ -874,7 +906,7 @@ def admin_required():
 
 @app.route('/admin-panel')
 def admin_panel():
-    if admin_required():
+    if not admin_required():
         flash("Access denied! Admins only.", "danger")
         return redirect(url_for("login"))
 
@@ -889,7 +921,6 @@ def admin_panel():
     summary_list = conn.execute("SELECT * FROM placement_summary").fetchall()
     conn.close()
 
-    import json
     programs = []
     for p in programs_raw:
         d = dict(p)
@@ -952,7 +983,7 @@ def admin_panel():
 
 @app.route('/admin/users/edit/<int:uid>', methods=["POST"])
 def admin_users_edit(uid):
-    if admin_required():
+    if not admin_required():
         return redirect(url_for("login"))
     f = request.form
     conn = get_db_connection()
@@ -967,7 +998,7 @@ def admin_users_edit(uid):
 
 @app.route('/admin/users/add', methods=["POST"])
 def admin_users_add():
-    if admin_required():
+    if not admin_required():
         return redirect(url_for("login"))
     
     f = request.form
@@ -996,7 +1027,7 @@ def admin_users_add():
 
 @app.route('/admin/users/delete/<int:uid>', methods=["POST"])
 def admin_users_delete(uid):
-    if admin_required():
+    if not admin_required():
         return redirect(url_for("login"))
     
     # Prevent admin from deleting themselves
@@ -1017,39 +1048,48 @@ def admin_users_delete(uid):
 
 @app.route('/admin/faculty/add', methods=["POST"])
 def admin_faculty_add():
-    if admin_required():
+    if not admin_required():
         return redirect(url_for("login"))
     f = request.form
     conn = get_db_connection()
-    conn.execute(
-        "INSERT INTO faculty (name, designation, designation_key, qualification, joined, research, email, photo) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",
-        (f['name'], f['designation'], f['designation_key'], f['qualification'], f['joined'], f['research'], f['email'], f['photo'])
-    )
-    conn.commit(); conn.close()
+    try:
+        conn.execute(
+            "INSERT INTO faculty (name, designation, designation_key, qualification, joined, research, email, photo) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",
+            (f['name'], f['designation'], f['designation_key'], f['qualification'], f['joined'], f['research'], f['email'], f['photo'])
+        )
+        conn.commit()
+    finally:
+        conn.close()
     flash("Faculty member added!", "success")
     return redirect(url_for("admin_panel") + "#faculty")
 
 @app.route('/admin/faculty/edit/<int:fid>', methods=["POST"])
 def admin_faculty_edit(fid):
-    if admin_required():
+    if not admin_required():
         return redirect(url_for("login"))
     f = request.form
     conn = get_db_connection()
-    conn.execute(
-        "UPDATE faculty SET name=%s, designation=%s, designation_key=%s, qualification=%s, joined=%s, research=%s, email=%s, photo=%s WHERE id=%s",
-        (f['name'], f['designation'], f['designation_key'], f['qualification'], f['joined'], f['research'], f['email'], f['photo'], fid)
-    )
-    conn.commit(); conn.close()
+    try:
+        conn.execute(
+            "UPDATE faculty SET name=%s, designation=%s, designation_key=%s, qualification=%s, joined=%s, research=%s, email=%s, photo=%s WHERE id=%s",
+            (f['name'], f['designation'], f['designation_key'], f['qualification'], f['joined'], f['research'], f['email'], f['photo'], fid)
+        )
+        conn.commit()
+    finally:
+        conn.close()
     flash("Faculty member updated!", "success")
     return redirect(url_for("admin_panel") + "#faculty")
 
 @app.route('/admin/faculty/delete/<int:fid>', methods=["POST"])
 def admin_faculty_delete(fid):
-    if admin_required():
+    if not admin_required():
         return redirect(url_for("login"))
     conn = get_db_connection()
-    conn.execute("DELETE FROM faculty WHERE id=%s", (fid,))
-    conn.commit(); conn.close()
+    try:
+        conn.execute("DELETE FROM faculty WHERE id=%s", (fid,))
+        conn.commit()
+    finally:
+        conn.close()
     flash("Faculty member deleted!", "warning")
     return redirect(url_for("admin_panel") + "#faculty")
 
@@ -1060,41 +1100,50 @@ def admin_faculty_delete(fid):
 
 @app.route('/admin/books/add', methods=["POST"])
 def admin_books_add():
-    if admin_required():
+    if not admin_required():
         return redirect(url_for("login"))
     f = request.form
     conn = get_db_connection()
-    conn.execute(
-        "INSERT INTO books (title, author, category, status, cover_gradient, cover_icon) VALUES (%s,%s,%s,%s,%s,%s)",
-        (f['title'], f['author'], f['category'], f['status'],
-         f.get('cover_gradient', 'linear-gradient(135deg,#667eea,#764ba2)'),
-         f.get('cover_icon', 'fas fa-book'))
-    )
-    conn.commit(); conn.close()
+    try:
+        conn.execute(
+            "INSERT INTO books (title, author, category, status, cover_gradient, cover_icon) VALUES (%s,%s,%s,%s,%s,%s)",
+            (f['title'], f['author'], f['category'], f['status'],
+             f.get('cover_gradient', 'linear-gradient(135deg,#667eea,#764ba2)'),
+             f.get('cover_icon', 'fas fa-book'))
+        )
+        conn.commit()
+    finally:
+        conn.close()
     flash("Book added!", "success")
     return redirect(url_for("admin_panel") + "#library")
 
 @app.route('/admin/books/edit/<int:bid>', methods=["POST"])
 def admin_books_edit(bid):
-    if admin_required():
+    if not admin_required():
         return redirect(url_for("login"))
     f = request.form
     conn = get_db_connection()
-    conn.execute(
-        "UPDATE books SET title=%s, author=%s, category=%s, status=%s WHERE id=%s",
-        (f['title'], f['author'], f['category'], f['status'], bid)
-    )
-    conn.commit(); conn.close()
+    try:
+        conn.execute(
+            "UPDATE books SET title=%s, author=%s, category=%s, status=%s WHERE id=%s",
+            (f['title'], f['author'], f['category'], f['status'], bid)
+        )
+        conn.commit()
+    finally:
+        conn.close()
     flash("Book updated!", "success")
     return redirect(url_for("admin_panel") + "#library")
 
 @app.route('/admin/books/delete/<int:bid>', methods=["POST"])
 def admin_books_delete(bid):
-    if admin_required():
+    if not admin_required():
         return redirect(url_for("login"))
     conn = get_db_connection()
-    conn.execute("DELETE FROM books WHERE id=%s", (bid,))
-    conn.commit(); conn.close()
+    try:
+        conn.execute("DELETE FROM books WHERE id=%s", (bid,))
+        conn.commit()
+    finally:
+        conn.close()
     flash("Book deleted!", "warning")
     return redirect(url_for("admin_panel") + "#library")
 
@@ -1105,47 +1154,54 @@ def admin_books_delete(bid):
 
 @app.route('/admin/programs/add', methods=["POST"])
 def admin_programs_add():
-    if admin_required():
+    if not admin_required():
         return redirect(url_for("login"))
-    import json
     f = request.form
     highlights = [h.strip() for h in f.get('highlights', '').split('\n') if h.strip()]
     conn = get_db_connection()
-    conn.execute(
-        "INSERT INTO programs (name, duration, intake, eligibility, extra_icon, extra_label, extra_value, highlights) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",
-        (f['name'], f['duration'], f['intake'], f['eligibility'],
-         f.get('extra_icon', '🏫'), f.get('extra_label', ''), f.get('extra_value', ''),
-         json.dumps(highlights))
-    )
-    conn.commit(); conn.close()
+    try:
+        conn.execute(
+            "INSERT INTO programs (name, duration, intake, eligibility, extra_icon, extra_label, extra_value, highlights) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",
+            (f['name'], f['duration'], f['intake'], f['eligibility'],
+             f.get('extra_icon', '🏫'), f.get('extra_label', ''), f.get('extra_value', ''),
+             json.dumps(highlights))
+        )
+        conn.commit()
+    finally:
+        conn.close()
     flash("Program added!", "success")
     return redirect(url_for("admin_panel") + "#academics")
 
 @app.route('/admin/programs/edit/<int:pid>', methods=["POST"])
 def admin_programs_edit(pid):
-    if admin_required():
+    if not admin_required():
         return redirect(url_for("login"))
-    import json
     f = request.form
     highlights = [h.strip() for h in f.get('highlights', '').split('\n') if h.strip()]
     conn = get_db_connection()
-    conn.execute(
-        "UPDATE programs SET name=%s, duration=%s, intake=%s, eligibility=%s, extra_label=%s, extra_value=%s, highlights=%s WHERE id=%s",
-        (f['name'], f['duration'], f['intake'], f['eligibility'],
-         f.get('extra_label', ''), f.get('extra_value', ''),
-         json.dumps(highlights), pid)
-    )
-    conn.commit(); conn.close()
+    try:
+        conn.execute(
+            "UPDATE programs SET name=%s, duration=%s, intake=%s, eligibility=%s, extra_label=%s, extra_value=%s, highlights=%s WHERE id=%s",
+            (f['name'], f['duration'], f['intake'], f['eligibility'],
+             f.get('extra_label', ''), f.get('extra_value', ''),
+             json.dumps(highlights), pid)
+        )
+        conn.commit()
+    finally:
+        conn.close()
     flash("Program updated!", "success")
     return redirect(url_for("admin_panel") + "#academics")
 
 @app.route('/admin/programs/delete/<int:pid>', methods=["POST"])
 def admin_programs_delete(pid):
-    if admin_required():
+    if not admin_required():
         return redirect(url_for("login"))
     conn = get_db_connection()
-    conn.execute("DELETE FROM programs WHERE id=%s", (pid,))
-    conn.commit(); conn.close()
+    try:
+        conn.execute("DELETE FROM programs WHERE id=%s", (pid,))
+        conn.commit()
+    finally:
+        conn.close()
     flash("Program deleted!", "warning")
     return redirect(url_for("admin_panel") + "#academics")
 
@@ -1156,15 +1212,18 @@ def admin_programs_delete(pid):
 
 @app.route('/admin/placement-summary/edit/<int:sid>', methods=["POST"])
 def admin_placement_summary_edit(sid):
-    if admin_required():
+    if not admin_required():
         return redirect(url_for("login"))
     f = request.form
     conn = get_db_connection()
-    conn.execute(
-        "UPDATE placement_summary SET icon=%s, value=%s, label=%s, company=%s WHERE id=%s",
-        (f['icon'], f['value'], f['label'], f.get('company', ''), sid)
-    )
-    conn.commit(); conn.close()
+    try:
+        conn.execute(
+            "UPDATE placement_summary SET icon=%s, value=%s, label=%s, company=%s WHERE id=%s",
+            (f['icon'], f['value'], f['label'], f.get('company', ''), sid)
+        )
+        conn.commit()
+    finally:
+        conn.close()
     flash("Placement summary updated!", "success")
     return redirect(url_for("admin_panel") + "#placements")
 
@@ -1175,23 +1234,29 @@ def admin_placement_summary_edit(sid):
 
 @app.route('/admin/companies/add', methods=["POST"])
 def admin_companies_add():
-    if admin_required():
+    if not admin_required():
         return redirect(url_for("login"))
     f = request.form
     conn = get_db_connection()
-    conn.execute("INSERT INTO placement_companies (name, url, sector) VALUES (%s,%s,%s)",
-                 (f['name'], f.get('url', ''), f.get('sector', 'IT')))
-    conn.commit(); conn.close()
+    try:
+        conn.execute("INSERT INTO placement_companies (name, url, sector) VALUES (%s,%s,%s)",
+                     (f['name'], f.get('url', ''), f.get('sector', 'IT')))
+        conn.commit()
+    finally:
+        conn.close()
     flash("Company added!", "success")
     return redirect(url_for("admin_panel") + "#placements")
 
 @app.route('/admin/companies/delete/<int:cid>', methods=["POST"])
 def admin_companies_delete(cid):
-    if admin_required():
+    if not admin_required():
         return redirect(url_for("login"))
     conn = get_db_connection()
-    conn.execute("DELETE FROM placement_companies WHERE id=%s", (cid,))
-    conn.commit(); conn.close()
+    try:
+        conn.execute("DELETE FROM placement_companies WHERE id=%s", (cid,))
+        conn.commit()
+    finally:
+        conn.close()
     flash("Company deleted!", "warning")
     return redirect(url_for("admin_panel") + "#placements")
 
@@ -1202,23 +1267,29 @@ def admin_companies_delete(cid):
 
 @app.route('/admin/alumni/add', methods=["POST"])
 def admin_alumni_add():
-    if admin_required():
+    if not admin_required():
         return redirect(url_for("login"))
     f = request.form
     conn = get_db_connection()
-    conn.execute("INSERT INTO alumni (name, batch, company, package, photo, testimonial) VALUES (%s,%s,%s,%s,%s,%s)",
-                 (f['name'], f['batch'], f['company'], f['package'], f.get('photo', ''), f.get('testimonial', '')))
-    conn.commit(); conn.close()
+    try:
+        conn.execute("INSERT INTO alumni (name, batch, company, package, photo, testimonial) VALUES (%s,%s,%s,%s,%s,%s)",
+                     (f['name'], f['batch'], f['company'], f['package'], f.get('photo', ''), f.get('testimonial', '')))
+        conn.commit()
+    finally:
+        conn.close()
     flash("Alumni added!", "success")
     return redirect(url_for("admin_panel") + "#placements")
 
 @app.route('/admin/alumni/delete/<int:aid>', methods=["POST"])
 def admin_alumni_delete(aid):
-    if admin_required():
+    if not admin_required():
         return redirect(url_for("login"))
     conn = get_db_connection()
-    conn.execute("DELETE FROM alumni WHERE id=%s", (aid,))
-    conn.commit(); conn.close()
+    try:
+        conn.execute("DELETE FROM alumni WHERE id=%s", (aid,))
+        conn.commit()
+    finally:
+        conn.close()
     flash("Alumni deleted!", "warning")
     return redirect(url_for("admin_panel") + "#placements")
 
@@ -1229,23 +1300,29 @@ def admin_alumni_delete(aid):
 
 @app.route('/admin/internships/add', methods=["POST"])
 def admin_internships_add():
-    if admin_required():
+    if not admin_required():
         return redirect(url_for("login"))
     f = request.form
     conn = get_db_connection()
-    conn.execute("INSERT INTO internships (title, company, domain, location, description, link) VALUES (%s,%s,%s,%s,%s,%s)",
-                 (f['title'], f['company'], f.get('domain', 'IT'), f.get('location', ''), f.get('description', ''), f.get('link', '#')))
-    conn.commit(); conn.close()
+    try:
+        conn.execute("INSERT INTO internships (title, company, domain, location, description, link) VALUES (%s,%s,%s,%s,%s,%s)",
+                     (f['title'], f['company'], f.get('domain', 'IT'), f.get('location', ''), f.get('description', ''), f.get('link', '#')))
+        conn.commit()
+    finally:
+        conn.close()
     flash("Internship added!", "success")
     return redirect(url_for("admin_panel") + "#placements")
 
 @app.route('/admin/internships/delete/<int:iid>', methods=["POST"])
 def admin_internships_delete(iid):
-    if admin_required():
+    if not admin_required():
         return redirect(url_for("login"))
     conn = get_db_connection()
-    conn.execute("DELETE FROM internships WHERE id=%s", (iid,))
-    conn.commit(); conn.close()
+    try:
+        conn.execute("DELETE FROM internships WHERE id=%s", (iid,))
+        conn.commit()
+    finally:
+        conn.close()
     flash("Internship deleted!", "warning")
     return redirect(url_for("admin_panel") + "#placements")
 
