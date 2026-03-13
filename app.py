@@ -20,16 +20,21 @@ app.register_blueprint(library_bp)
 app.register_blueprint(admin_bp)
 
 # PostgreSQL Connection details
-DB_HOST = os.environ.get("DB_HOST", "localhost")
-DB_NAME = os.environ.get("DB_NAME", "login")
-DB_USER = os.environ.get("DB_USER", "postgres")
-DB_PASS = os.environ.get("DB_PASS", "1234")
-
 class DBConnection:
     def __init__(self):
-        self.conn = psycopg2.connect(
-            host=DB_HOST, dbname=DB_NAME, user=DB_USER, password=DB_PASS
-        )
+        db_url = os.environ.get("NEON_DATABASE_URL") or os.environ.get("LOCAL_DATABASE_URL") or os.environ.get("DATABASE_URL")
+        
+        if db_url:
+            self.conn = psycopg2.connect(db_url)
+        else:
+            # Fallback for old local config if env vars are missing
+            DB_HOST = os.environ.get("DB_HOST", "localhost")
+            DB_NAME = os.environ.get("DB_NAME", "csconnect")
+            DB_USER = os.environ.get("DB_USER", "postgres")
+            DB_PASS = os.environ.get("DB_PASS", "1234")
+            self.conn = psycopg2.connect(
+                host=DB_HOST, dbname=DB_NAME, user=DB_USER, password=DB_PASS
+            )
     
     def cursor(self):
         return self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -45,6 +50,9 @@ class DBConnection:
     def commit(self):
         self.conn.commit()
         
+    def rollback(self):
+        self.conn.rollback()
+        
     def close(self):
         self.conn.close()
 
@@ -53,15 +61,19 @@ def get_db_connection():
 
 
 def get_site_data(key, default_val=None):
-    conn = get_db_connection()
-    row = conn.execute("SELECT data FROM site_data WHERE key = %s", (key,)).fetchone()
-    conn.close()
-    if row and row[0]:
-        # Handle if it's already a string or a dict/list because of jsonb
-        if isinstance(row[0], str):
-            return json.loads(row[0])
-        return row[0]
-    return default_val if default_val is not None else []
+    try:
+        conn = get_db_connection()
+        row = conn.execute("SELECT data FROM site_data WHERE key = %s", (key,)).fetchone()
+        conn.close()
+        if row and row[0]:
+            # Handle if it's already a string or a dict/list because of jsonb
+            if isinstance(row[0], str):
+                return json.loads(row[0])
+            return row[0]
+        return default_val if default_val is not None else {}
+    except Exception as e:
+        print(f"Error fetching site_data for key {key}: {e}")
+        return default_val if default_val is not None else {}
 
 def get_news_ticker():
     conn = get_db_connection()

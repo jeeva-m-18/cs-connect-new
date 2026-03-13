@@ -226,22 +226,38 @@
     </div>
     <div class="team-layout">
       <div class="faculty-lead reveal">
+        {% if team and team.faculty_coordinator %}
         <div class="team-photo-sq">
           <img src="{{ team.faculty_coordinator.photo }}" alt="Coordinator">
         </div>
         <h3>{{ team.faculty_coordinator.name }}</h3>
         <p class="role">{{ team.faculty_coordinator.designation }}</p>
         <p class="email"><i class="fas fa-envelope"></i> {{ team.faculty_coordinator.email }}</p>
+        {% else %}
+        <div class="team-photo-sq">
+          <img src="https://via.placeholder.com/150" alt="Coordinator">
+        </div>
+        <h3>Placement Coordinator</h3>
+        <p class="role">Coordinator</p>
+        <p class="email"><i class="fas fa-envelope"></i> tbd@example.com</p>
+        {% endif %}
       </div>
       <div class="student-leads reveal">
         <h4>Student Coordinators</h4>
         <div class="student-list">
-          {% for s in team.student_coordinators %}
-          <div class="student-item">
-            <strong>{{ s.name }}</strong>
-            <span>{{ s.email }}</span>
-          </div>
-          {% endfor %}
+          {% if team and team.student_coordinators %}
+            {% for s in team.student_coordinators %}
+            <div class="student-item">
+              <strong>{{ s.name }}</strong>
+              <span>{{ s.email }}</span>
+            </div>
+            {% endfor %}
+          {% else %}
+            <div class="student-item">
+              <strong>TBD</strong>
+              <span>TBD</span>
+            </div>
+          {% endif %}
         </div>
       </div>
     </div>
