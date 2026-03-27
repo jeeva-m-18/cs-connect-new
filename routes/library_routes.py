@@ -242,12 +242,28 @@ def return_book(book_id):
     elif Request.has_pending_request(user_id, book_id, 'return'):
         flash("A return request is already pending for this book.", "info")
     else:
+        # Get active issue to mark request date
+        issue_id = None
+        from database import db_connection
+        with db_connection() as conn:
+            issue = conn.execute("SELECT sl_no FROM issues WHERE book_id = %s AND user_id = %s AND status = 'issued'", (book_id, user_id)).fetchone()
+            if issue:
+                issue_id = issue['sl_no']
+        
+        if not issue_id:
+            flash("Active issue not found.", "danger")
+            return redirect(url_for("library_bp.book_details", book_id=book_id))
+
         # Create Return Request
+        from datetime import datetime, timezone
+        now_utc = datetime.now(timezone.utc)
         req_id = Request.create_request(book_id, user_id, 'return')
+        Issue.mark_return_requested(issue_id, now_utc)
+        
         action_html = f" <form action='/admin/approve_request/{req_id}' method='POST' style='display:inline; margin-left: 10px;'><button type='submit' style='background:#28a745; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-size:0.75rem; font-weight:600; cursor:pointer;'>Approve</button></form>"
-        msg = f"{session.get('name')} (ID: {user_id}) has requested for returning '{book['title']}' (Book ID: {book_id})." + action_html
+        msg = f"{session.get('name')} (ID: {user_id}) has requested for returning '{book['title']}' (Book ID: {book_id}). Fine stopped at request date." + action_html
         Notification.notify_admin(msg)
-        flash("Return request sent to admin for approval.", "success")
+        flash("Return request sent to admin for approval. Fine stops as of now.", "success")
 
     return redirect(url_for("library_bp.book_details", book_id=book_id))
 
@@ -275,6 +291,9 @@ def renew_book(book_id):
         return redirect(url_for("library_bp.book_details", book_id=book_id))
 
     from database import db_connection
+    from datetime import datetime, timezone, timedelta
+    now_utc = datetime.now(timezone.utc)
+    
     with db_connection() as conn:
         issue = conn.execute("SELECT sl_no, renewal_count, due_date FROM issues WHERE book_id = %s AND user_id = %s AND status = 'issued'", (book_id, user_id)).fetchone()
         
@@ -283,18 +302,52 @@ def renew_book(book_id):
             return redirect(url_for("library_bp.book_details", book_id=book_id))
             
         renewal_count = issue['renewal_count'] or 0
-        if renewal_count >= 3:
-            flash("Maximum renewal limit (3) reached for this book.", "warning")
+        due_date = issue['due_date']
+        
+        # Rule 5: Max 2 renewals per issue
+        if renewal_count >= 2:
+            flash("Maximum renewal limit (2) reached for this book.", "warning")
             return redirect(url_for("library_bp.book_details", book_id=book_id))
 
-        from datetime import timedelta
-        new_due_date = issue['due_date'] + timedelta(days=14)
-        conn.execute("UPDATE issues SET renewal_count = COALESCE(renewal_count, 0) + 1, due_date = %s WHERE sl_no = %s", (new_due_date, issue['sl_no']))
-        conn.commit()
+        # Rule 4: Before due date OR within 7 days after due date
+        # If now > due_date + 7, fail
+        if now_utc > (due_date + timedelta(days=7)):
+            flash("Renewal window closed (exceeded 7 days after due date). You must return the book.", "danger")
+            return redirect(url_for("library_bp.book_details", book_id=book_id))
 
+        # Rule 5 (2nd renewal): Allowed ONLY if NO other user has pending issue/reserve request
+        if renewal_count == 1:
+            competing = conn.execute("""
+                SELECT sl_no FROM requests 
+                WHERE book_id = %s 
+                AND status = 'pending' 
+                AND (request_type = 'issue' OR request_type = 'reserve' OR request_type = 'request')
+                AND requested_by != %s
+            """, (book_id, user_id)).fetchone()
+            if competing:
+                flash("Cannot proceed with second renewal: there are other students waiting for this book.", "warning")
+                return redirect(url_for("library_bp.book_details", book_id=book_id))
 
-    flash(f"Book renewed successfully! New due date: {new_due_date.strftime('%Y-%m-%d')}", "success")
-    return redirect(url_for("library_bp.book_details", book_id=book_id))
+        # Rule 6: If after due date, must pay fine. 
+        # (This will be enforced by Admin before approval, but we notify user here)
+        msg_suffix = ""
+        if now_utc > due_date:
+            msg_suffix = " Please pay the overdue fine to ensure admin approval."
+
+        if Request.has_pending_request(user_id, book_id, 'renew'):
+            flash("A renewal request is already pending.", "info")
+            return redirect(url_for("library_bp.book_details", book_id=book_id))
+
+        # Create Renew Request
+        req_id = Request.create_request(book_id, user_id, 'renew')
+        Issue.mark_renew_requested(issue['sl_no'], now_utc)
+        
+        action_html = f" <form action='/admin/approve_request/{req_id}' method='POST' style='display:inline; margin-left: 10px;'><button type='submit' style='background:#28a745; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-size:0.75rem; font-weight:600; cursor:pointer;'>Approve</button></form>"
+        msg = f"{session.get('name')} (ID: {user_id}) has requested to RENEW '{book['title']}' (Book ID: {book_id})." + action_html
+        Notification.notify_admin(msg)
+        
+        flash("Renewal request sent to admin for approval." + msg_suffix, "success")
+        return redirect(url_for("library_bp.book_details", book_id=book_id))
 
 
 
@@ -358,11 +411,13 @@ def api_library_dashboard():
             (user_id,)
         ).fetchone()[0]
         
-        # nearest_due_days
-        nearest_due = conn.execute(
-            "SELECT MIN(DATE_PART('day', due_date - NOW())) FROM issues WHERE user_id = %s AND status = 'issued'",
+        # nearest_due_days and date
+        res = conn.execute(
+            "SELECT MIN(DATE_PART('day', due_date - CURRENT_TIMESTAMP AT TIME ZONE 'UTC')), MIN(due_date) FROM issues WHERE user_id = %s AND status = 'issued'",
             (user_id,)
-        ).fetchone()[0]
+        ).fetchone()
+        nearest_due = res[0]
+        nearest_due_date = res[1]
         
         # lifetime_count
         lifetime_count = conn.execute(
@@ -385,6 +440,7 @@ def api_library_dashboard():
         "data": {
             "active_loans_count": active_loans,
             "nearest_due_days": int(nearest_due) if nearest_due is not None else None,
+            "nearest_due_date": nearest_due_date.isoformat() if nearest_due_date else None,
             "lifetime_count": lifetime_count,
             "catalogue_count": catalogue_count,
             "outstanding_fine": float(fines)
@@ -402,12 +458,13 @@ def api_library_my_books():
         loans = conn.execute("""
             SELECT i.sl_no, b.sl_no as book_id, b.title, b.author, i.issue_date,
                    i.due_date, i.return_date, i.status,
-                   DATE_PART('day', i.due_date - NOW()) as days_remaining
+                   DATE_PART('day', i.due_date - CURRENT_TIMESTAMP AT TIME ZONE 'UTC') as days_remaining
             FROM issues i
             JOIN books b ON i.book_id = b.sl_no
             WHERE i.user_id = %s
             ORDER BY
               CASE i.status WHEN 'issued' THEN 1 WHEN 'returned' THEN 2 END,
+              i.due_date ASC
         """, (user_id,)).fetchall()
         
         results = []

@@ -130,23 +130,46 @@ def approve_request(request_id):
         Notification.notify_user(user_id, f"Your request to issue '{book['title']}' has been approved.")
         flash(f"Issue request for '{book['title']}' approved.", "success")
 
+    elif req_type == "renew":
+        # Process Renewal
+        from database import db_connection
+        with db_connection() as conn:
+            issue_data = conn.execute("SELECT sl_no, fine_amount, payment_status FROM issues_with_fines WHERE book_id = %s AND user_id = %s AND status = 'issued'", (book_id, user_id)).fetchone()
+            if issue_data:
+                # Rule 6: If renewal requested after due date (fine > 0), must pay fine before approval
+                if issue_data['fine_amount'] > 0 and (issue_data['payment_status'] is None or issue_data['payment_status'] != 'approved'):
+                    flash(f"Cannot approve renewal: User has an unpaid fine of ₹{issue_data['fine_amount']} for this book.", "danger")
+                    return redirect(url_for("admin_bp.admin_library"))
+
+                Issue.renew_book(issue_data['sl_no'])
+                Request.mark_processed(request_id, "Renewal Approved")
+                Notification.notify_user(user_id, f"Your renewal request for '{req.get('book_title')}' has been approved.")
+                flash(f"Renewal for '{req.get('book_title')}' approved.", "success")
+            else:
+                flash("Active issue not found for renewal.", "danger")
+
     elif req_type == "return":
         # Process Return
-        Issue.return_book(book_id)
-        Book.update_availability(book_id, True)
-        Request.mark_processed(request_id, "Approved by Admin")
-        Notification.notify_user(user_id, f"Your return of '{req.get('book_title', 'the book')}' has been approved.")
-        flash(f"Return request for '{req.get('book_title')}' approved.", "success")
-        
-        # Check if there are reservations for this book and notify next in queue
-        pending_res = Request.get_pending_requests_by_book(book_id)
-        if pending_res:
-            next_req = pending_res[0] # Sorted by date ASC
-            Notification.notify_user(next_req['requested_by'], f"The book '{next_req['book_title']}' you reserved is now available. You can now request to issue it.")
+        from database import db_connection
+        with db_connection() as conn:
+            issue = conn.execute("SELECT sl_no FROM issues WHERE book_id = %s AND user_id = %s AND status = 'issued'", (book_id, user_id)).fetchone()
+            if issue:
+                # Rule 3: Use the request date for the return to stop the fine accurately
+                Issue.return_book(issue['sl_no'], return_date=req['request_date'])
+                Book.update_availability(book_id, True)
+                Request.mark_processed(request_id, "Approved by Admin")
+                Notification.notify_user(user_id, f"Your return of '{req.get('book_title', 'the book')}' has been approved.")
+                flash(f"Return request for '{req.get('book_title')}' approved.", "success")
+                
+                # Check if there are reservations for this book and notify next in queue
+                pending_res = Request.get_pending_requests_by_book(book_id)
+                if pending_res:
+                    next_req = pending_res[0] # Sorted by date ASC
+                    Notification.notify_user(next_req['requested_by'], f"The book '{next_req['book_title']}' you reserved is now available. You can now request to issue it.")
+            else:
+                flash("Active issue not found for return.", "danger")
 
     elif req_type == "reserve":
-        # Reservation is just a notification to admin/user, normally doesn't need "approval" 
-        # but we can mark it as processed if admin acknowledged it.
         Request.mark_processed(request_id, "Acknowledged by Admin")
         flash("Reservation request acknowledged.", "success")
 
@@ -162,6 +185,16 @@ def reject_request(request_id):
     req = Request.get_by_id(request_id)
     if req:
         Request.reject(request_id, feedback)
+        
+        # If it was a return or renew request, clear the request date in the issues table
+        # so the fine calculation resumes.
+        if req['request_type'] in ['return', 'renew']:
+            from database import db_connection
+            with db_connection() as conn:
+                issue = conn.execute("SELECT sl_no FROM issues WHERE book_id = %s AND user_id = %s AND status = 'issued'", (req['book_id'], req['requested_by'])).fetchone()
+                if issue:
+                    Issue.clear_request_dates(issue['sl_no'])
+        
         Notification.notify_user(req["requested_by"], f"Your {req.get('request_type')} request for '{req.get('book_title', 'the book')}' was rejected: {feedback}")
         flash("Request rejected.", "info")
     
@@ -532,13 +565,13 @@ def api_admin_library_loans():
     from database import db_connection
     with db_connection() as conn:
         loans = conn.execute("""
-            SELECT ll.sl_no, u.name as student_name, u.roll_no, b.title as book_title,
+            SELECT ll.sl_no, u.name as student_name, u.user_id as roll_no, b.title as book_title,
                    ll.issue_date as issued_date, ll.due_date, ll.return_date as returned_date, ll.status,
-                   DATE_PART('day', NOW() - ll.due_date) as days_overdue
+                   DATE_PART('day', CURRENT_TIMESTAMP AT TIME ZONE 'UTC' - ll.due_date) as days_overdue
             FROM issues ll
-            JOIN users u ON ll.student_id = u.user_id
+            JOIN users u ON ll.user_id = u.user_id
             JOIN books b ON ll.book_id = b.sl_no
-            ORDER BY CASE WHEN ll.status='active' THEN 1 ELSE 2 END, ll.due_date ASC
+            ORDER BY CASE WHEN ll.status='issued' THEN 1 ELSE 2 END, ll.due_date ASC
         """).fetchall()
     
         results = []
@@ -547,7 +580,7 @@ def api_admin_library_loans():
             d['issued_date'] = d['issued_date'].isoformat() if d['issued_date'] else None
             d['due_date'] = d['due_date'].isoformat() if d['due_date'] else None
             d['returned_date'] = d['returned_date'].isoformat() if d['returned_date'] else None
-            d['days_overdue'] = int(max(0, d['days_overdue'] or 0)) if d['status'] == 'active' else 0
+            d['days_overdue'] = int(max(0, d['days_overdue'] or 0)) if d['status'] == 'issued' else 0
             results.append(d)
         return jsonify(results)
 
@@ -557,10 +590,10 @@ def api_admin_library_loans_return(loan_id):
     if not admin_required(): return jsonify({"error": "Unauthorized"}), 401
     from database import db_connection
     with db_connection() as conn:
-        loan = conn.execute("SELECT * FROM issues WHERE sl_no = %s AND status = 'active'", (loan_id,)).fetchone()
+        loan = conn.execute("SELECT * FROM issues WHERE sl_no = %s AND status = 'issued'", (loan_id,)).fetchone()
         if loan:
-            conn.execute("UPDATE issues SET status = 'returned', return_date = NOW() WHERE sl_no = %s", (loan_id,))
-            conn.execute("UPDATE books SET available_copies = available_copies + 1 WHERE sl_no = %s", (loan['book_id'],))
+            Issue.return_book(loan_id)
+            Book.update_availability(loan['book_id'], True)
             conn.commit()
     return jsonify({"success": True})
 
@@ -571,14 +604,14 @@ def api_admin_library_loans_remind(loan_id):
     from models.notification import Notification
     with db_connection() as conn:
         loan = conn.execute("""
-            SELECT ll.student_id, b.title, ll.due_date 
+            SELECT ll.user_id, b.title, ll.due_date 
             FROM issues ll JOIN books b ON ll.book_id = b.sl_no WHERE ll.sl_no = %s
         """, (loan_id,)).fetchone()
     
     if loan:
         date_str = loan['due_date'].strftime('%b %d, %Y') if loan['due_date'] else 'recently'
         msg = f"Library Reminder: Your book '{loan['title']}' was due on {date_str}. Please return it immediately."
-        Notification.notify_user(loan['student_id'], msg)
+        Notification.notify_user(loan['user_id'], msg)
     return jsonify({"success": True})
 
 
@@ -590,10 +623,10 @@ def api_admin_library_fines():
         fines = conn.execute("""
             SELECT f.sl_no, f.paid_date, f.amount, f.paid, f.status, f.waived_reason,
                    u.name as student_name, b.title as book_title,
-                   DATE_PART('day', COALESCE(f.paid_date, NOW()) - ll.due_date) as days_overdue
+                   DATE_PART('day', COALESCE(f.paid_date, CURRENT_TIMESTAMP AT TIME ZONE 'UTC') - ll.due_date) as days_overdue
             FROM library_fines f
             JOIN issues ll ON f.issue_id = ll.sl_no
-            JOIN users u ON f.student_id = u.user_id
+            JOIN users u ON f.user_id = u.user_id
             JOIN books b ON ll.book_id = b.sl_no
             ORDER BY f.paid ASC, f.sl_no DESC
         """).fetchall()

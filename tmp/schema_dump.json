@@ -1,0 +1,41 @@
+{
+  "tables": {
+    "issues": [
+      "sl_no (integer)",
+      "book_id (integer)",
+      "user_id (text)",
+      "issue_date (timestamp without time zone)",
+      "due_date (timestamp without time zone)",
+      "return_date (timestamp without time zone)",
+      "status (text)",
+      "payment_requested_date (timestamp without time zone)",
+      "payment_status (text)",
+      "renewal_count (integer)"
+    ],
+    "requests": [
+      "sl_no (integer)",
+      "book_id (integer)",
+      "requested_by (text)",
+      "request_type (text)",
+      "status (text)",
+      "request_date (timestamp without time zone)",
+      "admin_feedback (text)"
+    ],
+    "library_fines": [
+      "sl_no (integer)",
+      "student_id (text)",
+      "loan_id (integer)",
+      "amount (numeric)",
+      "reason (text)",
+      "paid (boolean)",
+      "created_at (timestamp without time zone)",
+      "book_id (integer)",
+      "issue_id (integer)",
+      "days_overdue (integer)",
+      "rate_per_day (numeric)"
+    ]
+  },
+  "views": {
+    "issues_with_fines": " SELECT sl_no,\n    book_id,\n    user_id,\n    issue_date,\n    due_date,\n    return_date,\n    status,\n    payment_requested_date,\n    payment_status,\n    renewal_count,\n    COALESCE((\n        CASE\n            WHEN (payment_status = 'approved'::text) THEN payment_requested_date\n            ELSE NULL::timestamp without time zone\n        END)::timestamp with time zone, (return_date)::timestamp with time zone, CURRENT_TIMESTAMP) AS effective_date,\n    GREATEST((0)::numeric, floor((EXTRACT(epoch FROM (COALESCE((\n        CASE\n            WHEN (payment_status = 'approved'::text) THEN payment_requested_date\n            ELSE NULL::timestamp without time zone\n        END)::timestamp with time zone, (return_date)::timestamp with time zone, CURRENT_TIMESTAMP) - (due_date)::timestamp with time zone)) / (86400)::numeric))) AS days_overdue,\n    (GREATEST((0)::numeric, floor((EXTRACT(epoch FROM (COALESCE((\n        CASE\n            WHEN (payment_status = 'approved'::text) THEN payment_requested_date\n            ELSE NULL::timestamp without time zone\n        END)::timestamp with time zone, (return_date)::timestamp with time zone, CURRENT_TIMESTAMP) - (due_date)::timestamp with time zone)) / (86400)::numeric))) * (3)::numeric) AS fine_amount\n   FROM issues i;"
+  }
+}

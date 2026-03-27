@@ -6,8 +6,9 @@ class Issue:
     @staticmethod
     def create_issue(book_id, user_id):
         with db_connection() as conn:
-            from datetime import datetime, timedelta
-            issue_date = datetime.now()
+            from datetime import datetime, timedelta, timezone
+            issue_date = datetime.now(timezone.utc)
+            # Due date is set based on admin approval date (which is now)
             due_date = issue_date + timedelta(days=14)
             conn.execute(
                 "INSERT INTO issues (book_id, user_id, status, due_date, issue_date) VALUES (%s, %s, 'issued', %s, %s)",
@@ -15,16 +16,65 @@ class Issue:
             )
             conn.commit()
 
-
     @staticmethod
-    def return_book(book_id):
+    def return_book(issue_id, return_date=None):
         with db_connection() as conn:
+            if return_date is None:
+                from datetime import datetime, timezone
+                return_date = datetime.now(timezone.utc)
             conn.execute(
-                "UPDATE issues SET status = 'returned', return_date = CURRENT_TIMESTAMP WHERE book_id = %s AND status = 'issued'",
-                (book_id,),
+                "UPDATE issues SET status = 'returned', return_date = %s, return_request_date = NULL, renew_request_date = NULL WHERE sl_no = %s",
+                (return_date, issue_id),
             )
             conn.commit()
 
+    @staticmethod
+    def renew_book(issue_id, renewal_days=7):
+        with db_connection() as conn:
+            # Each renewal adds renewal_days to due_date
+            # The renewal_count is incremented
+            conn.execute("""
+                UPDATE issues 
+                SET due_date = due_date + %s * INTERVAL '1 day',
+                    renewal_count = COALESCE(renewal_count, 0) + 1,
+                    renew_request_date = NULL,
+                    return_request_date = NULL
+                WHERE sl_no = %s
+            """, (renewal_days, issue_id))
+            conn.commit()
+
+    @staticmethod
+    def mark_return_requested(issue_id, request_date=None):
+        with db_connection() as conn:
+            if request_date is None:
+                from datetime import datetime, timezone
+                request_date = datetime.now(timezone.utc)
+            conn.execute(
+                "UPDATE issues SET return_request_date = %s WHERE sl_no = %s",
+                (request_date, issue_id)
+            )
+            conn.commit()
+
+    @staticmethod
+    def mark_renew_requested(issue_id, request_date=None):
+        with db_connection() as conn:
+            if request_date is None:
+                from datetime import datetime, timezone
+                request_date = datetime.now(timezone.utc)
+            conn.execute(
+                "UPDATE issues SET renew_request_date = %s WHERE sl_no = %s",
+                (request_date, issue_id)
+            )
+            conn.commit()
+
+    @staticmethod
+    def clear_request_dates(issue_id):
+        with db_connection() as conn:
+            conn.execute(
+                "UPDATE issues SET return_request_date = NULL, renew_request_date = NULL WHERE sl_no = %s",
+                (issue_id,)
+            )
+            conn.commit()
 
     @staticmethod
     def has_user_issued_book(user_id, book_id):
@@ -35,7 +85,6 @@ class Issue:
             ).fetchone()
             return issue is not None
 
-
     @staticmethod
     def get_user_active_issued_count(user_id):
         with db_connection() as conn:
@@ -45,16 +94,15 @@ class Issue:
             ).fetchone()[0]
             return count
 
-
     @staticmethod
     def has_outstanding_fines(user_id):
         with db_connection() as conn:
+            # Fine rule: Block request if any fine pending (amount > 0 AND status not approved)
             fine = conn.execute(
-                "SELECT sl_no FROM issues_with_fines WHERE user_id = %s AND fine_amount > 0 AND payment_status != 'approved'",
+                "SELECT sl_no FROM issues_with_fines WHERE user_id = %s AND fine_amount > 0 AND (payment_status IS NULL OR payment_status != 'approved')",
                 (str(user_id),),
             ).fetchone()
             return fine is not None
-
 
     @staticmethod
     def is_user_issuer(user_id, book_id):
@@ -74,7 +122,6 @@ class Issue:
             ).fetchone()
             return holder[0] if holder else None
 
-
     @staticmethod
     def get_current_holder_id(book_id):
         with db_connection() as conn:
@@ -84,11 +131,9 @@ class Issue:
             ).fetchone()
             return holder[0] if holder else None
 
-
     @staticmethod
     def get_all_active_issues():
         with db_connection() as conn:
-            # Ensure we have these columns selected
             issues = conn.execute("""
                 SELECT i.sl_no, i.issue_date, b.title as book_title, u.name as user_name
                 FROM issues i
@@ -98,7 +143,6 @@ class Issue:
                 ORDER BY i.issue_date DESC
             """).fetchall()
             return [dict(i) for i in issues]
-
 
     @staticmethod
     def get_all_issues():
@@ -111,9 +155,6 @@ class Issue:
                 ORDER BY i.issue_date DESC
             """).fetchall()
             return [dict(i) for i in issues]
-
-
-
 
     @staticmethod
     def get_history_by_book(book_id):

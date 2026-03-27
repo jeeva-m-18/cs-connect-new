@@ -31,6 +31,11 @@ app.jinja_env.add_extension('jinja2.ext.do')
 
 CORS(app)
 
+@app.route('/.well-known/appspecific/com.chrome.devtools.json')
+def chrome_devtools():
+    return jsonify({}), 200
+
+
 @app.errorhandler(DatabaseError)
 def handle_database_error(e):
     logger.exception("Database error caught at controller level")

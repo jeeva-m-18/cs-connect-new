@@ -109,7 +109,6 @@
 
       <div class="lib-tabs">
         <div class="lib-tab active" data-tab="overview">Overview</div>
-        <div class="lib-tab" data-tab="catalogue">Book Catalogue</div>
         <div class="lib-tab" data-tab="my-books">My Active Books</div>
         <div class="lib-tab" data-tab="history">Borrowing History</div>
         <div class="lib-tab" data-tab="fines">Fines & Payments</div>
@@ -125,7 +124,8 @@
           <div class="stat-card">
             <div class="stat-label">Next Due In</div>
             <div class="stat-val" id="stat-due">-</div>
-            <div style="font-size: 0.7rem; color: var(--text-muted);" id="due-label">Days</div>
+            <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700;" id="due-label">Days</div>
+            <div style="font-size: 0.75rem; color: var(--text-primary); margin-top: 4px; font-weight: 600;" id="stat-date"></div>
           </div>
           <div class="stat-card">
             <div class="stat-label">Lifetime Count</div>
@@ -145,20 +145,6 @@
         </div>
       </div>
 
-      <!-- CATALOGUE PANE -->
-      <div class="tab-pane" id="pane-catalogue">
-        <div class="cat-search-bar">
-          <i data-lucide="search" style="color: var(--text-muted);"></i>
-          <input type="text" class="cat-input" id="cat-search" placeholder="Search for books by title, author, or publisher...">
-          <button class="dash-btn-primary" id="btn-search">Search</button>
-        </div>
-        
-        <div class="book-grid" id="cat-results">
-          <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">
-            Search for books above or use the "Browse All" feature.
-          </div>
-        </div>
-      </div>
 
       <!-- MY BOOKS PANE -->
       <div class="tab-pane" id="pane-my-books">
@@ -251,8 +237,14 @@
         document.getElementById('stat-due').innerText = data.nearest_due_days;
         document.getElementById('due-label').innerText = data.nearest_due_days === 1 ? 'Day Left' : 'Days Away';
         if(data.nearest_due_days <= 2) document.getElementById('stat-due').classList.add('days-danger');
+        
+        if(data.nearest_due_date) {
+          const d = new Date(data.nearest_due_date);
+          document.getElementById('stat-date').innerText = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+        }
       } else {
         document.getElementById('stat-due').innerText = '-';
+        document.getElementById('stat-date').innerText = '';
       }
       
       // Load quick summary if in overview
