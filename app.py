@@ -28,10 +28,11 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = "testsecret"
+app.secret_key = os.environ.get("SECRET_KEY", "testsecret")
 app.jinja_env.add_extension('jinja2.ext.do')
 
 CORS(app)
+
 
 @app.route('/.well-known/appspecific/com.chrome.devtools.json')
 def chrome_devtools():
@@ -156,7 +157,7 @@ def notifications_mark_read():
 def notifications_all():
     if not session.get('user_id'):
         flash("Please log in.", "warning")
-        return redirect(url_for('login'))
+        return redirect(url_for('login', next=request.path))
     try:
         from models.notification import Notification
         all_notifs = Notification.get_user_notifications()
@@ -217,7 +218,7 @@ def placements():
 def student_settings():
     if not session.get('user_id'):
         flash("Please log in.", "warning")
-        return redirect(url_for('login'))
+        return redirect(url_for('login', next=request.path))
     
     try:
         from database import db_connection
@@ -343,6 +344,7 @@ def api_change_password():
         return jsonify({'success': False, 'error': 'Internal server error'}), 500
 
 
+
 @app.route('/api/auth/logout-all', methods=['POST'])
 def api_logout_all():
     if not session.get('user_id'):
@@ -354,7 +356,6 @@ def api_logout_all():
     except Exception:
         logger.exception("Error during logout-all")
         return jsonify({'success': False, 'error': 'Internal server error'}), 500
-
 
 
 # ─────────────────────────────────────────────────
@@ -773,6 +774,9 @@ def init_db():
     
         conn.commit()
 
+# Call DB initialization on startup
+init_db()
+
 
 
 # ─────────────────────────────────────────────────
@@ -803,7 +807,7 @@ def home():
 def timetable():
     if not session.get('user_id'):
         flash("Please log in to view the timetable.", "warning")
-        return redirect(url_for('login'))
+        return redirect(url_for('login', next=request.path))
 
     from database import db_connection
     with db_connection() as conn:
@@ -1270,7 +1274,7 @@ def api_student_schedule_week():
 def student_library():
     if not session.get('user_id'):
         flash("Please log in.", "warning")
-        return redirect(url_for('login'))
+        return redirect(url_for('login', next=request.path))
     return render_template('student_library.html', active_page='library')
 
 
@@ -2383,6 +2387,7 @@ def login():
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
+        next_url = request.form.get("next")
 
         with db_connection() as conn:
             cursor = conn.cursor()
@@ -2396,12 +2401,13 @@ def login():
             session["role"]    = user['role']   # ← STEP 1: save role in session
             flash("Login successful!", "success")
 
-            # ← STEP 2: redirect to public page
-            return redirect(url_for("home"))
+            # Redirect to the 'next' URL if it exists, otherwise home
+            return redirect(next_url or url_for("home"))
         else:
             flash("Invalid email or password!", "danger")
 
-    return render_template("login.html", active_page='')
+    next_url = request.args.get('next')
+    return render_template("login.html", active_page='', next_url=next_url)
 
 
 @app.route('/logout')
@@ -3497,5 +3503,4 @@ def serve_react(path):
     return send_from_directory('frontend/dist', 'index.html')
 
 if __name__ == "__main__":
-    init_db()
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)), debug=True)

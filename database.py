@@ -66,10 +66,11 @@ def get_db_connection():
     Establish and return a connection to the PostgreSQL database with retries.
     NEVER returns None. Raises RuntimeError if all attempts fail.
     """
+    # Prioritize Cloud/Neon URLs for production-readiness
     urls = [
-        os.environ.get("LOCAL_DATABASE_URL"),
-        os.environ.get("NEON_DATABASE_URL"),
-        os.environ.get("DATABASE_URL")
+        os.environ.get("DATABASE_URL"),      # Standard for Render/Cloud
+        os.environ.get("NEON_DATABASE_URL"), # Specific Neon Var
+        os.environ.get("LOCAL_DATABASE_URL") # Local fallback
     ]
     urls = [u for u in urls if u]
     max_retries = 3
