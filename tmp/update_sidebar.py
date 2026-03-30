@@ -1,44 +1,83 @@
-import os
 import re
+import os
 
-def update_templates():
-    template_dir = 'templates'
-    
-    # 1. Regex for removing dash-sidebar-logo
-    # This matches <div class="dash-sidebar-logo"> ... </div>
-    logo_re = re.compile(r'<div class="dash-sidebar-logo">.*?</div>', re.DOTALL)
-    
-    # 2. Regex for injecting nav-label into dash-sidebar-item
-    # It captures the opening div (which contains title="..."), the <i> tag, and the closing div.
-    item_re = re.compile(r'(<div class="dash-sidebar-item[^>]*title="([^"]+)"[^>]*>)\s*(<i data-lucide="[^"]+"[^>]*></i>)\s*(</div>)', re.DOTALL)
-    
-    for root, dirs, files in os.walk(template_dir):
-        for file in files:
-            if file.endswith('.html'):
-                path = os.path.join(root, file)
-                with open(path, 'r', encoding='utf-8') as f:
-                    content = f.read()
-                
-                # Check if it has a dash-sidebar
-                if 'dash-sidebar' in content:
-                    new_content = logo_re.sub('', content)
-                    
-                    def replacer(match):
-                        open_div = match.group(1)
-                        title = match.group(2)
-                        i_tag = match.group(3)
-                        close_div = match.group(4)
-                        return f'{open_div}\n        {i_tag}\n        <span class="nav-label">{title}</span>\n      {close_div}'
-                        
-                    new_content = item_re.sub(replacer, new_content)
-                    
-                    # Remove any empty <!-- Logo --> comments if left behind
-                    new_content = new_content.replace('<!-- Logo -->\n    \n', '')
-                    
-                    if new_content != content:
-                        with open(path, 'w', encoding='utf-8') as f:
-                            f.write(new_content)
-                        print(f"Updated {file}")
+files = [
+    "templates/faculty_dashboard.html",
+    "templates/faculty_timetable.html",
+    "templates/enter_marks.html",
+    "templates/faculty_library.html",
+    "templates/faculty_upload_material.html",
+    "templates/faculty_send_circular.html",
+    "templates/my_students.html"
+]
 
-if __name__ == '__main__':
-    update_templates()
+sidebar_template = """  <aside class="dash-sidebar">
+    <div class="dash-sidebar-logo">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F5E6BE" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+    </div>
+    <nav class="dash-sidebar-items">
+      <div class="dash-sidebar-item {active_dash}" title="Dashboard" onclick="location.href='/faculty-dashboard'">
+        <i data-lucide="layout-dashboard"></i>
+        <span class="nav-label">Dashboard</span>
+      </div>
+      <div class="dash-sidebar-item {active_classes}" title="My Classes" onclick="location.href='/timetable'">
+        <i data-lucide="book-open"></i>
+        <span class="nav-label">My Classes</span>
+      </div>
+      <div class="dash-sidebar-item {active_marks}" title="Marks" onclick="location.href='/marks-entry'">
+        <i data-lucide="edit-3"></i>
+        <span class="nav-label">Marks</span>
+      </div>
+      <div class="dash-sidebar-item {active_lib}" title="Library" onclick="location.href='/faculty-dashboard/library'">
+        <i data-lucide="library"></i>
+        <span class="nav-label">Library Portal</span>
+      </div>
+      <div class="dash-sidebar-item {active_up}" title="Upload" onclick="location.href='/faculty/upload-material'">
+        <i data-lucide="upload-cloud"></i>
+        <span class="nav-label">Upload</span>
+      </div>
+      <div class="dash-sidebar-item {active_circ}" title="Circular" onclick="location.href='/faculty/send-circular'">
+        <i data-lucide="send"></i>
+        <span class="nav-label">Circular</span>
+      </div>
+    </nav>
+    <div class="dash-sidebar-bottom">
+      <div style="width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,var(--accent-crimson),var(--accent-dark)); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; color:white; border: 1px solid rgba(255,255,255,0.1);">
+        {{ session.get('name','F')[0].upper() }}
+      </div>
+    </div>
+  </aside>"""
+
+for f in files:
+    if not os.path.exists(f): 
+        print(f"Skipping {f}")
+        continue
+    with open(f, 'r', encoding='utf-8') as file:
+        content = file.read()
+    
+    act = { 'active_dash': '', 'active_classes': '', 'active_marks': '', 'active_lib': '', 'active_up': '', 'active_circ': '' }
+    if 'faculty_dashboard' in f: act['active_dash'] = 'active'
+    elif 'timetable' in f or 'my_students' in f: act['active_classes'] = 'active'
+    elif 'enter_marks' in f: act['active_marks'] = 'active'
+    elif 'library' in f: act['active_lib'] = 'active'
+    elif 'upload' in f: act['active_up'] = 'active'
+    elif 'circular' in f: act['active_circ'] = 'active'
+
+    new_sidebar = sidebar_template.format(**act)
+    
+    # regex substitution
+    if '<aside class="dash-sidebar">' in content or '<aside class="sidebar">' in content:
+        content = re.sub(r'<aside class="(?:dash-sidebar|sidebar)">.*?</aside>', new_sidebar, content, flags=re.DOTALL)
+    
+    # ensure dashboard_shared.css
+    if 'dashboard_shared.css' not in content:
+        content = content.replace('</head>', '  <link rel="stylesheet" href="{{ url_for(\'static\', filename=\'css/dashboard_shared.css\') }}">\n</head>')
+    
+    # ensure lucide
+    if 'lucide@latest' not in content:
+        script = '\n  <script src="https://unpkg.com/lucide@latest"></script>\n  <script>\n    if (typeof lucide !== \'undefined\') {\n      lucide.createIcons();\n    }\n  </script>\n'
+        content = content.replace('</body>', script + '</body>')
+
+    with open(f, 'w', encoding='utf-8') as file:
+        file.write(content)
+    print(f"Updated {f}")

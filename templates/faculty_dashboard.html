@@ -17,54 +17,37 @@
 <div class="dash-wrapper fade-up">
   <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
   <!-- ── SIDEBAR ── -->
-  <aside class="dash-sidebar">
-    
-
+    <aside class="dash-sidebar">
+    <div class="dash-sidebar-logo">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+    </div>
     <nav class="dash-sidebar-items">
-      <!-- Dashboard (Active) -->
-      <div class="dash-sidebar-item active" title="Dashboard">
+      <div class="dash-sidebar-item {% if active_page == 'dashboard' %}active{% endif %}" title="Dashboard" onclick="location.href='/faculty-dashboard'">
         <i data-lucide="layout-dashboard"></i>
         <span class="nav-label">Dashboard</span>
       </div>
-      <!-- My Classes -->
-      <div class="dash-sidebar-item" title="My Classes" onclick="location.href='/timetable'">
+      <div class="dash-sidebar-item {% if active_page == 'timetable' %}active{% endif %}" title="My Classes" onclick="location.href='/timetable'">
         <i data-lucide="book-open"></i>
         <span class="nav-label">My Classes</span>
       </div>
-      <!-- Mark Entry -->
-      <div class="dash-sidebar-item" title="Marks" onclick="location.href='/marks-entry'">
+      <div class="dash-sidebar-item {% if active_page == 'marks' %}active{% endif %}" title="Marks" onclick="location.href='/marks-entry'">
         <i data-lucide="edit-3"></i>
         <span class="nav-label">Marks</span>
       </div>
-      <!-- Library -->
-      <div class="dash-sidebar-item" title="Library" onclick="location.href='/faculty-dashboard/library'">
+      <div class="dash-sidebar-item {% if active_page == 'library' %}active{% endif %}" title="Library" onclick="location.href='/faculty-dashboard/library'">
         <i data-lucide="library"></i>
         <span class="nav-label">Library Portal</span>
       </div>
-      <!-- Dept Files -->
-      <div class="dash-sidebar-item" title="Dept Files" onclick="location.href='/academics'">
-        <i data-lucide="folder"></i>
-        <span class="nav-label">Dept Files</span>
-      </div>
-      <div class="dash-sidebar-item" title="Upload" onclick="location.href='/faculty/upload-material'">
+      <div class="dash-sidebar-item {% if active_page == 'upload' %}active{% endif %}" title="Upload" onclick="location.href='/faculty/upload-material'">
         <i data-lucide="upload-cloud"></i>
         <span class="nav-label">Upload</span>
       </div>
-      <div class="dash-sidebar-item" title="Circular" onclick="location.href='/faculty/send-circular'">
+      <div class="dash-sidebar-item {% if active_page == 'circular' %}active{% endif %}" title="Circular" onclick="location.href='/faculty/send-circular'">
         <i data-lucide="send"></i>
         <span class="nav-label">Circular</span>
       </div>
     </nav>
-
-    <div class="dash-sidebar-bottom">
-      <div style="width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,var(--accent-crimson),var(--accent-dark)); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; color:white; border: 1px solid rgba(255,255,255,0.1);">
-        {% if faculty and faculty.name %}
-          {{ faculty.name.split()[0][0] }}{{ faculty.name.split()[-1][0] if faculty.name.split()|length > 1 else '' }}
-        {% else %}
-          AR
-        {% endif %}
-      </div>
-    </div>
+    
   </aside>
 
   <!-- ── MAIN CONTENT ── -->
@@ -245,4 +228,4 @@
   setInterval(updateTime, 30000);
 </script>
 <script src="{{ url_for('static', filename='js/notifications_handler.js') }}"></script>
-{% endblock %}
+{% endblock %}

@@ -66,6 +66,7 @@ def get_student_attendance_data(user_id):
 def get_all_notes_data():
     """
     Retrieves all available study materials/notes from the semesters subjects catalog.
+    Handles both old list format [{title, url}] and new dict format {module: url}.
     """
     with db_connection() as conn:
         rows = conn.execute("SELECT subjects FROM semesters").fetchall()
@@ -75,13 +76,29 @@ def get_all_notes_data():
             if not subjects: continue
             
             for subj in subjects:
-                if 'notes' in subj and isinstance(subj['notes'], dict):
-                    for module, url in subj['notes'].items():
-                        all_notes.append({
-                            "subject": subj.get('name', 'General'),
-                            "file": f"{subj.get('code', 'NOTE')}_{module.replace(' ', '_')}.pdf",
-                            "url": url
-                        })
+                notes = subj.get('notes')
+                if not notes:
+                    continue
+
+                # New dict format: {"Module 1": "url", ...}
+                if isinstance(notes, dict):
+                    for module, url in notes.items():
+                        if url:
+                            all_notes.append({
+                                "subject": subj.get('name', 'General'),
+                                "file": f"{subj.get('code', 'NOTE')}_{module.replace(' ', '_')}.pdf",
+                                "url": url
+                            })
+                # Old list format: [{"title": "Module 1", "url": "..."}, ...]
+                elif isinstance(notes, list):
+                    for item in notes:
+                        if isinstance(item, dict) and item.get('url'):
+                            title = item.get('title', 'Module')
+                            all_notes.append({
+                                "subject": subj.get('name', 'General'),
+                                "file": f"{subj.get('code', 'NOTE')}_{title.replace(' ', '_')}.pdf",
+                                "url": item['url']
+                            })
         return all_notes
 
 def get_faculty_list_data():

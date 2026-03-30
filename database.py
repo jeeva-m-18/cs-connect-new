@@ -67,8 +67,8 @@ def get_db_connection():
     NEVER returns None. Raises RuntimeError if all attempts fail.
     """
     urls = [
-        os.environ.get("NEON_DATABASE_URL"),
         os.environ.get("LOCAL_DATABASE_URL"),
+        os.environ.get("NEON_DATABASE_URL"),
         os.environ.get("DATABASE_URL")
     ]
     urls = [u for u in urls if u]

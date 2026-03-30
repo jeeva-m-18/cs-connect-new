@@ -190,9 +190,9 @@ def fetch_ranked_context(keywords: List[str], use_threshold: bool = True) -> Lis
                 query = """
                     SELECT category, title, details, extra, score FROM (
                         SELECT 'FACULTY' as category, name as title, 
-                               'Designation: ' || designation || ' | Research: ' || research as details,
+                               'Designation: ' || designation || ' | Research: ' || COALESCE(research, '') as details,
                                email as extra,
-                               similarity(name, %s) as score
+                               GREATEST(similarity(name::text, %s::text), similarity(designation::text, %s::text), 0.15) as score
                         FROM faculty 
                         WHERE name ILIKE ANY(%s) OR research ILIKE ANY(%s) OR designation ILIKE ANY(%s)
                         
@@ -201,7 +201,7 @@ def fetch_ranked_context(keywords: List[str], use_threshold: bool = True) -> Lis
                         SELECT 'STUDY MATERIAL' as category, document_name as title, 
                                content as details,
                                NULL as extra,
-                               similarity(document_name, %s) as score
+                               similarity(document_name::text, %s::text) as score
                         FROM document_chunks 
                         WHERE document_name ILIKE ANY(%s) OR content ILIKE ANY(%s)
                         
@@ -210,7 +210,7 @@ def fetch_ranked_context(keywords: List[str], use_threshold: bool = True) -> Lis
                         SELECT 'LIBRARY' as category, title as title, 
                                'Author: ' || author || ' | Category: ' || category as details,
                                availability::text as extra,
-                               similarity(title, %s) as score
+                               similarity(title::text, %s::text) as score
                         FROM books 
                         WHERE title ILIKE ANY(%s) OR author ILIKE ANY(%s)
                         
@@ -219,7 +219,7 @@ def fetch_ranked_context(keywords: List[str], use_threshold: bool = True) -> Lis
                         SELECT 'ALUMNI' as category, name as title, 
                                'Placed at: ' || company as details,
                                package as extra,
-                               similarity(name, %s) as score
+                               similarity(name::text, %s::text) as score
                         FROM alumni 
                         WHERE name ILIKE ANY(%s) OR company ILIKE ANY(%s)
                         
@@ -228,7 +228,7 @@ def fetch_ranked_context(keywords: List[str], use_threshold: bool = True) -> Lis
                         SELECT 'SUBJECT' as category, full_name as title, 
                                'Code: ' || code as details,
                                faculty_name as extra,
-                               similarity(full_name, %s) as score
+                               similarity(full_name::text, %s::text) as score
                         FROM timetable_subjects 
                         WHERE full_name ILIKE ANY(%s) OR code ILIKE ANY(%s)
                         
@@ -237,26 +237,31 @@ def fetch_ranked_context(keywords: List[str], use_threshold: bool = True) -> Lis
                         SELECT 'INFO' as category, title as title, 
                                content as details,
                                NULL as extra,
-                               similarity(title, %s) as score
+                               GREATEST(similarity(title::text, %s::text), similarity(content::text, %s::text), 0.15) as score
                         FROM website_content 
                         WHERE title ILIKE ANY(%s) OR content ILIKE ANY(%s)
                     ) as search_results
                 """
                 
                 if use_threshold:
-                    query += " WHERE score > 0.2 "
+                    query += " WHERE score > 0.1 "
                 
                 query += " ORDER BY score DESC LIMIT 5"
                 
-                # Parameters: 
-                # Total 6 tables, each needs query_string for similarity + patterns for ILIKE ANY.
+                # Parameters:
+                # Faculty: 2x similarity (name + designation) + 3x ILIKE patterns
+                # Study Material: 1x similarity + 2x ILIKE patterns
+                # Library: 1x similarity + 2x ILIKE patterns
+                # Alumni: 1x similarity + 2x ILIKE patterns
+                # Subject: 1x similarity + 2x ILIKE patterns
+                # Info: 2x similarity (title + content) + 2x ILIKE patterns
                 params = [
-                    query_string, patterns, patterns, patterns, # Faculty
-                    query_string, patterns, patterns,           # Study Material
-                    query_string, patterns, patterns,           # Library
-                    query_string, patterns, patterns,           # Alumni
-                    query_string, patterns, patterns,           # Subject
-                    query_string, patterns, patterns            # Info
+                    query_string, query_string, patterns, patterns, patterns, # Faculty
+                    query_string, patterns, patterns,                          # Study Material
+                    query_string, patterns, patterns,                          # Library
+                    query_string, patterns, patterns,                          # Alumni
+                    query_string, patterns, patterns,                          # Subject
+                    query_string, query_string, patterns, patterns             # Info
                 ]
                 
                 cur.execute(query, params)
@@ -275,6 +280,31 @@ def fetch_ranked_context(keywords: List[str], use_threshold: bool = True) -> Lis
                         "extra": row[3],
                         "score": row[4]
                     })
+                
+                # Fetch structured notes dynamically from semesters table (JSON column)
+                try:
+                    from api import get_all_notes_data
+                    all_notes = get_all_notes_data()
+                    kw_lower = [kw.lower() for kw in keywords]
+                    for note in all_notes:
+                        note_text = f"{note['subject'].lower()} {note['file'].lower()}"
+                        matches = sum(1 for kw in kw_lower if kw in note_text)
+                        
+                        if matches > 0:
+                            results.append({
+                                "category": "STUDY MATERIAL",
+                                "title": f"Notes for {note['subject']}",
+                                "details": f"File: {note['file'].replace('_', ' ').replace('.pdf', '')}",
+                                "extra": f"Link: {note['url']}",
+                                "score": float(matches) / len(kw_lower) + 0.5
+                            })
+                except Exception as e:
+                    logger.exception("Error extracting structured notes for LLM")
+                    
+                # Re-sort to account for naturally added notes
+                results.sort(key=lambda x: x['score'], reverse=True)
+                results = results[:5]
+
                 
     except RuntimeError:
         logger.error("Database is temporarily unavailable during context search")
@@ -305,6 +335,7 @@ def build_safe_context(context_items: List[Dict[str, Any]]) -> str:
         details = str(item.get("details", "")).strip()
         extra = str(item.get("extra", "")).strip()
         
+        raw_extra = extra
         if extra:
             details = f"{details} | Extra: {extra}"
             
@@ -312,7 +343,8 @@ def build_safe_context(context_items: List[Dict[str, Any]]) -> str:
         obj = SimpleNamespace(
             name=title,
             subject=cat,
-            details=details
+            details=details,
+            raw_extra=raw_extra
         )
         
         # Deduplicate based on content
@@ -335,9 +367,16 @@ def build_safe_context(context_items: List[Dict[str, Any]]) -> str:
         
         # Include safe URL for STUDY MATERIAL category
         if item.subject == 'STUDY MATERIAL':
-            url = get_safe_pdf_url(item.name)
-            if url:
-                record += f"Resource URL: {url}\n"
+            if getattr(item, 'raw_extra', '').startswith('Link: '):
+                # 1. Use the pre-existing external database URL if available
+                url = getattr(item, 'raw_extra').replace('Link: ', '').strip()
+                if url:
+                    record += f"Resource URL: {url}\n"
+            else:
+                # 2. Fall back to local file path checks
+                url = get_safe_pdf_url(item.name)
+                if url:
+                    record += f"Resource URL: {url}\n"
                 
         record += "-----------------------\n\n"
         

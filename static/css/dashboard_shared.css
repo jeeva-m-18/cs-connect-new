@@ -39,15 +39,19 @@
 }
 
 .dash-sidebar-logo {
-  width: 40px;
-  height: 40px;
-  background: linear-gradient(135deg, var(--accent-crimson), var(--accent-dark));
-  border-radius: 10px;
+  width: 48px;
+  height: 48px;
+  background: #ffffff;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 32px;
-  box-shadow: 0 4px 12px rgba(139, 29, 29, 0.2);
+  box-shadow: 0 4px 15px rgba(139, 29, 29, 0.08); /* faint pinkish shadow to match image */
+}
+
+.dash-sidebar-logo svg {
+  stroke: #D4AF37; /* golden color for cap */
 }
 
 .dash-sidebar-items {
@@ -83,12 +87,12 @@
 
 .dash-sidebar-item:hover {
   background: var(--dash-hover-bg);
-  color: var(--accent-crimson);
+  color: #2D2926;
 }
 
 .dash-sidebar-item.active {
   background: var(--dash-active-bg);
-  color: var(--accent-crimson);
+  color: #2D2926;
 }
 
 .dash-sidebar-item svg, .dash-sidebar-item i {

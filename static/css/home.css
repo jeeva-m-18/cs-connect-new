@@ -49,7 +49,7 @@
     letter-spacing: 5px;
     margin-bottom: 24px;
     font-weight: 500;
-    text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .hero-title {
@@ -60,7 +60,7 @@
     letter-spacing: -2px;
     margin-bottom: 20px;
     line-height: 1.1;
-    text-shadow: 0 2px 10px rgba(255,255,255,0.4);
+    text-shadow: 0 2px 10px rgba(255, 255, 255, 0.4);
 }
 
 .hero-tagline {
@@ -589,4 +589,4 @@
     .excellence-grid {
         grid-template-columns: 1fr;
     }
-}
+}

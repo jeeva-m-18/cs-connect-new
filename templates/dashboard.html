@@ -6,7 +6,9 @@
   <title>{% block title %}Dashboard - CS Connect{% endblock %}</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard_shared.css') }}" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
   {% block extra_css %}{% endblock %}
 </head>
 <body>
@@ -15,46 +17,39 @@
     <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
     
     <!-- SIDEBAR -->
-    <aside class="sidebar">
-      <div class="sidebar-logo">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F5E6BE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-          <polyline points="2 17 12 22 22 17"></polyline>
-          <polyline points="2 12 12 17 22 12"></polyline>
-        </svg>
+    <aside class="dash-sidebar">
+      <div class="dash-sidebar-logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
       </div>
-
-      <nav class="nav-links">
-        <div class="nav-item active" data-tip="Dashboard" onclick="location.href='/student-dashboard'">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      <nav class="dash-sidebar-items">
+        <div class="dash-sidebar-item active" title="Dashboard" onclick="location.href='/student-dashboard'">
+          <i class="lucide-icon" data-lucide="layout-dashboard"></i>
+          <span class="nav-label">Dashboard</span>
         </div>
-        <div class="nav-item" data-tip="Library" onclick="location.href='/dashboard/library'">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        <div class="dash-sidebar-item" title="Library" onclick="location.href='/dashboard/library'">
+          <i class="lucide-icon" data-lucide="book-open"></i>
+          <span class="nav-label">Library</span>
         </div>
-        <div class="nav-item" data-tip="Download Syllabus" onclick="location.href='/dashboard/syllabus'">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
+        <div class="dash-sidebar-item" title="Download Syllabus" onclick="location.href='/dashboard/syllabus'">
+          <i class="lucide-icon" data-lucide="download"></i>
+          <span class="nav-label">Syllabus</span>
         </div>
-        <div class="nav-item" data-tip="Performance" onclick="location.href='/student-dashboard'">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+        <div class="dash-sidebar-item" title="Performance" onclick="location.href='/student-dashboard'">
+          <i class="lucide-icon" data-lucide="activity"></i>
+          <span class="nav-label">Performance</span>
         </div>
-        <div class="nav-item" data-tip="Profile" onclick="location.href='/student-dashboard'">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-        </div>
-        <div class="nav-item" data-tip="Classmates" onclick="location.href='/student-dashboard'">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        <div class="dash-sidebar-item" title="Classmates" onclick="location.href='/student-dashboard'">
+          <i class="lucide-icon" data-lucide="users"></i>
+          <span class="nav-label">Classmates</span>
         </div>
       </nav>
-
-      <div class="sidebar-bottom">
-        <div class="nav-item" data-tip="Settings" onclick="location.href='/student-dashboard'">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      <div class="dash-sidebar-bottom">
+        <div class="dash-sidebar-item" title="Settings" onclick="location.href='/student-dashboard'">
+          <i class="lucide-icon" data-lucide="settings"></i>
+          <span class="nav-label">Settings</span>
         </div>
-        <div class="user-avatar" style="background: linear-gradient(135deg, #8B1D1D, #4a0f0f); color: #fff; border: none;">
-          {% if session.get('name') %}
-            {{ session.get('name')[:1] }}{{ session.get('name').split(' ')[1][:1] if ' ' in session.get('name') else '' }}
-          {% else %}
-            AK
-          {% endif %}
+        <div style="width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,var(--accent-crimson),var(--accent-dark)); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; color:white; border: 1px solid rgba(255,255,255,0.1);">
+          {{ session.get('name', 'S')[:2].upper() }}
         </div>
       </div>
     </aside>
@@ -208,6 +203,11 @@
       const wrapper = document.querySelector('.dashboard-wrapper');
       if (wrapper) wrapper.classList.toggle('sidebar-open');
     }
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+    });
   </script>
 </body>
 </html>

@@ -11,8 +11,7 @@ body {
   color: #2D2926;
   min-height: 100vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
 }
 
 /* 2-Panel Layout Wrapper */
@@ -20,7 +19,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: 100vw;
-  min-height: 100vh;
+  flex: 1;
   background: #FDFCF8;
   overflow: hidden;
 }

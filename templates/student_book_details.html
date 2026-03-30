@@ -428,7 +428,7 @@ async function fetchBookData() {
             avHtml = `<span style="color:var(--green);">${av.available} of ${av.total} available</span>`;
             if (loadedData.student_loan) {
                 actsHtml = `
-                  <form action="/library/return/${currentBookId}" method="POST" style="width:100%;">
+                  <form action="/return_book/${currentBookId}" method="POST" style="width:100%;">
                     <button type="submit" class="btn btn-outline" style="border-color:var(--amber); color:var(--amber);">
                       <i data-lucide="rotate-ccw" style="width:14px;height:14px;"></i> Request Return
                     </button>
@@ -441,7 +441,7 @@ async function fetchBookData() {
             } else {
                 let d = new Date(); d.setDate(d.getDate()+14);
                 actsHtml = `
-                  <form action="/library/issue/${currentBookId}" method="POST" style="width:100%;">
+                  <form action="/issue_book/${currentBookId}" method="POST" style="width:100%;">
                     <button type="submit" class="btn btn-primary"><i data-lucide="book-open" style="width:14px;height:14px;"></i> Request Issue</button>
                   </form>
                   <div class="btn-subtext" style="margin-top:8px;">Approval required by Admin</div>
@@ -451,7 +451,7 @@ async function fetchBookData() {
             avHtml = `<span style="color:var(--red);">0 of ${av.total} available</span>`;
             if (loadedData.student_loan) {
                 actsHtml = `
-                  <form action="/library/return/${currentBookId}" method="POST" style="width:100%;">
+                   <form action="/return_book/${currentBookId}" method="POST" style="width:100%;">
                     <button type="submit" class="btn btn-outline" style="border-color:var(--amber); color:var(--amber);">
                       <i data-lucide="rotate-ccw" style="width:14px;height:14px;"></i> Request Return
                     </button>
@@ -468,7 +468,7 @@ async function fetchBookData() {
                `;
             } else {
                actsHtml = `
-                 <form action="/library/request/${currentBookId}" method="POST" style="width:100%;">
+                  <form action="/request_book/${currentBookId}" method="POST" style="width:100%;">
                     <button type="submit" class="btn btn-outline"><i data-lucide="user-plus" style="width:14px;height:14px;"></i> Request Reservation</button>
                  </form>
                  <div class="btn-subtext" style="margin-top:8px;">Est. wait: ${(av.reserved+1)*7} days &middot; #${av.reserved+1} in queue</div>

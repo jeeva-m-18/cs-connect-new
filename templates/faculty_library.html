@@ -78,43 +78,47 @@
 {% block content %}
 <div class="dash-wrapper fade-up">
   <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
-  <aside class="dash-sidebar">
+    <aside class="dash-sidebar">
+    <div class="dash-sidebar-logo">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+    </div>
     <nav class="dash-sidebar-items">
-      <div class="dash-sidebar-item" onclick="location.href='/faculty-dashboard'">
-        <i data-lucide="layout-dashboard"></i><span class="nav-label">Dashboard</span>
+      <div class="dash-sidebar-item {% if active_page == 'dashboard' %}active{% endif %}" title="Dashboard" onclick="location.href='/faculty-dashboard'">
+        <i data-lucide="layout-dashboard"></i>
+        <span class="nav-label">Dashboard</span>
       </div>
-      <div class="dash-sidebar-item" onclick="location.href='/timetable'">
-        <i data-lucide="book-open"></i><span class="nav-label">My Classes</span>
+      <div class="dash-sidebar-item {% if active_page == 'timetable' %}active{% endif %}" title="My Classes" onclick="location.href='/timetable'">
+        <i data-lucide="book-open"></i>
+        <span class="nav-label">My Classes</span>
       </div>
-      <div class="dash-sidebar-item" onclick="location.href='/marks-entry'">
-        <i data-lucide="edit-3"></i><span class="nav-label">Marks</span>
+      <div class="dash-sidebar-item {% if active_page == 'marks' %}active{% endif %}" title="Marks" onclick="location.href='/marks-entry'">
+        <i data-lucide="edit-3"></i>
+        <span class="nav-label">Marks</span>
       </div>
-      <div class="dash-sidebar-item active">
-        <i data-lucide="library"></i><span class="nav-label">Library</span>
+      <div class="dash-sidebar-item {% if active_page == 'library' %}active{% endif %}" title="Library" onclick="location.href='/faculty-dashboard/library'">
+        <i data-lucide="library"></i>
+        <span class="nav-label">Library Portal</span>
       </div>
-      <div class="dash-sidebar-item" onclick="location.href='/academics'">
-        <i data-lucide="folder"></i><span class="nav-label">Dept Files</span>
+      <div class="dash-sidebar-item {% if active_page == 'upload' %}active{% endif %}" title="Upload" onclick="location.href='/faculty/upload-material'">
+        <i data-lucide="upload-cloud"></i>
+        <span class="nav-label">Upload</span>
       </div>
-      <div class="dash-sidebar-item" onclick="location.href='/faculty/upload-material'">
-        <i data-lucide="upload-cloud"></i><span class="nav-label">Upload</span>
-      </div>
-      <div class="dash-sidebar-item" onclick="location.href='/faculty/send-circular'">
-        <i data-lucide="send"></i><span class="nav-label">Circular</span>
+      <div class="dash-sidebar-item {% if active_page == 'circular' %}active{% endif %}" title="Circular" onclick="location.href='/faculty/send-circular'">
+        <i data-lucide="send"></i>
+        <span class="nav-label">Circular</span>
       </div>
     </nav>
-    <div class="dash-sidebar-bottom">
-      <div style="width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,var(--accent-crimson),var(--accent-dark)); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; color:white; border: 1px solid rgba(255,255,255,0.1);">
-         {% set name = session.get('name') or session.get('user_name') or 'Faculty User' %}
-         {{ name[0] }}{{ name.split()[-1][0] if name.split()|length > 1 else '' }}
-       </div>
-    </div>
+    
   </aside>
 
   <main class="dash-main">
     <header class="dash-topbar" style="border-bottom: 1px solid var(--border-accent); background: white;">
-      <div style="display: flex; align-items: center; gap: 12px; padding: 0 32px;">
+      <div style="display: flex; align-items: center; gap: 12px;">
         <button class="sidebar-toggle" onclick="toggleSidebar()"><i data-lucide="menu"></i></button>
         <div class="dash-breadcrumb">Faculty Resources &middot; <b>Central Library</b></div>
+      </div>
+      <div class="dash-top-actions">
+        <div class="time-chip" id="live-time" style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); background: var(--dash-active-bg); padding: 4px 12px; border-radius: 20px;">—</div>
       </div>
     </header>
 

@@ -58,7 +58,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--gol
 }
 
 /* Main Content Area */
-.main-content { flex: 1; margin-left: var(--sidebar-width); display: flex; flex-direction: column; overflow-y: auto; height: 100vh; position: relative; }
+.main-content { flex: 1;  display: flex; flex-direction: column; overflow-y: auto; height: 100vh; position: relative; }
 
 .top-bar {
   position: sticky; top: 0; z-index: 50; background: var(--bg); border-bottom: 1px solid var(--border);
