@@ -23,7 +23,7 @@ library_bp = Blueprint("library_bp", __name__)
 def library():
     if "user_id" not in session:
         flash("Please log in to access the library.", "warning")
-        return redirect(url_for("login"))
+        return redirect(url_for("login", next=request.path))
     books = Book.get_all()
     user_id = str(session.get("user_id"))
     has_active_issue = False
@@ -40,7 +40,7 @@ def library():
 def student_library():
     if "user_id" not in session:
         flash("Please log in to access your library dashboard.", "warning")
-        return redirect(url_for("login"))
+        return redirect(url_for("login", next=request.path))
     return render_template("student_library.html", active_page="library")
 
 
@@ -48,7 +48,7 @@ def student_library():
 def faculty_library():
     if "user_id" not in session:
         flash("Please log in to access your library dashboard.", "warning")
-        return redirect(url_for("login"))
+        return redirect(url_for("login", next=request.path))
     if session.get("role") not in ["faculty", "admin"]:
         flash("Unauthorized access.", "danger")
         return redirect(url_for("home"))
@@ -59,7 +59,7 @@ def faculty_library():
 def student_library_search():
     if "user_id" not in session:
         flash("Please log in to search the library.", "warning")
-        return redirect(url_for("login"))
+        return redirect(url_for("login", next=request.path))
     q = request.args.get("q", "")
     category = request.args.get("category", "All Categories")
     availability = request.args.get("availability", "All Books")
@@ -111,12 +111,12 @@ def search_books():
 @library_bp.route("/my-books")
 def my_books():
     if "user_id" not in session:
-        return redirect(url_for("login"))
+        return redirect(url_for("login", next=request.path))
     user_id = str(session["user_id"])
     role = session.get("role")
     if role not in ["student", "faculty"]:
         flash("Unauthorized", "danger")
-        return redirect(url_for("login"))
+        return redirect(url_for("login", next=request.path))
 
     from database import db_connection
     with db_connection() as conn:
@@ -146,7 +146,7 @@ def my_books():
 def book_details(book_id):
     if "user_id" not in session:
         flash("Please log in to view book details.", "warning")
-        return redirect(url_for("login"))
+        return redirect(url_for("login", next=request.path))
 
     book = Book.get_by_id(book_id)
     if not book:
@@ -176,7 +176,7 @@ def book_details(book_id):
 @library_bp.route("/issue_book/<int:book_id>", methods=["POST"])
 def issue_book(book_id):
     if "user_id" not in session:
-        return redirect(url_for("login"))
+        return redirect(url_for("login", next=request.path))
 
     if session.get("role") == "admin":
         flash("Admins cannot issue books.", "danger")
@@ -222,7 +222,7 @@ def issue_book(book_id):
 @library_bp.route("/return_book/<int:book_id>", methods=["POST"])
 def return_book(book_id):
     if "user_id" not in session:
-        return redirect(url_for("login"))
+        return redirect(url_for("login", next=request.path))
 
     if session.get("role") == "admin":
         flash("Admins cannot return books.", "danger")
@@ -271,7 +271,7 @@ def return_book(book_id):
 @library_bp.route("/renew_book/<int:book_id>", methods=["POST"])
 def renew_book(book_id):
     if "user_id" not in session:
-        return redirect(url_for("login"))
+        return redirect(url_for("login", next=request.path))
     if session.get("role") == "admin":
         flash("Admins cannot renew books.", "danger")
         return redirect(url_for("library_bp.book_details", book_id=book_id))
@@ -354,7 +354,7 @@ def renew_book(book_id):
 @library_bp.route("/request_book/<int:book_id>", methods=["POST"])
 def request_book(book_id):
     if "user_id" not in session:
-        return redirect(url_for("login"))
+        return redirect(url_for("login", next=request.path))
 
     if session.get("role") == "admin":
         flash("Admins cannot request books.", "danger")
@@ -742,7 +742,7 @@ def api_library_suggestions():
 @library_bp.route("/student-dashboard/library/catalogue")
 def student_library_catalogue():
     if "user_id" not in session:
-        return redirect(url_for("login"))
+        return redirect(url_for("login", next=request.path))
     return render_template("library_catalogue.html", active_page="library")
 
 @library_bp.route("/api/library/catalogue")
@@ -931,7 +931,7 @@ def api_library_reserve():
 @library_bp.route("/student-dashboard/library/books/<int:book_id>")
 def student_library_book_details(book_id):
     if "user_id" not in session:
-        return redirect(url_for("login"))
+        return redirect(url_for("login", next=request.path))
     user_id = str(session["user_id"])
     from models.request import Request
     pending_req = Request.has_pending_request(user_id, book_id, 'issue') or Request.has_pending_request(user_id, book_id, 'reserve') if user_id else None
@@ -1047,7 +1047,7 @@ def api_library_cancel_reservation(res_id):
 @library_bp.route("/student-dashboard/library/fines")
 def student_library_fines():
     if "user_id" not in session:
-        return redirect(url_for("login"))
+        return redirect(url_for("login", next=request.path))
     return render_template("library_fines.html", active_page="library")
 
 @library_bp.route("/api/library/fines/<int:fine_id>/mark-paid", methods=["PATCH"])
@@ -1089,7 +1089,7 @@ def api_library_fines_mark_all_paid():
 @library_bp.route("/api/library/fines/<int:fine_id>/receipt")
 def api_library_fines_receipt(fine_id):
     if "user_id" not in session:
-        return redirect(url_for("login"))
+        return redirect(url_for("login", next=request.path))
         
     user_id = str(session["user_id"])
     from database import db_connection

@@ -2384,10 +2384,12 @@ def submit_faculty_material():
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
+    # Capture next_url from either query string or form data
+    next_url = request.args.get('next') or request.form.get('next')
+    
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
-        next_url = request.form.get("next")
 
         with db_connection() as conn:
             cursor = conn.cursor()
@@ -2395,18 +2397,18 @@ def login():
             user = cursor.fetchone()
 
         if user and check_password_hash(user['password'], password):
-            session["user_id"] = user['user_id']   # TEXT user_id, not integer sl_no
+            session["user_id"] = user['user_id']
             session["name"]    = user['name']
             session["email"]   = user['email']
-            session["role"]    = user['role']   # ← STEP 1: save role in session
+            session["role"]    = user['role']
             flash("Login successful!", "success")
 
-            # Redirect to the 'next' URL if it exists, otherwise home
-            return redirect(next_url or url_for("home"))
+            # Always redirect to the library if no specific next_url is set
+            return redirect(next_url or url_for("library_bp.library"))
         else:
             flash("Invalid email or password!", "danger")
 
-    next_url = request.args.get('next')
+    # Pass next_url back to template (handles both GET and failed POST)
     return render_template("login.html", active_page='', next_url=next_url)
 
 

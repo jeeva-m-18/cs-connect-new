@@ -76,7 +76,10 @@
 
 
 
-        <form method="POST" action="{{ url_for('login') }}">
+        <form method="POST" action="">
+          {% if next_url %}
+          <input type="hidden" name="next" value="{{ next_url }}">
+          {% endif %}
 
 
           <div class="form-group">
