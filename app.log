@@ -12308,3 +12308,928 @@ connection to server at "ep-holy-sea-anfklwql-pooler.c-6.us-east-1.aws.neon.tech
 2026-03-30 23:59:39,379 [ERROR] llm_engine: Intent Analysis API Error: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
 2026-03-30 23:59:39,380 [INFO] root: No relevant context found for query: hi
 2026-03-30 23:59:39,382 [INFO] werkzeug: 127.0.0.1 - - [30/Mar/2026 23:59:39] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 15:54:53,993 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 15:54:55,409 [INFO] database: Database connection successful
+2026-05-16 15:55:02,511 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.29.17:5000
+2026-05-16 15:55:02,511 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-05-16 15:55:02,512 [INFO] werkzeug:  * Restarting with stat
+2026-05-16 15:55:03,755 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 15:55:04,463 [INFO] database: Database connection successful
+2026-05-16 15:55:10,231 [WARNING] werkzeug:  * Debugger is active!
+2026-05-16 15:55:10,236 [INFO] werkzeug:  * Debugger PIN: 717-992-605
+2026-05-16 15:56:25,684 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 15:56:26,342 [INFO] database: Database connection successful
+2026-05-16 15:56:26,367 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 15:56:26,799 [INFO] database: Database connection successful
+2026-05-16 15:56:26,965 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 15:56:27,520 [INFO] database: Database connection successful
+2026-05-16 15:56:27,740 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 15:56:27] "GET / HTTP/1.1" 200 -
+2026-05-16 15:56:27,988 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 15:56:27] "GET /static/media/hod.jpg HTTP/1.1" 200 -
+2026-05-16 15:56:27,990 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 15:56:27] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-05-16 15:56:27,993 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 15:56:27] "GET /static/css/chatbot.css HTTP/1.1" 200 -
+2026-05-16 15:56:27,999 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 15:56:27] "GET /static/images/aisat-logo-300x300.png HTTP/1.1" 200 -
+2026-05-16 15:56:27,999 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 15:56:27] "GET /static/css/home.css HTTP/1.1" 200 -
+2026-05-16 15:56:28,007 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 15:56:28] "GET /static/js/main.js HTTP/1.1" 200 -
+2026-05-16 15:56:28,014 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 15:56:28] "GET /static/js/chatbot.js HTTP/1.1" 200 -
+2026-05-16 15:56:28,415 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 15:56:28] "GET /static/images/aisat_building.jpeg HTTP/1.1" 200 -
+2026-05-16 15:56:29,523 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 15:56:29,993 [INFO] database: Database connection successful
+2026-05-16 15:56:30,436 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 15:56:31,060 [INFO] database: Database connection successful
+2026-05-16 15:56:31,441 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 15:56:31] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-05-16 15:59:34,030 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 15:59:34,867 [INFO] database: Database connection successful
+2026-05-16 15:59:41,709 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.29.17:5000
+2026-05-16 15:59:41,709 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-05-16 15:59:41,710 [INFO] werkzeug:  * Restarting with stat
+2026-05-16 15:59:42,722 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 15:59:43,283 [INFO] database: Database connection successful
+2026-05-16 15:59:49,801 [WARNING] werkzeug:  * Debugger is active!
+2026-05-16 15:59:49,805 [INFO] werkzeug:  * Debugger PIN: 717-992-605
+2026-05-16 15:59:49,836 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 15:59:50,356 [INFO] database: Database connection successful
+2026-05-16 15:59:50,375 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 15:59:51,260 [INFO] database: Database connection successful
+2026-05-16 15:59:51,508 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 15:59:53,207 [INFO] database: Database connection successful
+2026-05-16 15:59:53,450 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 15:59:53] "GET / HTTP/1.1" 200 -
+2026-05-16 15:59:53,941 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 15:59:53] "[36mGET /static/media/hod.jpg HTTP/1.1[0m" 304 -
+2026-05-16 15:59:53,953 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 15:59:53] "[36mGET /static/images/aisat-logo-300x300.png HTTP/1.1[0m" 304 -
+2026-05-16 15:59:53,965 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 15:59:53] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-05-16 15:59:53,965 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 15:59:53] "[36mGET /static/css/home.css HTTP/1.1[0m" 304 -
+2026-05-16 15:59:53,972 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 15:59:53] "[36mGET /static/css/chatbot.css HTTP/1.1[0m" 304 -
+2026-05-16 15:59:53,992 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 15:59:53] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-05-16 15:59:53,996 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 15:59:53] "[36mGET /static/js/chatbot.js HTTP/1.1[0m" 304 -
+2026-05-16 15:59:54,040 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 15:59:54] "[36mGET /static/images/aisat_building.jpeg HTTP/1.1[0m" 304 -
+2026-05-16 15:59:54,405 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 15:59:55,127 [INFO] database: Database connection successful
+2026-05-16 15:59:55,515 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 15:59:56,372 [INFO] database: Database connection successful
+2026-05-16 15:59:56,783 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 15:59:56] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-05-16 16:00:03,638 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-05-16 16:00:03,641 [ERROR] llm_engine: Intent Analysis API Error: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-05-16 16:00:03,643 [INFO] root: No relevant context found for query: faculty
+2026-05-16 16:00:03,650 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 16:00:03] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 17:44:42,126 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:44:46,466 [INFO] database: Database connection successful
+2026-05-16 17:44:46,738 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:44:48,472 [INFO] database: Database connection successful
+2026-05-16 17:44:48,721 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:44:49,410 [INFO] database: Database connection successful
+2026-05-16 17:44:49,874 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:44:50,766 [INFO] database: Database connection successful
+2026-05-16 17:44:51,045 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:44:51,754 [INFO] database: Database connection successful
+2026-05-16 17:44:52,053 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:44:52,248 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:44:53,485 [INFO] database: Database connection successful
+2026-05-16 17:44:53,596 [INFO] database: Database connection successful
+2026-05-16 17:44:53,838 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:44:53,909 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:44:54,613 [INFO] database: Database connection successful
+2026-05-16 17:44:54,613 [INFO] database: Database connection successful
+2026-05-16 17:44:54,934 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:44:54,935 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:44:55,646 [INFO] database: Database connection successful
+2026-05-16 17:44:55,662 [INFO] database: Database connection successful
+2026-05-16 17:44:55,847 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:44:55,852 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:44:55] "GET /about-cse HTTP/1.1" 200 -
+2026-05-16 17:44:58,399 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:45:00,758 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:45:02,954 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:45:08,314 [INFO] database: Database connection successful
+2026-05-16 17:45:08,537 [INFO] database: Database connection successful
+2026-05-16 17:45:08,747 [INFO] database: Database connection successful
+2026-05-16 17:45:08,749 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:45:08,852 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:45:08] "GET /about-aisat HTTP/1.1" 200 -
+2026-05-16 17:45:09,056 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:45:09,368 [INFO] database: Database connection successful
+2026-05-16 17:45:09,685 [INFO] database: Database connection successful
+2026-05-16 17:45:09,865 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:45:09,958 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:45:09] "GET /login HTTP/1.1" 200 -
+2026-05-16 17:45:10,610 [INFO] database: Database connection successful
+2026-05-16 17:45:10,940 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:45:10] "GET /contact HTTP/1.1" 200 -
+2026-05-16 17:45:11,103 [INFO] database: Database connection successful
+2026-05-16 17:45:11,275 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:45:12,779 [INFO] database: Database connection successful
+2026-05-16 17:45:12,949 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:45:13,760 [INFO] database: Database connection successful
+2026-05-16 17:45:14,007 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:45:14] "GET /faculty HTTP/1.1" 200 -
+2026-05-16 17:46:03,272 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:46:04,451 [INFO] database: Database connection successful
+2026-05-16 17:46:10,202 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.29.17:5000
+2026-05-16 17:46:10,202 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-05-16 17:46:10,203 [INFO] werkzeug:  * Restarting with stat
+2026-05-16 17:46:11,184 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:46:11,970 [INFO] database: Database connection successful
+2026-05-16 17:46:18,729 [WARNING] werkzeug:  * Debugger is active!
+2026-05-16 17:46:18,732 [INFO] werkzeug:  * Debugger PIN: 717-992-605
+2026-05-16 17:46:23,783 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:46:26,586 [INFO] database: Database connection successful
+2026-05-16 17:46:26,641 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:46:27,310 [INFO] database: Database connection successful
+2026-05-16 17:46:27,491 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:46:28,624 [INFO] database: Database connection successful
+2026-05-16 17:46:29,007 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:46:29] "GET / HTTP/1.1" 200 -
+2026-05-16 17:46:29,369 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:46:29] "[36mGET /static/css/chatbot.css HTTP/1.1[0m" 304 -
+2026-05-16 17:46:29,376 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:46:29] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-05-16 17:46:29,377 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:46:29] "[36mGET /static/css/home.css HTTP/1.1[0m" 304 -
+2026-05-16 17:46:29,382 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:46:29] "[36mGET /static/images/aisat-logo-300x300.png HTTP/1.1[0m" 304 -
+2026-05-16 17:46:29,388 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:46:29] "[36mGET /static/media/hod.jpg HTTP/1.1[0m" 304 -
+2026-05-16 17:46:29,425 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:46:29] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-05-16 17:46:29,430 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:46:29] "[36mGET /static/js/chatbot.js HTTP/1.1[0m" 304 -
+2026-05-16 17:46:29,436 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:46:29] "[36mGET /static/images/aisat_building.jpeg HTTP/1.1[0m" 304 -
+2026-05-16 17:46:40,345 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:46:43,061 [INFO] database: Database connection successful
+2026-05-16 17:46:45,009 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:46:47,330 [INFO] database: Database connection successful
+2026-05-16 17:46:47,668 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:46:49,492 [INFO] database: Database connection successful
+2026-05-16 17:46:50,746 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:46:53,386 [INFO] database: Database connection successful
+2026-05-16 17:46:53,664 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:46:55,411 [INFO] database: Database connection successful
+2026-05-16 17:46:55,581 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:46:57,634 [INFO] database: Database connection successful
+2026-05-16 17:46:58,781 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:47:01,794 [INFO] database: Database connection successful
+2026-05-16 17:47:02,011 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:47:06,548 [INFO] database: Database connection successful
+2026-05-16 17:47:07,173 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:47:07] "GET /about-cse HTTP/1.1" 200 -
+2026-05-16 17:47:07,287 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:47:07] "GET /static/css/aboutcse.css HTTP/1.1" 200 -
+2026-05-16 17:47:07,293 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:47:07] "[36mGET /static/css/chatbot.css HTTP/1.1[0m" 304 -
+2026-05-16 17:47:07,304 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:47:07] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-05-16 17:47:07,308 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:47:07] "[36mGET /static/images/aisat-logo-300x300.png HTTP/1.1[0m" 304 -
+2026-05-16 17:47:07,311 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:47:07] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-05-16 17:47:07,354 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:47:07] "[36mGET /static/js/chatbot.js HTTP/1.1[0m" 304 -
+2026-05-16 17:47:34,775 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:47:35,804 [INFO] database: Database connection successful
+2026-05-16 17:47:35,996 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:47:37,225 [INFO] database: Database connection successful
+2026-05-16 17:47:37,626 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:47:37] "GET /login HTTP/1.1" 200 -
+2026-05-16 17:47:37,690 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:47:37] "GET /static/css/login.css HTTP/1.1" 200 -
+2026-05-16 17:47:37,699 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:47:37] "[36mGET /static/images/aisat-logo-300x300.png HTTP/1.1[0m" 304 -
+2026-05-16 17:47:37,711 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:47:37] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-05-16 17:47:54,384 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:47:55,656 [INFO] database: Database connection successful
+2026-05-16 17:47:56,151 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:47:56] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-05-16 17:47:56,158 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:47:56,994 [INFO] database: Database connection successful
+2026-05-16 17:47:57,254 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:47:58,011 [INFO] database: Database connection successful
+2026-05-16 17:47:58,228 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:47:59,189 [INFO] database: Database connection successful
+2026-05-16 17:47:59,421 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:48:00,465 [INFO] database: Database connection successful
+2026-05-16 17:48:00,792 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:48:01,762 [INFO] database: Database connection successful
+2026-05-16 17:48:01,976 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:48:03,049 [INFO] database: Database connection successful
+2026-05-16 17:48:03,547 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:48:04,616 [INFO] database: Database connection successful
+2026-05-16 17:48:04,782 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:48:05,469 [INFO] database: Database connection successful
+2026-05-16 17:48:05,690 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:48:06,359 [INFO] database: Database connection successful
+2026-05-16 17:48:06,534 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:48:07,247 [INFO] database: Database connection successful
+2026-05-16 17:48:07,393 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:48:08,005 [INFO] database: Database connection successful
+2026-05-16 17:48:08,164 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:48:08,983 [INFO] database: Database connection successful
+2026-05-16 17:48:09,319 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:48:10,134 [INFO] database: Database connection successful
+2026-05-16 17:48:10,422 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:48:10] "GET /library HTTP/1.1" 200 -
+2026-05-16 17:48:10,491 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:48:10] "GET /static/css/dashboard_shared.css HTTP/1.1" 200 -
+2026-05-16 17:48:10,496 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:48:10] "[36mGET /static/css/chatbot.css HTTP/1.1[0m" 304 -
+2026-05-16 17:48:10,500 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:48:10] "[36mGET /static/images/aisat-logo-300x300.png HTTP/1.1[0m" 304 -
+2026-05-16 17:48:10,501 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:48:10] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-05-16 17:48:10,511 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:48:10] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-05-16 17:48:10,520 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:48:10] "[36mGET /static/js/chatbot.js HTTP/1.1[0m" 304 -
+2026-05-16 17:52:29,419 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 17:52:30,674 [INFO] database: Database connection successful
+2026-05-16 17:52:31,022 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:52:31] "PATCH /api/notifications/read-all HTTP/1.1" 200 -
+2026-05-16 17:53:04,401 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-05-16 17:53:04,402 [ERROR] llm_engine: Intent Analysis API Error: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-05-16 17:53:04,403 [INFO] root: No relevant context found for query: how many book are available in the libary
+2026-05-16 17:53:04,405 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 17:53:04] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 18:34:13,251 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:34:24,211 [INFO] database: Database connection successful
+2026-05-16 18:34:33,111 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.29.17:5000
+2026-05-16 18:34:33,111 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-05-16 18:34:33,112 [INFO] werkzeug:  * Restarting with stat
+2026-05-16 18:34:34,202 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:34:35,086 [INFO] database: Database connection successful
+2026-05-16 18:34:42,857 [WARNING] werkzeug:  * Debugger is active!
+2026-05-16 18:34:42,859 [INFO] werkzeug:  * Debugger PIN: 717-992-605
+2026-05-16 18:35:32,647 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:35:33,297 [INFO] database: Database connection successful
+2026-05-16 18:35:33,311 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:35:33,899 [INFO] database: Database connection successful
+2026-05-16 18:35:34,121 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:35:34,792 [INFO] database: Database connection successful
+2026-05-16 18:35:34,942 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:35:35,705 [INFO] database: Database connection successful
+2026-05-16 18:35:35,929 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:35:36,726 [INFO] database: Database connection successful
+2026-05-16 18:35:37,072 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:35:37] "GET / HTTP/1.1" 200 -
+2026-05-16 18:35:37,282 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:35:37] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-05-16 18:35:37,286 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:35:37] "[36mGET /static/css/chatbot.css HTTP/1.1[0m" 304 -
+2026-05-16 18:35:37,293 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:35:37] "[36mGET /static/images/aisat-logo-300x300.png HTTP/1.1[0m" 304 -
+2026-05-16 18:35:37,295 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:35:37] "[36mGET /static/media/hod.jpg HTTP/1.1[0m" 304 -
+2026-05-16 18:35:37,298 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:35:37] "[36mGET /static/css/home.css HTTP/1.1[0m" 304 -
+2026-05-16 18:35:37,315 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:35:37] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-05-16 18:35:37,316 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:35:37] "[36mGET /static/js/chatbot.js HTTP/1.1[0m" 304 -
+2026-05-16 18:35:37,329 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:35:37] "[36mGET /static/images/aisat_building.jpeg HTTP/1.1[0m" 304 -
+2026-05-16 18:35:48,723 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 18:35:48,733 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:35:49,632 [INFO] database: Database connection successful
+2026-05-16 18:35:50,849 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:35:52,148 [INFO] database: Database connection successful
+2026-05-16 18:35:54,234 [INFO] root: No relevant context found for query: faculties
+2026-05-16 18:35:54,236 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:35:54] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 18:41:42,492 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:41:49,908 [INFO] database: Database connection successful
+2026-05-16 18:42:11,781 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.29.17:5000
+2026-05-16 18:42:11,781 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-05-16 18:42:11,782 [INFO] werkzeug:  * Restarting with stat
+2026-05-16 18:42:12,985 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:42:15,278 [INFO] database: Database connection successful
+2026-05-16 18:42:25,440 [WARNING] werkzeug:  * Debugger is active!
+2026-05-16 18:42:25,445 [INFO] werkzeug:  * Debugger PIN: 717-992-605
+2026-05-16 18:42:25,491 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:42:26,233 [INFO] database: Database connection successful
+2026-05-16 18:42:26,253 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:42:26,961 [INFO] database: Database connection successful
+2026-05-16 18:42:27,211 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:42:27,869 [INFO] database: Database connection successful
+2026-05-16 18:42:28,113 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:42:28,895 [INFO] database: Database connection successful
+2026-05-16 18:42:29,108 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:42:29,814 [INFO] database: Database connection successful
+2026-05-16 18:42:30,080 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:42:30] "GET / HTTP/1.1" 200 -
+2026-05-16 18:42:30,290 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:42:30] "[36mGET /static/css/home.css HTTP/1.1[0m" 304 -
+2026-05-16 18:42:30,299 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:42:30] "[36mGET /static/images/aisat-logo-300x300.png HTTP/1.1[0m" 304 -
+2026-05-16 18:42:30,304 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:42:30] "[36mGET /static/css/chatbot.css HTTP/1.1[0m" 304 -
+2026-05-16 18:42:30,304 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:42:30] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-05-16 18:42:30,306 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:42:30] "[36mGET /static/media/hod.jpg HTTP/1.1[0m" 304 -
+2026-05-16 18:42:30,331 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:42:30] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-05-16 18:42:30,332 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:42:30] "[36mGET /static/js/chatbot.js HTTP/1.1[0m" 304 -
+2026-05-16 18:42:30,359 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:42:30] "[36mGET /static/images/aisat_building.jpeg HTTP/1.1[0m" 304 -
+2026-05-16 18:42:53,697 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 18:42:53,701 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:42:54,445 [INFO] database: Database connection successful
+2026-05-16 18:42:54,701 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:42:55,348 [INFO] database: Database connection successful
+2026-05-16 18:42:55,523 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:42:57,872 [INFO] database: Database connection successful
+2026-05-16 18:43:00,419 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 18:43:00,425 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:43:00] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 18:43:06,289 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 18:43:06,292 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:43:07,193 [INFO] database: Database connection successful
+2026-05-16 18:43:08,264 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:43:08,835 [INFO] database: Database connection successful
+2026-05-16 18:43:09,374 [INFO] root: No relevant context found for query: faculties
+2026-05-16 18:43:09,376 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:43:09] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 18:43:15,428 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 18:43:15,430 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:43:17,068 [INFO] database: Database connection successful
+2026-05-16 18:43:17,634 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:43:18,396 [INFO] database: Database connection successful
+2026-05-16 18:43:19,380 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 18:43:19,383 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:43:19] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 18:43:48,910 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 18:43:48,912 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:43:50,611 [INFO] database: Database connection successful
+2026-05-16 18:43:51,711 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:43:53,167 [INFO] database: Database connection successful
+2026-05-16 18:43:54,407 [INFO] root: No relevant context found for query: how many faculties in cs dept
+2026-05-16 18:43:54,409 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:43:54] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 18:44:11,287 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 18:44:11,289 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:44:12,074 [INFO] database: Database connection successful
+2026-05-16 18:44:12,636 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:44:13,657 [INFO] database: Database connection successful
+2026-05-16 18:44:15,461 [INFO] root: No relevant context found for query: timetable fo s6
+2026-05-16 18:44:15,462 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:44:15] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 18:44:21,641 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 18:44:21,643 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:44:22,555 [INFO] database: Database connection successful
+2026-05-16 18:44:23,556 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:44:24,585 [INFO] database: Database connection successful
+2026-05-16 18:44:26,142 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 18:44:26,759 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 18:44:26,763 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:44:26] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 18:45:12,493 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 18:45:12,495 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:45:13,658 [INFO] database: Database connection successful
+2026-05-16 18:45:15,146 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:45:16,945 [INFO] database: Database connection successful
+2026-05-16 18:45:18,270 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 18:45:18,687 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 18:45:18,693 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:45:18] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 18:52:42,851 [INFO] werkzeug:  * Detected change in 'C:\\Users\\archa\\Desktop\\works\\cs-connect\\llm_engine.py', reloading
+2026-05-16 18:52:43,089 [INFO] werkzeug:  * Restarting with stat
+2026-05-16 18:52:44,171 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:52:46,052 [INFO] database: Database connection successful
+2026-05-16 18:52:52,148 [WARNING] werkzeug:  * Debugger is active!
+2026-05-16 18:52:52,151 [INFO] werkzeug:  * Debugger PIN: 717-992-605
+2026-05-16 18:53:20,434 [INFO] werkzeug:  * Detected change in 'C:\\Users\\archa\\Desktop\\works\\cs-connect\\llm_engine.py', reloading
+2026-05-16 18:53:20,650 [INFO] werkzeug:  * Restarting with stat
+2026-05-16 18:53:21,753 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:53:22,662 [INFO] database: Database connection successful
+2026-05-16 18:53:28,090 [WARNING] werkzeug:  * Debugger is active!
+2026-05-16 18:53:28,092 [INFO] werkzeug:  * Debugger PIN: 717-992-605
+2026-05-16 18:58:42,295 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:58:43,665 [INFO] database: Database connection successful
+2026-05-16 18:58:54,091 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.29.17:5000
+2026-05-16 18:58:54,092 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-05-16 18:58:54,094 [INFO] werkzeug:  * Restarting with stat
+2026-05-16 18:58:55,481 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:58:56,888 [INFO] database: Database connection successful
+2026-05-16 18:59:02,953 [WARNING] werkzeug:  * Debugger is active!
+2026-05-16 18:59:02,956 [INFO] werkzeug:  * Debugger PIN: 717-992-605
+2026-05-16 18:59:11,732 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:59:12,622 [INFO] database: Database connection successful
+2026-05-16 18:59:12,642 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:59:13,919 [INFO] database: Database connection successful
+2026-05-16 18:59:14,097 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:59:14,986 [INFO] database: Database connection successful
+2026-05-16 18:59:15,181 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:59:17,639 [INFO] database: Database connection successful
+2026-05-16 18:59:17,945 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 18:59:19,427 [INFO] database: Database connection successful
+2026-05-16 18:59:19,667 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:59:19] "GET / HTTP/1.1" 200 -
+2026-05-16 18:59:19,922 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:59:19] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-05-16 18:59:19,925 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:59:19] "[36mGET /static/css/home.css HTTP/1.1[0m" 304 -
+2026-05-16 18:59:19,930 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:59:19] "GET /static/css/chatbot.css HTTP/1.1" 200 -
+2026-05-16 18:59:19,936 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:59:19] "[36mGET /static/media/hod.jpg HTTP/1.1[0m" 304 -
+2026-05-16 18:59:19,937 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:59:19] "[36mGET /static/images/aisat-logo-300x300.png HTTP/1.1[0m" 304 -
+2026-05-16 18:59:19,959 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:59:19] "[36mGET /static/js/chatbot.js HTTP/1.1[0m" 304 -
+2026-05-16 18:59:19,960 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:59:19] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-05-16 18:59:19,972 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 18:59:19] "[36mGET /static/images/aisat_building.jpeg HTTP/1.1[0m" 304 -
+2026-05-16 19:00:25,687 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:00:25,697 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:00:27,831 [INFO] database: Database connection successful
+2026-05-16 19:00:29,743 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:00:31,268 [INFO] database: Database connection successful
+2026-05-16 19:00:32,583 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:00:32,588 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:00:32] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 19:00:45,749 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:00:45,753 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:00:46,567 [INFO] database: Database connection successful
+2026-05-16 19:00:51,544 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:00:52,704 [INFO] database: Database connection successful
+2026-05-16 19:00:53,350 [INFO] root: No relevant context found for query: time table
+2026-05-16 19:00:53,352 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:00:53] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 19:03:20,431 [INFO] werkzeug:  * Detected change in 'C:\\Users\\archa\\Desktop\\works\\cs-connect\\llm_engine.py', reloading
+2026-05-16 19:03:20,664 [INFO] werkzeug:  * Restarting with stat
+2026-05-16 19:03:22,163 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:03:22,679 [INFO] database: Database connection successful
+2026-05-16 19:03:30,065 [WARNING] werkzeug:  * Debugger is active!
+2026-05-16 19:03:30,070 [INFO] werkzeug:  * Debugger PIN: 717-992-605
+2026-05-16 19:05:25,902 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:05:26,512 [INFO] database: Database connection successful
+2026-05-16 19:05:26,544 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:05:27,411 [INFO] database: Database connection successful
+2026-05-16 19:05:27,657 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:05:28,460 [INFO] database: Database connection successful
+2026-05-16 19:05:28,645 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:05:29,141 [INFO] database: Database connection successful
+2026-05-16 19:05:29,305 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:05:30,076 [INFO] database: Database connection successful
+2026-05-16 19:05:30,401 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:05:30] "GET / HTTP/1.1" 200 -
+2026-05-16 19:05:31,457 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:05:31] "[36mGET /static/css/home.css HTTP/1.1[0m" 304 -
+2026-05-16 19:05:31,552 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:05:31] "[36mGET /static/css/chatbot.css HTTP/1.1[0m" 304 -
+2026-05-16 19:05:31,558 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:05:31] "[36mGET /static/images/aisat-logo-300x300.png HTTP/1.1[0m" 304 -
+2026-05-16 19:05:31,560 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:05:31] "[36mGET /static/media/hod.jpg HTTP/1.1[0m" 304 -
+2026-05-16 19:05:31,587 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:05:31] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-05-16 19:05:31,593 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:05:31] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-05-16 19:05:31,595 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:05:31] "[36mGET /static/js/chatbot.js HTTP/1.1[0m" 304 -
+2026-05-16 19:05:31,652 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:05:31] "[36mGET /static/images/aisat_building.jpeg HTTP/1.1[0m" 304 -
+2026-05-16 19:05:52,595 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:05:52,605 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:05:53,319 [INFO] database: Database connection successful
+2026-05-16 19:05:53,993 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:05:54,550 [INFO] database: Database connection successful
+2026-05-16 19:05:55,970 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:05:55,976 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:05:55] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 19:06:17,886 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:06:17,891 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:06:19,236 [INFO] database: Database connection successful
+2026-05-16 19:06:19,627 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:06:20,249 [INFO] database: Database connection successful
+2026-05-16 19:06:21,087 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:06:21,093 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:06:21] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 19:26:32,062 [INFO] werkzeug:  * Detected change in 'C:\\Users\\archa\\Desktop\\works\\cs-connect\\llm_engine.py', reloading
+2026-05-16 19:26:32,286 [INFO] werkzeug:  * Restarting with stat
+2026-05-16 19:26:33,864 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:26:34,315 [INFO] database: Database connection successful
+2026-05-16 19:26:40,328 [WARNING] werkzeug:  * Debugger is active!
+2026-05-16 19:26:40,332 [INFO] werkzeug:  * Debugger PIN: 717-992-605
+2026-05-16 19:26:42,393 [INFO] werkzeug:  * Detected change in 'C:\\Users\\archa\\Desktop\\works\\cs-connect\\tmp\\test_pgtrgm.py', reloading
+2026-05-16 19:26:42,807 [INFO] werkzeug:  * Restarting with stat
+2026-05-16 19:26:44,813 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:26:45,768 [INFO] database: Database connection successful
+2026-05-16 19:26:51,440 [WARNING] werkzeug:  * Debugger is active!
+2026-05-16 19:26:51,446 [INFO] werkzeug:  * Debugger PIN: 717-992-605
+2026-05-16 19:27:07,660 [INFO] werkzeug:  * Detected change in 'C:\\Users\\archa\\Desktop\\works\\cs-connect\\tmp\\test_pgtrgm.py', reloading
+2026-05-16 19:27:07,856 [INFO] werkzeug:  * Restarting with stat
+2026-05-16 19:27:09,426 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:27:10,486 [INFO] database: Database connection successful
+2026-05-16 19:27:16,082 [WARNING] werkzeug:  * Debugger is active!
+2026-05-16 19:27:16,086 [INFO] werkzeug:  * Debugger PIN: 717-992-605
+2026-05-16 19:28:21,101 [INFO] werkzeug:  * Detected change in 'C:\\Users\\archa\\Desktop\\works\\cs-connect\\llm_engine.py', reloading
+2026-05-16 19:28:21,465 [INFO] werkzeug:  * Restarting with stat
+2026-05-16 19:28:23,147 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:28:24,450 [INFO] database: Database connection successful
+2026-05-16 19:28:30,408 [WARNING] werkzeug:  * Debugger is active!
+2026-05-16 19:28:30,412 [INFO] werkzeug:  * Debugger PIN: 717-992-605
+2026-05-16 19:30:05,377 [INFO] werkzeug:  * Detected change in 'C:\\Users\\archa\\Desktop\\works\\cs-connect\\tmp\\test_query2.py', reloading
+2026-05-16 19:30:05,706 [INFO] werkzeug:  * Restarting with stat
+2026-05-16 19:30:07,420 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:30:08,525 [INFO] database: Database connection successful
+2026-05-16 19:30:15,454 [WARNING] werkzeug:  * Debugger is active!
+2026-05-16 19:30:15,458 [INFO] werkzeug:  * Debugger PIN: 717-992-605
+2026-05-16 19:30:57,048 [INFO] werkzeug:  * Detected change in 'C:\\Users\\archa\\Desktop\\works\\cs-connect\\llm_engine.py', reloading
+2026-05-16 19:30:57,391 [INFO] werkzeug:  * Restarting with stat
+2026-05-16 19:30:58,532 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:30:59,744 [INFO] database: Database connection successful
+2026-05-16 19:31:08,552 [WARNING] werkzeug:  * Debugger is active!
+2026-05-16 19:31:08,562 [INFO] werkzeug:  * Debugger PIN: 717-992-605
+2026-05-16 19:31:57,477 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:31:58,327 [INFO] database: Database connection successful
+2026-05-16 19:31:58,367 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:31:59,114 [INFO] database: Database connection successful
+2026-05-16 19:31:59,426 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:32:00,177 [INFO] database: Database connection successful
+2026-05-16 19:32:00,562 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:32:01,243 [INFO] database: Database connection successful
+2026-05-16 19:32:01,412 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:32:02,310 [INFO] database: Database connection successful
+2026-05-16 19:32:02,699 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:32:02] "GET / HTTP/1.1" 200 -
+2026-05-16 19:32:08,894 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:32:08] "[36mGET /static/css/chatbot.css HTTP/1.1[0m" 304 -
+2026-05-16 19:32:08,916 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:32:08] "[36mGET /static/css/home.css HTTP/1.1[0m" 304 -
+2026-05-16 19:32:08,944 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:32:08] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-05-16 19:32:08,974 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:32:08] "[36mGET /static/media/hod.jpg HTTP/1.1[0m" 304 -
+2026-05-16 19:32:08,977 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:32:08] "[36mGET /static/images/aisat-logo-300x300.png HTTP/1.1[0m" 304 -
+2026-05-16 19:32:08,999 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:32:08] "[36mGET /static/js/chatbot.js HTTP/1.1[0m" 304 -
+2026-05-16 19:32:08,999 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:32:08] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-05-16 19:32:09,027 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:32:09] "[36mGET /static/images/aisat_building.jpeg HTTP/1.1[0m" 304 -
+2026-05-16 19:32:20,528 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:32:20,542 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:32:21,454 [INFO] database: Database connection successful
+2026-05-16 19:32:21,750 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:32:22,358 [INFO] database: Database connection successful
+2026-05-16 19:32:23,898 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:32:23,908 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:32:23] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 19:33:54,978 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:33:54,986 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:33:55,855 [INFO] database: Database connection successful
+2026-05-16 19:33:56,908 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:33:57,489 [INFO] database: Database connection successful
+2026-05-16 19:33:58,646 [INFO] root: No relevant context found for query: is children happy in aisat?
+2026-05-16 19:33:58,652 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:33:58] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 19:35:42,284 [INFO] werkzeug:  * Detected change in 'C:\\Users\\archa\\Desktop\\works\\cs-connect\\llm_engine.py', reloading
+2026-05-16 19:35:42,539 [INFO] werkzeug:  * Restarting with stat
+2026-05-16 19:35:44,206 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:35:45,172 [INFO] database: Database connection successful
+2026-05-16 19:35:50,571 [WARNING] werkzeug:  * Debugger is active!
+2026-05-16 19:35:50,575 [INFO] werkzeug:  * Debugger PIN: 717-992-605
+2026-05-16 19:36:31,969 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:36:32,678 [INFO] database: Database connection successful
+2026-05-16 19:36:32,698 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:36:33,341 [INFO] database: Database connection successful
+2026-05-16 19:36:33,471 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:36:34,498 [INFO] database: Database connection successful
+2026-05-16 19:36:34,867 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:36:35,595 [INFO] database: Database connection successful
+2026-05-16 19:36:36,079 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:36:37,262 [INFO] database: Database connection successful
+2026-05-16 19:36:37,602 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:36:37] "GET / HTTP/1.1" 200 -
+2026-05-16 19:36:47,246 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:36:47] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-05-16 19:36:47,253 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:36:47] "[36mGET /static/css/home.css HTTP/1.1[0m" 304 -
+2026-05-16 19:36:47,286 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:36:47] "[36mGET /static/images/aisat-logo-300x300.png HTTP/1.1[0m" 304 -
+2026-05-16 19:36:47,289 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:36:47] "[36mGET /static/css/chatbot.css HTTP/1.1[0m" 304 -
+2026-05-16 19:36:47,353 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:36:47] "[36mGET /static/media/hod.jpg HTTP/1.1[0m" 304 -
+2026-05-16 19:36:47,365 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:36:47] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-05-16 19:36:47,389 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:36:47] "[36mGET /static/js/chatbot.js HTTP/1.1[0m" 304 -
+2026-05-16 19:36:47,419 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:36:47] "[36mGET /static/images/aisat_building.jpeg HTTP/1.1[0m" 304 -
+2026-05-16 19:37:12,994 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:37:13,016 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:37:14,813 [INFO] database: Database connection successful
+2026-05-16 19:37:15,981 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:37:17,646 [INFO] database: Database connection successful
+2026-05-16 19:37:19,116 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:37:19,121 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:37:19] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 19:37:39,737 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:37:39,742 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:37:41,277 [INFO] database: Database connection successful
+2026-05-16 19:37:41,750 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:37:42,568 [INFO] database: Database connection successful
+2026-05-16 19:37:44,741 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:37:44,746 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:37:44] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 19:38:00,226 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:38:00,228 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:38:00,791 [INFO] database: Database connection successful
+2026-05-16 19:38:01,062 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:38:01,712 [INFO] database: Database connection successful
+2026-05-16 19:38:02,805 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:38:02,811 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:38:02] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 19:38:15,313 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:38:15,317 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:38:16,361 [INFO] database: Database connection successful
+2026-05-16 19:38:16,681 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:38:17,484 [INFO] database: Database connection successful
+2026-05-16 19:38:17,892 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:38:18,660 [INFO] database: Database connection successful
+2026-05-16 19:38:19,558 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:38:19,561 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:38:19] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 19:43:33,010 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:43:33,013 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:43:34,326 [INFO] database: Database connection successful
+2026-05-16 19:43:35,873 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:43:38,253 [INFO] database: Database connection successful
+2026-05-16 19:43:39,499 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:43:39,723 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:43:39,729 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:43:39] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 19:45:17,132 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:45:17,140 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:45:18,052 [INFO] database: Database connection successful
+2026-05-16 19:45:18,244 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:45:18,966 [INFO] database: Database connection successful
+2026-05-16 19:45:19,815 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:45:20,088 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:45:20,091 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:45:20] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 19:47:41,109 [INFO] werkzeug:  * Detected change in 'C:\\Users\\archa\\Desktop\\works\\cs-connect\\llm_engine.py', reloading
+2026-05-16 19:47:41,396 [INFO] werkzeug:  * Restarting with stat
+2026-05-16 19:47:42,865 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:47:44,164 [INFO] database: Database connection successful
+2026-05-16 19:47:50,694 [WARNING] werkzeug:  * Debugger is active!
+2026-05-16 19:47:50,699 [INFO] werkzeug:  * Debugger PIN: 717-992-605
+2026-05-16 19:49:47,171 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:49:48,986 [INFO] database: Database connection successful
+2026-05-16 19:49:49,014 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:49:49,925 [INFO] database: Database connection successful
+2026-05-16 19:49:50,117 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:49:51,347 [INFO] database: Database connection successful
+2026-05-16 19:49:51,684 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:49:52,479 [INFO] database: Database connection successful
+2026-05-16 19:49:52,915 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:49:54,217 [INFO] database: Database connection successful
+2026-05-16 19:49:54,545 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:49:54] "GET / HTTP/1.1" 200 -
+2026-05-16 19:49:54,952 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:49:54] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-05-16 19:49:54,958 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:49:54] "[36mGET /static/css/chatbot.css HTTP/1.1[0m" 304 -
+2026-05-16 19:49:54,963 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:49:54] "[36mGET /static/images/aisat-logo-300x300.png HTTP/1.1[0m" 304 -
+2026-05-16 19:49:54,963 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:49:54] "[36mGET /static/css/home.css HTTP/1.1[0m" 304 -
+2026-05-16 19:49:54,967 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:49:54] "[36mGET /static/media/hod.jpg HTTP/1.1[0m" 304 -
+2026-05-16 19:49:54,982 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:49:54] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-05-16 19:49:54,983 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:49:54] "[36mGET /static/js/chatbot.js HTTP/1.1[0m" 304 -
+2026-05-16 19:49:54,995 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:49:54] "[36mGET /static/images/aisat_building.jpeg HTTP/1.1[0m" 304 -
+2026-05-16 19:50:53,807 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:50:53,813 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:50:54,595 [INFO] database: Database connection successful
+2026-05-16 19:50:54,936 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:50:55,550 [INFO] database: Database connection successful
+2026-05-16 19:50:55,957 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:50:56,678 [INFO] database: Database connection successful
+2026-05-16 19:50:58,085 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:50:58,092 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:50:58] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 19:51:27,775 [INFO] werkzeug:  * Detected change in 'C:\\Users\\archa\\Desktop\\works\\cs-connect\\tmp\\test_query3.py', reloading
+2026-05-16 19:51:28,003 [INFO] werkzeug:  * Restarting with stat
+2026-05-16 19:51:29,482 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:51:30,077 [INFO] database: Database connection successful
+2026-05-16 19:51:35,775 [WARNING] werkzeug:  * Debugger is active!
+2026-05-16 19:51:35,778 [INFO] werkzeug:  * Debugger PIN: 717-992-605
+2026-05-16 19:52:04,227 [INFO] werkzeug:  * Detected change in 'C:\\Users\\archa\\Desktop\\works\\cs-connect\\llm_engine.py', reloading
+2026-05-16 19:52:04,462 [INFO] werkzeug:  * Restarting with stat
+2026-05-16 19:52:05,976 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:52:06,666 [INFO] database: Database connection successful
+2026-05-16 19:52:12,660 [WARNING] werkzeug:  * Debugger is active!
+2026-05-16 19:52:12,664 [INFO] werkzeug:  * Debugger PIN: 717-992-605
+2026-05-16 19:53:17,263 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:53:17,887 [INFO] database: Database connection successful
+2026-05-16 19:53:17,907 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:53:18,795 [INFO] database: Database connection successful
+2026-05-16 19:53:19,188 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:53:19,860 [INFO] database: Database connection successful
+2026-05-16 19:53:20,138 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:53:20,769 [INFO] database: Database connection successful
+2026-05-16 19:53:20,966 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:53:21,880 [INFO] database: Database connection successful
+2026-05-16 19:53:22,156 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:53:22] "GET / HTTP/1.1" 200 -
+2026-05-16 19:53:22,494 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:53:22] "[36mGET /static/css/home.css HTTP/1.1[0m" 304 -
+2026-05-16 19:53:22,501 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:53:22] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-05-16 19:53:22,507 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:53:22] "[36mGET /static/media/hod.jpg HTTP/1.1[0m" 304 -
+2026-05-16 19:53:22,510 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:53:22] "[36mGET /static/css/chatbot.css HTTP/1.1[0m" 304 -
+2026-05-16 19:53:22,514 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:53:22] "[36mGET /static/images/aisat-logo-300x300.png HTTP/1.1[0m" 304 -
+2026-05-16 19:53:22,519 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:53:22] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-05-16 19:53:22,530 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:53:22] "[36mGET /static/js/chatbot.js HTTP/1.1[0m" 304 -
+2026-05-16 19:53:22,547 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:53:22] "[36mGET /static/images/aisat_building.jpeg HTTP/1.1[0m" 304 -
+2026-05-16 19:53:47,182 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:53:47,187 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:53:47,945 [INFO] database: Database connection successful
+2026-05-16 19:53:48,206 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:53:48,973 [INFO] database: Database connection successful
+2026-05-16 19:53:51,001 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:53:51,005 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:53:51] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 19:54:56,272 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:54:56,275 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:54:57,049 [INFO] database: Database connection successful
+2026-05-16 19:54:57,512 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:54:58,239 [INFO] database: Database connection successful
+2026-05-16 19:54:59,757 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:54:59,760 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:54:59] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 19:56:28,218 [INFO] werkzeug:  * Detected change in 'C:\\Users\\archa\\Desktop\\works\\cs-connect\\tmp\\test_query3.py', reloading
+2026-05-16 19:56:28,488 [INFO] werkzeug:  * Restarting with stat
+2026-05-16 19:56:30,410 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:56:31,429 [INFO] database: Database connection successful
+2026-05-16 19:56:36,960 [WARNING] werkzeug:  * Debugger is active!
+2026-05-16 19:56:36,965 [INFO] werkzeug:  * Debugger PIN: 717-992-605
+2026-05-16 19:56:45,062 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:56:45,067 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:56:46,987 [INFO] database: Database connection successful
+2026-05-16 19:56:47,181 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:56:47,844 [INFO] database: Database connection successful
+2026-05-16 19:56:49,469 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 19:56:49,475 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 19:56:49] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 19:59:54,941 [INFO] werkzeug:  * Detected change in 'C:\\Users\\archa\\Desktop\\works\\cs-connect\\llm_engine.py', reloading
+2026-05-16 19:59:55,268 [INFO] werkzeug:  * Restarting with stat
+2026-05-16 19:59:56,883 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 19:59:57,815 [INFO] database: Database connection successful
+2026-05-16 20:00:04,993 [WARNING] werkzeug:  * Debugger is active!
+2026-05-16 20:00:04,996 [INFO] werkzeug:  * Debugger PIN: 717-992-605
+2026-05-16 20:02:04,455 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:02:05,177 [INFO] database: Database connection successful
+2026-05-16 20:02:05,195 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:02:06,165 [INFO] database: Database connection successful
+2026-05-16 20:02:06,416 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:02:07,242 [INFO] database: Database connection successful
+2026-05-16 20:02:07,406 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:02:08,235 [INFO] database: Database connection successful
+2026-05-16 20:02:08,423 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:02:09,350 [INFO] database: Database connection successful
+2026-05-16 20:02:09,617 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:02:09] "GET / HTTP/1.1" 200 -
+2026-05-16 20:02:09,963 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:02:09] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-05-16 20:02:09,963 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:02:09] "[36mGET /static/css/home.css HTTP/1.1[0m" 304 -
+2026-05-16 20:02:09,970 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:02:09] "GET /static/css/chatbot.css HTTP/1.1" 200 -
+2026-05-16 20:02:09,971 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:02:09] "[36mGET /static/media/hod.jpg HTTP/1.1[0m" 304 -
+2026-05-16 20:02:09,974 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:02:09] "[36mGET /static/images/aisat-logo-300x300.png HTTP/1.1[0m" 304 -
+2026-05-16 20:02:09,992 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:02:09] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-05-16 20:02:09,996 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:02:09] "[36mGET /static/js/chatbot.js HTTP/1.1[0m" 304 -
+2026-05-16 20:02:10,005 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:02:10] "[36mGET /static/images/aisat_building.jpeg HTTP/1.1[0m" 304 -
+2026-05-16 20:02:23,263 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 20:02:23,270 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:02:24,197 [INFO] database: Database connection successful
+2026-05-16 20:02:24,611 [ERROR] llm_engine: Database Ranked Search Error
+Traceback (most recent call last):
+  File "C:\Users\archa\Desktop\works\cs-connect\llm_engine.py", line 296, in fetch_ranked_context
+    cur.execute(query, params)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\archa\AppData\Local\Programs\Python\Python314\Lib\site-packages\psycopg2\extras.py", line 146, in execute
+    return super().execute(query, vars)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.SyntaxError: syntax error at or near "WHERE"
+LINE 70:                  WHERE score > 0.1  ORDER BY score DESC LIMI...
+                          ^
+
+2026-05-16 20:02:24,915 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 20:02:24,919 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:02:24] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 20:02:29,390 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 20:02:29,393 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:02:30,288 [INFO] database: Database connection successful
+2026-05-16 20:02:30,544 [ERROR] llm_engine: Database Ranked Search Error
+Traceback (most recent call last):
+  File "C:\Users\archa\Desktop\works\cs-connect\llm_engine.py", line 296, in fetch_ranked_context
+    cur.execute(query, params)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\archa\AppData\Local\Programs\Python\Python314\Lib\site-packages\psycopg2\extras.py", line 146, in execute
+    return super().execute(query, vars)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.SyntaxError: syntax error at or near "WHERE"
+LINE 70:                  WHERE score > 0.1  ORDER BY score DESC LIMI...
+                          ^
+
+2026-05-16 20:02:31,211 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 20:02:31,215 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:02:31] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 20:05:20,329 [INFO] werkzeug:  * Detected change in 'C:\\Users\\archa\\Desktop\\works\\cs-connect\\llm_engine.py', reloading
+2026-05-16 20:05:20,689 [INFO] werkzeug:  * Restarting with stat
+2026-05-16 20:05:22,282 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:05:23,006 [INFO] database: Database connection successful
+2026-05-16 20:05:28,590 [WARNING] werkzeug:  * Debugger is active!
+2026-05-16 20:05:28,593 [INFO] werkzeug:  * Debugger PIN: 717-992-605
+2026-05-16 20:05:48,903 [INFO] werkzeug:  * Detected change in 'C:\\Users\\archa\\Desktop\\works\\cs-connect\\llm_engine.py', reloading
+2026-05-16 20:05:49,123 [INFO] werkzeug:  * Restarting with stat
+2026-05-16 20:05:50,775 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:05:51,761 [INFO] database: Database connection successful
+2026-05-16 20:05:58,088 [WARNING] werkzeug:  * Debugger is active!
+2026-05-16 20:05:58,090 [INFO] werkzeug:  * Debugger PIN: 717-992-605
+2026-05-16 20:12:08,654 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:12:09,806 [INFO] database: Database connection successful
+2026-05-16 20:12:09,831 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:12:10,744 [INFO] database: Database connection successful
+2026-05-16 20:12:10,992 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:12:11,711 [INFO] database: Database connection successful
+2026-05-16 20:12:12,042 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:12:13,527 [INFO] database: Database connection successful
+2026-05-16 20:12:13,719 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:12:14,526 [INFO] database: Database connection successful
+2026-05-16 20:12:14,845 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:12:14] "GET / HTTP/1.1" 200 -
+2026-05-16 20:12:15,170 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:12:15] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-05-16 20:12:15,186 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:12:15] "GET /static/css/chatbot.css HTTP/1.1" 200 -
+2026-05-16 20:12:15,189 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:12:15] "[36mGET /static/css/home.css HTTP/1.1[0m" 304 -
+2026-05-16 20:12:15,190 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:12:15] "[36mGET /static/images/aisat-logo-300x300.png HTTP/1.1[0m" 304 -
+2026-05-16 20:12:15,194 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:12:15] "[36mGET /static/media/hod.jpg HTTP/1.1[0m" 304 -
+2026-05-16 20:12:15,210 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:12:15] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-05-16 20:12:15,211 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:12:15] "[36mGET /static/js/chatbot.js HTTP/1.1[0m" 304 -
+2026-05-16 20:12:15,224 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:12:15] "[36mGET /static/images/aisat_building.jpeg HTTP/1.1[0m" 304 -
+2026-05-16 20:12:49,868 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 20:12:49,873 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:12:50,610 [INFO] database: Database connection successful
+2026-05-16 20:12:51,088 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:12:51,919 [INFO] database: Database connection successful
+2026-05-16 20:12:54,643 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 20:12:54,646 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:12:54] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 20:13:44,684 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 20:13:44,686 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:13:45,564 [INFO] database: Database connection successful
+2026-05-16 20:13:46,443 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:13:47,202 [INFO] database: Database connection successful
+2026-05-16 20:13:48,203 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 20:13:48,206 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:13:48] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 20:14:04,611 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 20:14:04,615 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:14:05,471 [INFO] database: Database connection successful
+2026-05-16 20:14:05,802 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:14:06,453 [INFO] database: Database connection successful
+2026-05-16 20:14:07,688 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 20:14:07,691 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:14:07] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 20:15:39,717 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 20:15:39,728 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:15:40,638 [INFO] database: Database connection successful
+2026-05-16 20:15:41,094 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:15:41,903 [INFO] database: Database connection successful
+2026-05-16 20:15:42,709 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 20:15:42,714 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:15:42] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 20:15:46,777 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:15:47,364 [INFO] database: Database connection successful
+2026-05-16 20:15:47,977 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:15:48,544 [INFO] database: Database connection successful
+2026-05-16 20:15:48,851 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:15:50,238 [INFO] database: Database connection successful
+2026-05-16 20:15:50,532 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:15:52,130 [INFO] database: Database connection successful
+2026-05-16 20:15:52,338 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:15:53,055 [INFO] database: Database connection successful
+2026-05-16 20:15:53,430 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:15:53] "GET /academics HTTP/1.1" 200 -
+2026-05-16 20:15:53,489 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:15:53] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-05-16 20:15:53,493 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:15:53] "GET /static/css/academics.css HTTP/1.1" 200 -
+2026-05-16 20:15:53,499 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:15:53] "[36mGET /static/css/chatbot.css HTTP/1.1[0m" 304 -
+2026-05-16 20:15:53,510 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:15:53] "[36mGET /static/images/aisat-logo-300x300.png HTTP/1.1[0m" 304 -
+2026-05-16 20:15:53,513 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:15:53] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-05-16 20:15:53,525 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:15:53] "[36mGET /static/js/chatbot.js HTTP/1.1[0m" 304 -
+2026-05-16 20:25:29,984 [INFO] werkzeug:  * Detected change in 'C:\\Users\\archa\\Desktop\\works\\cs-connect\\llm_engine.py', reloading
+2026-05-16 20:25:30,149 [INFO] werkzeug:  * Restarting with stat
+2026-05-16 20:25:30,972 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:25:33,180 [INFO] database: Database connection successful
+2026-05-16 20:25:36,406 [WARNING] werkzeug:  * Debugger is active!
+2026-05-16 20:25:36,411 [INFO] werkzeug:  * Debugger PIN: 717-992-605
+2026-05-16 20:30:04,129 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:30:04,607 [INFO] database: Database connection successful
+2026-05-16 20:30:04,940 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:30:05,297 [INFO] database: Database connection successful
+2026-05-16 20:30:05,469 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:30:05,829 [INFO] database: Database connection successful
+2026-05-16 20:30:05,982 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:30:06,362 [INFO] database: Database connection successful
+2026-05-16 20:30:06,493 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:30:06,856 [INFO] database: Database connection successful
+2026-05-16 20:30:07,042 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:30:07] "GET /academics HTTP/1.1" 200 -
+2026-05-16 20:30:07,533 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:30:07] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-05-16 20:30:07,542 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:30:07] "[36mGET /static/images/aisat-logo-300x300.png HTTP/1.1[0m" 304 -
+2026-05-16 20:30:07,547 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:30:07] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-05-16 20:30:07,557 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:30:07] "[36mGET /static/css/academics.css HTTP/1.1[0m" 304 -
+2026-05-16 20:30:07,560 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:30:07] "[36mGET /static/css/chatbot.css HTTP/1.1[0m" 304 -
+2026-05-16 20:30:07,562 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:30:07] "[36mGET /static/js/chatbot.js HTTP/1.1[0m" 304 -
+2026-05-16 20:30:38,614 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 20:30:38,620 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:30:40,228 [INFO] database: Database connection successful
+2026-05-16 20:30:40,676 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:30:41,428 [INFO] database: Database connection successful
+2026-05-16 20:30:42,260 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 20:30:42,265 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:30:42] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 20:32:05,179 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 20:32:05,182 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:32:06,058 [INFO] database: Database connection successful
+2026-05-16 20:32:06,471 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:32:07,505 [INFO] database: Database connection successful
+2026-05-16 20:32:08,662 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 20:32:08,668 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:32:08] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 20:38:03,098 [INFO] werkzeug:  * Detected change in 'C:\\Users\\archa\\Desktop\\works\\cs-connect\\llm_engine.py', reloading
+2026-05-16 20:38:03,205 [INFO] werkzeug:  * Restarting with stat
+2026-05-16 20:38:03,873 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:38:04,805 [INFO] database: Database connection successful
+2026-05-16 20:38:07,550 [WARNING] werkzeug:  * Debugger is active!
+2026-05-16 20:38:07,551 [INFO] werkzeug:  * Debugger PIN: 717-992-605
+2026-05-16 20:38:34,790 [INFO] werkzeug:  * Detected change in 'C:\\Users\\archa\\Desktop\\works\\cs-connect\\tmp\\test_query4.py', reloading
+2026-05-16 20:38:34,889 [INFO] werkzeug:  * Restarting with stat
+2026-05-16 20:38:35,529 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:38:35,938 [INFO] database: Database connection successful
+2026-05-16 20:38:39,299 [WARNING] werkzeug:  * Debugger is active!
+2026-05-16 20:38:39,301 [INFO] werkzeug:  * Debugger PIN: 717-992-605
+2026-05-16 20:43:28,981 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:43:29,679 [INFO] database: Database connection successful
+2026-05-16 20:43:30,157 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:43:30,599 [INFO] database: Database connection successful
+2026-05-16 20:43:30,719 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:43:31,071 [INFO] database: Database connection successful
+2026-05-16 20:43:31,222 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:43:31,624 [INFO] database: Database connection successful
+2026-05-16 20:43:31,852 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:43:32,224 [INFO] database: Database connection successful
+2026-05-16 20:43:32,413 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:43:32] "GET /academics HTTP/1.1" 200 -
+2026-05-16 20:43:32,865 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:43:32] "[36mGET /static/css/academics.css HTTP/1.1[0m" 304 -
+2026-05-16 20:43:32,869 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:43:32] "[36mGET /static/css/chatbot.css HTTP/1.1[0m" 304 -
+2026-05-16 20:43:32,912 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:43:32] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-05-16 20:43:32,913 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:43:32] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-05-16 20:43:32,920 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:43:32] "[36mGET /static/images/aisat-logo-300x300.png HTTP/1.1[0m" 304 -
+2026-05-16 20:43:32,927 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:43:32] "[36mGET /static/js/chatbot.js HTTP/1.1[0m" 304 -
+2026-05-16 20:44:45,055 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 20:44:45,060 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:44:47,126 [INFO] database: Database connection successful
+2026-05-16 20:44:47,927 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:44:48,765 [INFO] database: Database connection successful
+2026-05-16 20:44:49,378 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 20:44:49,382 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:44:49] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 20:44:53,324 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:44:53] "GET /static/uploads/notes/Syllabus_CS401.pdf HTTP/1.1" 200 -
+2026-05-16 20:44:55,991 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:44:55] "[36mGET /static/uploads/notes/Syllabus_CS401.pdf HTTP/1.1[0m" 304 -
+2026-05-16 20:45:00,234 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:45:00] "[36mGET /static/uploads/notes/Syllabus_CS401.pdf HTTP/1.1[0m" 304 -
+2026-05-16 20:45:06,014 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 20:45:06,017 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:45:06,755 [INFO] database: Database connection successful
+2026-05-16 20:45:07,071 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:45:07,448 [INFO] database: Database connection successful
+2026-05-16 20:45:07,873 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 20:45:07,878 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:45:07] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 20:45:10,556 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-16 20:45:10,559 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:45:10,913 [INFO] database: Database connection successful
+2026-05-16 20:45:11,261 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:45:11,996 [INFO] database: Database connection successful
+2026-05-16 20:45:12,183 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:45:12,917 [INFO] database: Database connection successful
+2026-05-16 20:45:13,197 [INFO] root: No relevant context found for query: My CGPA
+2026-05-16 20:45:13,199 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:45:13] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 20:46:44,598 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:46:46,393 [INFO] database: Database connection successful
+2026-05-16 20:46:47,360 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:46:48,067 [INFO] database: Database connection successful
+2026-05-16 20:46:48,316 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:46:48,721 [INFO] database: Database connection successful
+2026-05-16 20:46:48,838 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:46:49,301 [INFO] database: Database connection successful
+2026-05-16 20:46:49,425 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:46:49,801 [INFO] database: Database connection successful
+2026-05-16 20:46:49,950 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:46:49] "GET /academics HTTP/1.1" 200 -
+2026-05-16 20:46:49,981 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:46:49] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-05-16 20:46:49,987 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:46:49] "[36mGET /static/css/chatbot.css HTTP/1.1[0m" 304 -
+2026-05-16 20:46:49,993 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:46:49] "[36mGET /static/css/academics.css HTTP/1.1[0m" 304 -
+2026-05-16 20:46:49,994 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:46:49] "[36mGET /static/images/aisat-logo-300x300.png HTTP/1.1[0m" 304 -
+2026-05-16 20:46:49,998 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:46:49] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-05-16 20:46:50,011 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:46:50] "[36mGET /static/js/chatbot.js HTTP/1.1[0m" 304 -
+2026-05-16 20:51:02,829 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:51:03,665 [INFO] database: Database connection successful
+2026-05-16 20:51:04,358 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:51:05,332 [INFO] database: Database connection successful
+2026-05-16 20:51:05,449 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:51:05,853 [INFO] database: Database connection successful
+2026-05-16 20:51:05,974 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:51:06,375 [INFO] database: Database connection successful
+2026-05-16 20:51:06,498 [INFO] database: Connecting to DB (Attempt 1/3) - Target: ep-long-water-a1yyxfck-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+2026-05-16 20:51:06,973 [INFO] database: Database connection successful
+2026-05-16 20:51:07,130 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:51:07] "GET /academics HTTP/1.1" 200 -
+2026-05-16 20:51:07,160 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:51:07] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-05-16 20:51:07,174 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:51:07] "[36mGET /static/css/academics.css HTTP/1.1[0m" 304 -
+2026-05-16 20:51:07,176 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:51:07] "[36mGET /static/css/chatbot.css HTTP/1.1[0m" 304 -
+2026-05-16 20:51:07,179 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:51:07] "[36mGET /static/images/aisat-logo-300x300.png HTTP/1.1[0m" 304 -
+2026-05-16 20:51:07,181 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:51:07] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2026-05-16 20:51:07,195 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 20:51:07] "[36mGET /static/js/chatbot.js HTTP/1.1[0m" 304 -
